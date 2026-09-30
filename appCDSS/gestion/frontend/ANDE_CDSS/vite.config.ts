@@ -1,4 +1,5 @@
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react-swc'
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 
 // En Docker el backend se alcanza por nombre de servicio; en local se puede pisar con VITE_PROXY_TARGET.
@@ -13,6 +14,11 @@ export default defineConfig({
     proxy: {
       '/api': proxyTarget,
       '/auth': proxyTarget,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
