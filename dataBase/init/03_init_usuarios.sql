@@ -1,6 +1,7 @@
 BEGIN;
 
 -- Carga de usuarios semilla desde CSV (montado en /semillas, ver docker-compose.yml).
+-- usuarios.csv no se versiona: en un clone nuevo, copiar usuarios.example.csv a usuarios.csv.
 CREATE TEMP TABLE _usuario_tmp (
     username      TEXT,
     email         TEXT,

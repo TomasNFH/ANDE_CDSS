@@ -4,8 +4,13 @@ __pycache__/
 *$py.class
 .DS_Store
 
-# DB
-/semillas
+# DB (semillas con datos reales: queda versionado solo el .example)
+dataBase/semillas/*
+!dataBase/semillas/*.example.csv
 
 # FRONTEND
-/node_modules
+node_modules/
+dist/
+
+# Entorno
+.env
