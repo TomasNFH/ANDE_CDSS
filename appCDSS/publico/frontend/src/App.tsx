@@ -1,14 +1,8 @@
-import { cn } from "@/lib/utils"
+import PaginaSesiones from '@/pages/PaginaSesiones'
 
+// El módulo público es solo el login; después se pasa a gestión.
 function App() {
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-background p-8">
-      <div className={cn("rounded-lg border bg-card p-8 text-card-foreground shadow-sm")}>
-        <h1 className="text-2xl font-semibold">ANDE CDSS · Público</h1>
-        <p className="mt-2 text-muted-foreground">Vite + React + Tailwind listos.</p>
-      </div>
-    </main>
-  )
+  return <PaginaSesiones />
 }
 
 export default App

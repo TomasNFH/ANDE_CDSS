@@ -1,12 +1,16 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from app.dependencies.auth import get_usuario_actual
 
 from app.services.catalogo_service import (
     obtener_bioactivos,
     obtener_autores,
 )
 
+# Todo el catálogo requiere sesión iniciada.
 router = APIRouter(
-    tags=["Catálogo"]
+    tags=["Catálogo"],
+    dependencies=[Depends(get_usuario_actual)],
 )
 
 

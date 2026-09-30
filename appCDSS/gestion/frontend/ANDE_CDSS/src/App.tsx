@@ -1,13 +1,22 @@
-import { cn } from "@/lib/utils"
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { AuthProvider } from '@/contexts/AuthContext'
+import RequireAuth from '@/components/RequireAuth'
+import PaginaInicio from '@/pages/PaginaInicio'
 
 function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background p-8">
-      <div className={cn("rounded-lg border bg-card p-8 text-card-foreground shadow-sm")}>
-        <h1 className="text-2xl font-semibold">ANDE CDSS · Gestión</h1>
-        <p className="mt-2 text-muted-foreground">Vite + React + Tailwind listos.</p>
-      </div>
-    </main>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Todo gestión requiere sesión; el login está en el módulo público */}
+          <Route element={<RequireAuth />}>
+            <Route path="/" element={<PaginaInicio />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

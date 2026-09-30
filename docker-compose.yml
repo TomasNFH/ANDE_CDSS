@@ -28,6 +28,9 @@ services:
     container_name: andeCDSS_gestion_backend
     environment:
       DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
+      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, gestión la lee
+      SESSION_HTTPS_ONLY: "false"
+      CORS_ORIGINS: http://localhost:8090,http://localhost:8091
     ports:
       - "8020:8000"
     volumes:
@@ -41,6 +44,7 @@ services:
     container_name: andeCDSS_gestion_frontend
     environment:
       VITE_PROXY_TARGET: http://gestion-backend:8000
+      VITE_PUBLICO_URL: http://localhost:8091/   # login: a donde se vuelve sin sesión o al cerrarla
     ports:
       - "8090:8080"
     volumes:
@@ -49,12 +53,16 @@ services:
     depends_on:
       - gestion-backend
 
-  # El público NO debe hablar con el backend de gestión: solo con su frontend y con la base.
+  # El público NO habla con el backend de gestión: solo con su frontend y con la base.
+  # Hace el login y deja la cookie de sesión; gestión la valida con el mismo SESSION_SECRET.
   publico-backend:
     build: ./appCDSS/publico/backend
     container_name: andeCDSS_publico_backend
     environment:
       DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
+      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, gestión la lee
+      SESSION_HTTPS_ONLY: "false"
+      CORS_ORIGINS: http://localhost:8090,http://localhost:8091
     ports:
       - "8021:8000"
     volumes:
@@ -68,6 +76,7 @@ services:
     container_name: andeCDSS_publico_frontend
     environment:
       VITE_PROXY_TARGET: http://publico-backend:8000
+      VITE_GESTION_URL: http://localhost:8090/   # a donde se pasa después del login
     ports:
       - "8091:8080"
     volumes:

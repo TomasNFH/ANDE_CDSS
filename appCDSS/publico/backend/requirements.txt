@@ -12,3 +12,4 @@ tzdata==2025.3
 passlib==1.7.4
 rdkit==2025.3.6
 click==8.3.1
+itsdangerous==2.2.0
