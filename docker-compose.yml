@@ -1,0 +1,90 @@
+# Compose único para levantar TODO el entorno local con: docker compose up --build
+# Orquesta la base (Postgres) + gestión (back/front) + público (back/front).
+# Puertos y subnet elegidos para no chocar con biobanco (5433, 8000-8001, 8080-8081, 172.40)
+# ni con prodnaturales (5434, 8001, 8011, 5173, 5181, 172.41).
+
+services:
+  db:
+    image: postgres:17
+    container_name: andeCDSS_postgres
+    environment:
+      POSTGRES_DB: dbAndeCDSS
+      POSTGRES_USER: andeCDSS_user
+      POSTGRES_PASSWORD: andeCDSS1234
+    ports:
+      - "5435:5432"
+    volumes:
+      - andeCDSS_db_data:/var/lib/postgresql/data
+      - ./dataBase/init:/docker-entrypoint-initdb.d
+      - ./dataBase/semillas:/semillas:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U andeCDSS_user -d dbAndeCDSS"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  gestion-backend:
+    build: ./appCDSS/gestion/backend
+    container_name: andeCDSS_gestion_backend
+    environment:
+      DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
+    ports:
+      - "8020:8000"
+    volumes:
+      - ./appCDSS/gestion/backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  gestion-frontend:
+    build: ./appCDSS/gestion/frontend/ANDE_CDSS
+    container_name: andeCDSS_gestion_frontend
+    environment:
+      VITE_PROXY_TARGET: http://gestion-backend:8000
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./appCDSS/gestion/frontend/ANDE_CDSS:/app
+      - /app/node_modules
+    depends_on:
+      - gestion-backend
+
+  # El público NO debe hablar con el backend de gestión: solo con su frontend y con la base.
+  publico-backend:
+    build: ./appCDSS/publico/backend
+    container_name: andeCDSS_publico_backend
+    environment:
+      DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
+    ports:
+      - "8021:8000"
+    volumes:
+      - ./appCDSS/publico/backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  publico-frontend:
+    build: ./appCDSS/publico/frontend
+    container_name: andeCDSS_publico_frontend
+    environment:
+      VITE_PROXY_TARGET: http://publico-backend:8000
+    ports:
+      - "8091:8080"
+    volumes:
+      - ./appCDSS/publico/frontend:/app
+      - /app/node_modules
+    depends_on:
+      - publico-backend
+
+
+volumes:
+  andeCDSS_db_data:
+    driver: local
+
+
+networks:
+  default:
+    name: andeCDSS_network
+    ipam:
+      config:
+        - subnet: 172.42.0.0/16

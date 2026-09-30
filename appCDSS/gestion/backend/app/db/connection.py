@@ -12,8 +12,8 @@ def conectar_base_datos():
     # Fallback a valores por defecto si no hay DATABASE_URL
     return psycopg.connect(
         host=os.environ.get("DB_HOST", "localhost"),
-        user=os.environ.get("DB_USER", "prodNat_user"),
-        password=os.environ.get("DB_PASSWORD", "prodNat1234"),
-        dbname=os.environ.get("DB_NAME", "dbProdNat"),
-        port=os.environ.get("DB_PORT", "5434"),
+        user=os.environ.get("DB_USER", "andeCDSS_user"),
+        password=os.environ.get("DB_PASSWORD", "andeCDSS1234"),
+        dbname=os.environ.get("DB_NAME", "dbAndeCDSS"),
+        port=os.environ.get("DB_PORT", "5435"),
     )
