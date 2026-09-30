@@ -1,0 +1,14 @@
+fastapi==0.136.1
+uvicorn[standard]==0.38.0
+pydantic==2.12.3
+sqlalchemy==2.0.43
+psycopg[binary]==3.2.11
+numpy==2.3.3
+pandas==2.3.3
+python-dotenv==1.1.1
+python-dateutil==2.9.0.post0
+pytz==2025.2
+tzdata==2025.3
+passlib==1.7.4
+rdkit==2025.3.6
+click==8.3.1
