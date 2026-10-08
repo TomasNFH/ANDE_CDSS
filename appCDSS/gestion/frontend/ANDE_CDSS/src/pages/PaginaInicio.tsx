@@ -30,10 +30,7 @@
 // export default PaginaInicio;
 
 import React, { useState } from "react";
-import Sidebar from "@/components/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader";
-import { useNavigate } from "react-router-dom";
-import { useSidebar } from "@/contexts/SidebarContext";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,12 +42,11 @@ import { BrainCircuit, Sparkles, Binoculars, CreditCard } from "lucide-react";
 const HomePage = () => {
   const [selectedPlan, setSelectedPlan] = useState("pro");
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
-  const navigate = useNavigate();
   const [showCDSSOptions, setShowCDSSOptions] = useState(true);
+  const [showCustomOptions, setShowCustomOptions] = useState(false);
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
   const [bounceAcquisition, setBounceAcquisition] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
-  const { collapsed } = useSidebar();
 
   const plans = [
     {
@@ -146,15 +142,8 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          <Sidebar
-            data-id="yll2vylo2"
-            data-path="src/pages/HomePage.tsx"
-            bounceAcquisition={bounceAcquisition}
-          />
           <div
-            className={`flex-1 transition-all duration-300 ${
-              collapsed ? "ml-20" : "ml-64"
-            }`}
+            className="flex-1"
             data-id="be7igm5ru"
             data-path="src/pages/HomePage.tsx"
           >
@@ -181,21 +170,20 @@ const HomePage = () => {
                   className="absolute left-1/2 -translate-x-1/2"
                   style={{ top: "-1.1rem", width: "8rem" }}
                 >
-                  <div className="flex justify-center">
-                    <span className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-lg shadow">
-                      Start Predicting
-                    </span>
-                  </div>
                 </div>
                 <div className="flex flex-col items-center">
                   <button
                     type="button"
-                    className="w-40 h-40 flex items-center justify-center rounded-2xl bg-blue-100 hover:bg-blue-200 transition-all mb-2 shadow-lg"
-                    aria-label="Model Training"
+                    className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                      showCustomOptions
+                        ? "bg-blue-300"
+                        : "bg-blue-100 hover:bg-blue-200"
+                    }`}
+                    aria-label="Custom models"
                     onClick={() => {
+                      setShowCustomOptions((prev) => !prev);
                       setShowCDSSOptions(false);
                       setShowMiniPlayer(false);
-                      navigate("/acquisition");
                     }}
                     onMouseEnter={() => {
                       setBounceAcquisition(true);
@@ -204,7 +192,7 @@ const HomePage = () => {
                     <BrainCircuit size={64} />
                   </button>
                   <span className="text-base font-semibold text-gray-700 mt-2">
-                    Model Training
+                    Custom models
                   </span>
                 </div>
                 <div className="flex flex-col items-center">
@@ -218,13 +206,14 @@ const HomePage = () => {
                     aria-label="Clinical Decision Support"
                     onClick={() => {
                       setShowCDSSOptions((prev) => !prev);
+                      setShowCustomOptions(false);
                       setShowMiniPlayer(false);
                     }}
                   >
                     <Sparkles size={64} />
                   </button>
                   <span className="text-base font-semibold text-gray-700 mt-2">
-                    Clinical Decision Support
+                    Open models
                   </span>
                 </div>
                 <div className="flex flex-col items-center">
@@ -234,6 +223,7 @@ const HomePage = () => {
                     aria-label="How to"
                     onClick={() => {
                       setShowCDSSOptions(false);
+                      setShowCustomOptions(false);
                       setShowMiniPlayer(true);
                     }}
                   >
@@ -254,29 +244,10 @@ const HomePage = () => {
                     <div className="flex flex-row justify-center items-center gap-12 mt-8">
                       <div className="flex-1 flex items-center justify-end pr-8">
                         <span className="text-2xl font-semibold text-gray-800 max-w-xs text-left">
-                          Clinica Decision Support System with best custom
-                          trained models (or upload your own)
+                          Use model trained over open source datasets.
                         </span>
                       </div>
                       <div className="flex flex-row gap-8">
-                        <div className="flex flex-col items-center">
-                          <button
-                            className="w-80 h-56 cursor-pointer border-2 border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all bg-white p-0 hover:scale-105 hover:z-10 relative"
-                            onClick={() => window.open("/cdssnep", "_blank")}
-                            style={{ padding: 0 }}
-                          >
-                            <img
-                              src="/nephrology2.jpg"
-                              alt="Nephrology"
-                              className="w-full h-full object-cover"
-                            />
-                            <span className="absolute inset-0 flex items-center justify-center">
-                              <span className="bg-black bg-opacity-85 px-6 py-2 rounded text-white text-3xl font-bold drop-shadow-lg">
-                                Nephrology
-                              </span>
-                            </span>
-                          </button>
-                        </div>
                         <div className="flex flex-col items-center">
                           <button
                             className="w-80 h-56 cursor-pointer border-2 border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all bg-white p-0 hover:scale-105 hover:z-10 relative"
@@ -286,19 +257,28 @@ const HomePage = () => {
                             style={{ padding: 0 }}
                           >
                             <img
-                              src="/oncology2.jpg"
-                              alt="Oncology"
+                              src="/cardiology.jpg"
+                              alt="Cardiology"
                               className="w-full h-full object-cover"
                             />
                             <span className="absolute inset-0 flex items-center justify-center">
                               <span className="bg-black bg-opacity-85 px-6 py-2 rounded text-white text-3xl font-bold drop-shadow-lg">
-                                Oncology
+                                Cardiology
                               </span>
                             </span>
                           </button>
                         </div>
                       </div>
                     </div>
+                  </CardContent>
+                </Card>
+              )}
+              {showCustomOptions && (
+                <Card className="mt-10 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
+                  <CardContent className="w-full flex items-center justify-center py-16">
+                    <span className="text-2xl font-semibold text-gray-500">
+                      No hay modelos disponibles.
+                    </span>
                   </CardContent>
                 </Card>
               )}
