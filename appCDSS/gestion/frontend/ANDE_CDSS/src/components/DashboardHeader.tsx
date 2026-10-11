@@ -36,23 +36,6 @@ const DashboardHeader = () => {
         data-id="kv1eoj6hq"
         data-path="src/components/DashboardHeader.tsx"
       >
-        <div
-          className="relative"
-          data-id="xrvjj8bhv"
-          data-path="src/components/DashboardHeader.tsx"
-        >
-          <Search
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400"
-            data-id="n55al2orc"
-            data-path="src/components/DashboardHeader.tsx"
-          />
-          <Input
-            placeholder="Search here"
-            className="pl-8 h-9 w-48 text-sm rounded-md"
-            data-id="p3u9y73re"
-            data-path="src/components/DashboardHeader.tsx"
-          />
-        </div>
         <button
           className="p-1.5 text-gray-500 hover:text-gray-700 transition-colors"
           data-id="rlzeaq06h"
