@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,11 +7,23 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.routers.auth_router import router as auth_router
 from app.routers.catalago_router import router as catalogo_router
+from app.routers.model_router import router as model_router
 from app.services.auth_service import SESSION_MAX_AGE
+from app.services.model_service import cargar_modelos_abiertos
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Los modelos abiertos se cargan una sola vez y quedan en memoria para todos los requests.
+    # Si falta un archivo o no coinciden las versiones de sklearn, falla acá y no en una consulta.
+    cargar_modelos_abiertos()
+    yield
+
 
 app = FastAPI(
     title = 'CDSS backend: gestion',
-    version = '1.0.0'
+    version = '1.0.0',
+    lifespan = lifespan,
 )
 
 # Sesión: cookie firmada (HMAC). La crea el backend público en el login; para poder leerla,
@@ -47,3 +60,4 @@ app.add_middleware(
 # Registrar routers
 app.include_router(auth_router)
 app.include_router(catalogo_router)
+app.include_router(model_router)

@@ -1,163 +1,205 @@
+import os
+import pickle
+import re
+from dataclasses import dataclass, field
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import skops.io as sio
+
+# Carpeta con los modelos abiertos exportados (backend/openModels). Se puede sobreescribir por entorno.
+OPEN_MODELS_DIR = Path(
+    os.environ.get("OPEN_MODELS_DIR", Path(__file__).resolve().parents[2] / "openModels")
+)
+
+# Modelos abiertos disponibles: nombre de la API -> carpeta del export y etiquetas legibles
+# de cada clase del target (el export solo trae los valores codificados).
+OPEN_MODELS = {
+    "framingham": {
+        "carpeta": "framingham_EXPORT",
+        "etiquetas": {0: "Sin CHD a 10 años", 1: "CHD a 10 años"},
+    },
+}
+
+NORMALIZATION_METHODS = ["No", "Min-Max", "Z-score"]
+
+# Filas del set de test que se devuelven como ejemplo de predicción.
+N_EJEMPLOS = 10
 
 
-@app.route('/PredictionModel', methods=['GET'])
-def prediction_model():
-    global X_test
-    global y_test
-    global minmax
-    global std
-    # global rosseta
-    global clf
-    global MODEL_INFO
+@dataclass
+class LoadedModel:
+    nombre: str
+    clf: object
+    model_name: str
+    target_column: str
+    target_type: str
+    features: list[str]
+    norm_method: str
+    scalers: dict
+    all_features: list[str]
+    etiquetas: dict
+    resumen: dict = field(default_factory=dict)
 
-    global CURRENT_MODEL
-    global MODEL_INFO
-    global NORM_F
-    global scalers
-    global all_features
-    global features_list
 
-    CURRENT_MODEL = clf
-    model_name = MODEL_INFO['Model name'].values[0]
-    Features = MODEL_INFO['Features used'].values[0][1:-1]
-    Importances = MODEL_INFO['importances'].values[0][1:-1]
-    target_column = MODEL_INFO['Target column'].values[0]
-    target_type = MODEL_INFO['Target type'].values[0]
-    scalers = []
-    scalers.append(minmax)
-    scalers.append(std)
-    all_features = X_test.columns
+# Modelos cargados en memoria. Se llena una vez al arrancar la app (lifespan en main.py)
+# y después solo se lee: todos los requests comparten la misma instancia.
+MODELS: dict[str, LoadedModel] = {}
 
-    Normalization_methods = ['No', 'Min-Max', 'Z-score']
-    NORM_METHOD = MODEL_INFO['Normalization method'].values[0]
-    NORM_F = [i for i, j in enumerate(Normalization_methods) if j == NORM_METHOD][0]
 
-    features_list = []
-    features_list = [item.strip() for item in Features.split(',')]
-    features_list = [item.strip() for item in Features.split(',')]
-    features_list = [f.strip("'") for f in features_list]
-    features_list = [f for f in features_list if f]
+def _parsear_lista(texto: str) -> list[str]:
+    """"['age', 'glucose']" -> ['age', 'glucose']"""
+    return [f.strip().strip("'\"") for f in texto.strip()[1:-1].split(",") if f.strip()]
 
-    importances_list = []
-    importances_list = [item.strip() for item in Importances.split(' ')]
-    importances_list = [f for f in importances_list if f]
-    imp_array = [float(string) for string in importances_list]
-    Nimp_array = (imp_array)/(np.max(imp_array))
-    importances_list = Nimp_array.tolist()
 
-    # Create DataFrame with proper shape - reshape to (1, n_features) for single row
-    if len(importances_list) == len(features_list):
-        feat = pd.DataFrame([importances_list], columns=features_list)
+def _parsear_numeros(texto: str) -> list[float]:
+    """Arrays de numpy guardados como texto ("[0.1 0.2\\n 0.3]") -> lista de floats."""
+    return [float(n) for n in re.findall(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?", texto)]
+
+
+def normalizar(m: LoadedModel, X: pd.DataFrame) -> pd.DataFrame:
+    """Aplica la normalización con la que se entrenó el modelo.
+
+    Los scalers se ajustaron sobre todas las columnas de X_test, así que se usan
+    los parámetros de cada feature por su índice en vez de transformar la fila completa.
+    """
+    if m.norm_method == "No":
+        return X
+
+    idx = [m.all_features.index(f) for f in X.columns]
+    if m.norm_method == "Min-Max":
+        s = m.scalers["minmax"]
+        return X * s.scale_[idx] + s.min_[idx]
+    if m.norm_method == "Z-score":
+        s = m.scalers["std"]
+        mean = s.mean_[idx] if s.with_mean else 0
+        scale = s.scale_[idx] if s.with_std else 1
+        return (X - mean) / scale
+    raise ValueError(f"Método de normalización desconocido: {m.norm_method}")
+
+
+def etiqueta(m: LoadedModel, clase) -> str:
+    return m.etiquetas.get(int(clase), str(clase))
+
+
+def predecir_df(m: LoadedModel, X: pd.DataFrame) -> tuple[list[str], list[float], np.ndarray]:
+    """Predice sobre un DataFrame con las features del modelo (en cualquier orden).
+
+    Devuelve las etiquetas predichas, la confianza (probabilidad de la clase predicha)
+    y la matriz completa de probabilidades (filas x clases, en el orden de clf.classes_).
+    """
+    Xn = normalizar(m, X[m.features].astype(float))
+    proba = m.clf.predict_proba(Xn.to_numpy())
+    pred_idx = proba.argmax(axis=1)
+    clases = m.clf.classes_[pred_idx]
+    return [etiqueta(m, c) for c in clases], proba.max(axis=1).tolist(), proba
+
+
+def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
+    """Lo que consume FraminhamPage: métricas, gráficas y ejemplos. Se calcula una vez al cargar."""
+    importances = np.array(_parsear_numeros(info["importances"]))
+    if len(importances) == len(m.features) and importances.max() > 0:
+        feat = [m.features, (importances / importances.max()).tolist()]
     else:
-        # If lengths don't match, create empty DataFrame
-        feat = pd.DataFrame(columns=features_list)
-    feat_list = [feat.columns.tolist()] + feat.values.tolist()
+        feat = [m.features]
 
-    classes = len(rosseta[target_column][0])
-    cm_list = [0, 0, 0, 0]
-    cm_string = MODEL_INFO['Confusion matrix'].values[0]
-    numbers = re.findall(r'\d+', cm_string)
-    if target_type == 'boolean':
-        # Convert to integers and create flat list
-        if len(numbers) >= 4:
-            cm_list = [int(numbers[0]), int(numbers[1]), int(numbers[2]), int(numbers[3])]
-        else:
-            cm_list = [0, 0, 0, 0]  # Default fallback
-        cm_list = [cm_list]
-    if target_type == 'classes':
-        cm_list = []
-        for val_numb in numbers: 
-            cm_list.append(int(val_numb))
-        cm_list = [cm_list]
+    clases = list(m.clf.classes_)
+    cm = [int(n) for n in re.findall(r"\d+", info["Confusion matrix"])]
+    roc_curves, auc = [], []
+    if m.target_type == "boolean":
+        # sklearn guarda [[TN, FP], [FN, TP]]; ConfusionMatrix espera [TP, FN, FP, TN]
+        # con la clase 1 como positiva.
+        tn, fp, fn, tp = cm[:4] if len(cm) >= 4 else [0, 0, 0, 0]
+        cm = [tp, fn, fp, tn]
+        bool_labels = [etiqueta(m, 1), etiqueta(m, 0)]
 
+        auc = float(info["AUC"])
+        tpr = _parsear_numeros(info["True Positive Rate"])
+        fpr = _parsear_numeros(info["False Positive Rate"])
+        if tpr and len(tpr) == len(fpr):
+            roc_curves = [list(zip(fpr, tpr))]
+    else:
+        bool_labels = [etiqueta(m, c) for c in clases]
 
-    tpr_list = []
-    fpr_list = []
-    roc_curves = []
-    AUC = []
-    if target_type == 'boolean':
-        AUC = MODEL_INFO['AUC'].values[0].tolist()
+    ejemplo = X_test[m.features].head(N_EJEMPLOS).copy()
+    pred, conf, _ = predecir_df(m, ejemplo)
+    ejemplo[m.target_column] = [etiqueta(m, c) for c in y_test.head(N_EJEMPLOS)]
+    ejemplo["PREDICTION"] = pred
+    ejemplo["CONFIDENCE"] = conf
+    example_prediction = [ejemplo.columns.tolist()] + ejemplo.values.tolist()
 
-        tpr_string = MODEL_INFO['True Positive Rate'].values[0]
-        tpr_numbers = re.findall(r'\d+\.?\d*', tpr_string)
-        if tpr_numbers:
-            tpr_list = [float(num) for num in tpr_numbers]
-        else:
-            tpr_list = []  # Default fallback
-
-        # MODEL_INFO['False Positive Rate']
-        fpr_string = MODEL_INFO['False Positive Rate'].values[0]
-        fpr_numbers = re.findall(r'\d+\.?\d*', fpr_string)
-        if fpr_numbers:
-            fpr_list = [float(num) for num in fpr_numbers]
-        else:
-            fpr_list = []  # Default fallback
-
-        # Create ROC curve from TPR and FPR lists
-        roc_curves = []
-        if len(tpr_list) == len(fpr_list) and len(tpr_list) > 0:
-            roc_points = list(zip(fpr_list, tpr_list))  # Each point is (FPR, TPR)
-            roc_curves.append(roc_points)
-        else:
-            roc_curves = []  # Default fallback
-
-    # breakpoint()
-    X_testN = DprepNcleaning.data_normF(X_test.to_numpy(), FLAG=NORM_F, scaler=scalers) 
-    X_testN=pd.DataFrame(X_testN, columns=X_test.columns)
-    PREDICTION, PROBA, Y_DECASTED = Mbuilding.predict_fun(x_test_function=X_test[features_list], model_function = clf, y_test_function = y_test, target_column_function = target_column, target_type_function = target_type, rosseta_function = rosseta, cast_flag_function = False)
-    
-
-    # Flatten the PREDICTION list if it's a list of lists
-    flat_predictions = [item[0] if isinstance(item, list) else item for item in PREDICTION]
-    X_test = X_test[features_list]
-    X_test[target_column] = Y_DECASTED
-    X_test['PREDICTION'] = flat_predictions
-    X_test['CONFIDENCE'] = PROBA
-
-    # breakpoint()
-    if target_column == 'CAUSA_BAJA': 
-        X_test = X_test.head(8)  # Limit to 10 rows for display
-        ExamplePrediction = [X_test.columns.tolist()] + X_test.values.tolist()
-    else: ExamplePrediction = [X_test.columns.tolist()] + X_test.values.astype(float).tolist() #esto es para oncologia
-
-    
-    bool_labels=[]
-    if target_type == 'boolean': 
-        # bool_labels.append(rosseta[target_column][0][0])
-        # bool_labels.append(rosseta[target_column][0][1])
-        bool_labels.append('Toxicidad presente')
-        bool_labels.append('Toxicidad ausente')
-        bool_labels.append(rosseta[target_column][1][0].item())
-        bool_labels.append(rosseta[target_column][1][1].item())    
-    if target_type == 'classes':
-        for outer in range(2): 
-            for inner in range(classes):
-                bool_labels.append(rosseta[target_column][outer][inner].item())
-
-    
-    # breakpoint()
-    # ExamplePrediction = []
-    tree1 = []
-    tree2 = []
-    if model_name == 'RandomForestClassifier':
+    first_tree, last_tree = [], []
+    if hasattr(m.clf, "estimators_") and m.model_name == "RandomForestClassifier":
         from sklearn.tree import export_text
-        tree1 = export_text(clf.estimators_[0], feature_names=features_list)
-        tree2 = export_text(clf.estimators_[-1], feature_names=features_list)
-        # breakpoint()
+        first_tree = export_text(m.clf.estimators_[0], feature_names=m.features)
+        last_tree = export_text(m.clf.estimators_[-1], feature_names=m.features)
 
-    print('es este si')
+    return {
+        "model_name": m.model_name,
+        "features": m.features,
+        "feat": feat,
+        "CM": [cm],
+        "roc_curves": roc_curves,
+        "auc": auc,
+        "example_prediction": example_prediction,
+        "bool_labels": bool_labels,
+        "target_column": m.target_column,
+        "target_type": m.target_type,
+        "NumbClasses": len(clases),
+        "FirstTree": first_tree,
+        "LastTree": last_tree,
+    }
 
-    return jsonify({
-        'model_name': model_name, 
-        'features': features_list, 
-        'feat': feat_list,
-        'CM': cm_list,
-        'roc_curves': roc_curves,
-        'auc': AUC,
-        'example_prediction': ExamplePrediction,
-        'bool_labels': bool_labels,
-        'target_type': target_type,
-        'NumbClasses': classes,
-        'FirstTree': tree1,
-        'LastTree': tree2
-    })
+
+def cargar_modelo(nombre: str) -> LoadedModel:
+    """Lee un export de openModels (model.skops + info.csv + scalers + set de test)."""
+    config = OPEN_MODELS[nombre]
+    carpeta = OPEN_MODELS_DIR / config["carpeta"]
+
+    # skops solo carga tipos de confianza: si el archivo trae alguno desconocido, falla.
+    clf = sio.load(carpeta / "model.skops")
+    info = pd.read_csv(carpeta / "info.csv", index_col=0).iloc[0]
+    # Pickles propios, generados junto con el modelo.
+    with open(carpeta / "minmax.pkl", "rb") as f:
+        minmax = pickle.load(f)
+    with open(carpeta / "std.pkl", "rb") as f:
+        std = pickle.load(f)
+    X_test = pd.read_csv(carpeta / "X_test.csv")
+    y_test = pd.read_csv(carpeta / "y_test.csv").iloc[:, 0]
+
+    m = LoadedModel(
+        nombre=nombre,
+        clf=clf,
+        model_name=info["Model name"],
+        target_column=info["Target column"],
+        target_type=info["Target type"],
+        features=_parsear_lista(info["Features used"]),
+        norm_method=info["Normalization method"],
+        scalers={"minmax": minmax, "std": std},
+        all_features=X_test.columns.tolist(),
+        etiquetas=config["etiquetas"],
+    )
+    if m.norm_method not in NORMALIZATION_METHODS:
+        raise ValueError(f"{nombre}: método de normalización desconocido '{m.norm_method}'")
+    if clf.n_features_in_ != len(m.features):
+        raise ValueError(
+            f"{nombre}: el modelo espera {clf.n_features_in_} features y info.csv lista {len(m.features)}"
+        )
+
+    m.resumen = _armar_resumen(m, info, X_test, y_test)
+    return m
+
+
+def cargar_modelos_abiertos():
+    for nombre in OPEN_MODELS:
+        MODELS[nombre] = cargar_modelo(nombre)
+
+
+def obtener_modelo(nombre: str) -> LoadedModel:
+    """KeyError si el modelo no existe o no está cargado."""
+    return MODELS[nombre]
+
+
+def obtener_resumen(nombre: str) -> dict:
+    return obtener_modelo(nombre).resumen

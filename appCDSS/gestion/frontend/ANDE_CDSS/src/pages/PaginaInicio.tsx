@@ -30,6 +30,7 @@
 // export default PaginaInicio;
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardHeader from "@/components/DashboardHeader";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,6 +41,7 @@ import { Badge } from "@/components/ui/badge";
 import { BrainCircuit, Sparkles, Binoculars, CreditCard } from "lucide-react";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState("pro");
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
   const [showCDSSOptions, setShowCDSSOptions] = useState(true);
@@ -251,9 +253,7 @@ const HomePage = () => {
                         <div className="flex flex-col items-center">
                           <button
                             className="w-80 h-56 cursor-pointer border-2 border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all bg-white p-0 hover:scale-105 hover:z-10 relative"
-                            onClick={() =>
-                              window.open("/cdssoncology", "_blank")
-                            }
+                            onClick={() => navigate("/cardiology")}
                             style={{ padding: 0 }}
                           >
                             <img

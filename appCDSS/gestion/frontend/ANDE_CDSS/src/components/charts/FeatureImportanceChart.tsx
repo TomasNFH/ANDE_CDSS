@@ -66,7 +66,7 @@ const FeatureImportanceChart = ({
               border: "1px solid #e5e7eb",
             }}
             itemStyle={{ color: color }}
-            formatter={(value: number) => [value.toFixed(6), "Importance"]}
+            formatter={(value) => [Number(value).toFixed(6), "Importance"]}
             labelStyle={{ fontWeight: "bold" }}
           />
 

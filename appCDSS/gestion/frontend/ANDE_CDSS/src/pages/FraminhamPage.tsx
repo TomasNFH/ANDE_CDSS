@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -19,25 +19,12 @@ import {
   LineChart,
   ChevronLeft,
   ChevronRight,
-  Database,
-  Upload,
-  X,
-  FileText,
-  CheckCircle,
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import FeatureImportanceChart from "@/components/charts/FeatureImportanceChart";
 import ConfusionMatrix from "@/components/charts/ConfusionMatrix";
 import ROCCurve from "@/components/charts/ROCCurve";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import DecisionTreeText from "@/components/DecisionTreeText";
 
 const modelDescriptions: Record<string, string> = {
   RandomForestClassifier:
@@ -70,8 +57,22 @@ const modelDescriptions: Record<string, string> = {
     "K-Nearest Neighbors Regressor predicts the value of a sample based on the average of its k nearest neighbors in the feature space.",
 };
 
-const CDSSpredictions = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+// Modelo abierto que muestra esta página (ver OPEN_MODELS en el backend).
+const MODEL_ID = "framingham";
+
+// Mensaje de error de la API: FastAPI devuelve { detail } (texto o lista de errores de validación).
+const errorDeRespuesta = async (response: Response) => {
+  try {
+    const data = await response.json();
+    if (typeof data.detail === "string") return data.detail;
+    if (Array.isArray(data.detail)) return "Revisá los valores ingresados: tienen que ser numéricos.";
+  } catch {
+    // respuesta sin JSON
+  }
+  return `HTTP error! status: ${response.status}`;
+};
+
+const FraminhamPage = () => {
   const [modelName, setModelName] = useState<string>("");
   const [features, setFeatures] = useState<string[]>([]);
   const [featureValues, setFeatureValues] = useState<Record<string, string>>(
@@ -80,27 +81,15 @@ const CDSSpredictions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
   const [prediction, setPrediction] = useState<string>("");
+  const [predictionConfidence, setPredictionConfidence] = useState<
+    number | null
+  >(null);
+  const [predictionError, setPredictionError] = useState<string>("");
   const [predictionLoading, setPredictionLoading] = useState(false);
   const [isModelInfoOpen, setIsModelInfoOpen] = useState(false);
   const [isDockHovered, setIsDockHovered] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [showModelContent, setShowModelContent] = useState(false);
-
-  // File upload states
-  const [showUploadDialog, setShowUploadDialog] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadError, setUploadError] = useState<string>("");
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [testDfInfo, setTestDfInfo] = useState<{
-    shape: [number, number] | null;
-    columns: string[] | null;
-  } | null>(null);
-
   const { collapsed } = useSidebar();
-  const [firstTree, setFirstTree] = useState<any>(null);
-  const [lastTree, setLastTree] = useState<any>(null);
   // New state variables for model data
   const [modelData, setModelData] = useState<{
     feat: string[][];
@@ -108,210 +97,70 @@ const CDSSpredictions = () => {
     roc_curves: number[][][];
   } | null>(null);
 
-  const [examplePrediction, setExamplePrediction] = useState<string[][] | null>(
-    null
-  );
-  const [latestInputPrediction, setLatestInputPrediction] = useState<
+  const [examplePrediction, setExamplePrediction] = useState<
+    (string | number)[][] | null
+  >(null);
+  // Predicciones hechas en esta visita: [encabezados, ...filas], la más reciente primero.
+  const [predictionHistory, setPredictionHistory] = useState<
     (string | number)[][] | null
   >(null);
 
-  const [boolLabels, setBoolLabels] = useState<[string, string] | null>(null);
+  const [boolLabels, setBoolLabels] = useState<string[] | null>(null);
+  const [targetColumn, setTargetColumn] = useState<string>("");
   const [targetType, setTargetType] = useState<string>("");
+  const [auc, setAuc] = useState<number | null>(null);
 
-  // Two identical slides
+  // Slide 0: ejemplos del set de test; slide 1: historial de predicciones
   const slides = [1, 2];
 
   useEffect(() => {
-    if (showModelContent) {
-      const fetchPredictionModel = async () => {
-        try {
-          setLoading(true);
-          const response = await fetch(
-            "http://localhost:5000/PredictionModel",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+    const fetchPredictionModel = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/models/${MODEL_ID}`, {
+          credentials: "include",
+        });
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+        if (!response.ok) {
+          throw new Error(await errorDeRespuesta(response));
+        }
 
-          const data = await response.json();
-          setModelName(data.model_name);
-          if (data.features) {
-            setFeatures(data.features);
-            // Initialize feature values with empty strings
-            const initialValues: Record<string, string> = {};
-            data.features.forEach((feature: string) => {
-              initialValues[feature] = "";
-            });
-            setFeatureValues(initialValues);
-          }
-          // Store model data for charts
-          setModelData({
-            feat: data.feat || [],
-            CM: data.CM || [],
-            roc_curves: data.roc_curves || [],
+        const data = await response.json();
+        setModelName(data.model_name);
+        if (data.features) {
+          setFeatures(data.features);
+          // Initialize feature values with empty strings
+          const initialValues: Record<string, string> = {};
+          data.features.forEach((feature: string) => {
+            initialValues[feature] = "";
           });
-          // Add FirstTree and LastTree from backend
-          setFirstTree(data.FirstTree || null);
-          // Console plot of FirstTree
-          if (data.FirstTree) {
-            console.log("FirstTree structure:", data.FirstTree);
-          }
-          setLastTree(data.LastTree || null);
-          if (data.example_prediction) {
-            setExamplePrediction(data.example_prediction);
-          } else {
-            console.log("No example prediction data received from backend");
-            setExamplePrediction(null);
-          }
-          if (
-            data.bool_labels &&
-            Array.isArray(data.bool_labels) &&
-            data.bool_labels.length >= 2
-          ) {
-            setBoolLabels([data.bool_labels[0], data.bool_labels[1]]);
-          } else {
-            setBoolLabels(null);
-          }
-          if (data.target_type) {
-            setTargetType(data.target_type);
-            console.log("Received target_type from backend:", data.target_type);
-          } else {
-            setTargetType("");
-            console.log("No target_type received from backend");
-          }
-        } catch (err) {
-          console.error("Error fetching default model:", err);
-          setError(
-            err instanceof Error ? err.message : "Failed to fetch default model"
-          );
-        } finally {
-          setLoading(false);
+          setFeatureValues(initialValues);
         }
-      };
-
-      fetchPredictionModel();
-    }
-  }, [showModelContent]);
-
-  const handleLoadModel = () => {
-    setShowUploadDialog(true);
-  };
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
-    setUploadedFiles(files);
-    setUploadError("");
-    setUploadSuccess(false);
-  };
-
-  const handleFileUpload = async () => {
-    if (uploadedFiles.length === 0) {
-      setUploadError("Please select at least one file");
-      return;
-    }
-
-    setIsUploading(true);
-    setUploadProgress(0);
-    setUploadError("");
-
-    // Simulate progress
-    const progressInterval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(progressInterval);
-          return prev;
-        }
-        return prev + 10;
-      });
-    }, 200);
-
-    try {
-      const formData = new FormData();
-      uploadedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
-
-      const response = await fetch("http://localhost:5000/upload_model", {
-        method: "POST",
-        body: formData,
-      });
-
-      clearInterval(progressInterval);
-      setUploadProgress(100);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Store model data for charts
+        setModelData({
+          feat: data.feat || [],
+          CM: data.CM || [],
+          roc_curves: data.roc_curves || [],
+        });
+        setExamplePrediction(data.example_prediction || null);
+        setBoolLabels(
+          Array.isArray(data.bool_labels) && data.bool_labels.length >= 2
+            ? data.bool_labels
+            : null
+        );
+        setTargetColumn(data.target_column || "");
+        setTargetType(data.target_type || "");
+        setAuc(typeof data.auc === "number" ? data.auc : null);
+      } catch (err) {
+        console.error("Error fetching model:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch model");
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-
-      if (data.success) {
-        setUploadSuccess(true);
-        // Store test DataFrame information
-        if (data.test_df_shape && data.test_df_columns) {
-          setTestDfInfo({
-            shape: data.test_df_shape,
-            columns: data.test_df_columns,
-          });
-        }
-        // Close dialog and load the model
-        setTimeout(() => {
-          setShowUploadDialog(false);
-          setShowModelContent(true);
-          setUploadedFiles([]);
-          setUploadProgress(0);
-          setUploadSuccess(false);
-        }, 1500);
-      } else {
-        setUploadError(data.error || "Upload failed");
-      }
-    } catch (err) {
-      clearInterval(progressInterval);
-      console.error("Error uploading files:", err);
-      setUploadError(
-        err instanceof Error ? err.message : "Failed to upload files"
-      );
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const removeFile = (index: number) => {
-    setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleDialogClose = () => {
-    setShowUploadDialog(false);
-    setUploadedFiles([]);
-    setUploadProgress(0);
-    setUploadError("");
-    setUploadSuccess(false);
-    setTestDfInfo(null);
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const files = Array.from(e.dataTransfer.files);
-    setUploadedFiles((prev) => [...prev, ...files]);
-    setUploadError("");
-    setUploadSuccess(false);
-  };
-
-  const handleSelectTrainedModel = () => {
-    // Do nothing as requested
-    console.log("Select trained model button pressed - no action taken");
-  };
+    fetchPredictionModel();
+  }, []);
 
   const handleFeatureChange = (feature: string, value: string) => {
     setFeatureValues((prev) => ({
@@ -323,10 +172,13 @@ const CDSSpredictions = () => {
   const handlePredict = async () => {
     setPredictionLoading(true);
     setPrediction("");
+    setPredictionConfidence(null);
+    setPredictionError("");
 
     try {
-      const response = await fetch("http://localhost:5000/predictGENERAL", {
+      const response = await fetch(`/api/models/${MODEL_ID}/predict`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -336,21 +188,22 @@ const CDSSpredictions = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(await errorDeRespuesta(response));
       }
 
-      const data = await response.json(); // 👈 Tenés que hacer esto antes de acceder a data.input_prediction
-
-      if (data && data.input_prediction) {
-        // Save InputPrediction 2D array to state
-        setLatestInputPrediction(data.input_prediction);
-        console.log("InputPrediction:", data.input_prediction); // 👈 Este log ahora sí funciona
-      }
+      const data = await response.json();
 
       setPrediction(data.prediction);
+      setPredictionConfidence(data.confidence);
+      if (data.input_prediction) {
+        const [headers, row] = data.input_prediction;
+        setPredictionHistory((prev) =>
+          prev ? [prev[0], row, ...prev.slice(1)] : [headers, row]
+        );
+      }
     } catch (err) {
       console.error("Error making prediction:", err);
-      setError(
+      setPredictionError(
         err instanceof Error ? err.message : "Failed to make prediction"
       );
     } finally {
@@ -426,6 +279,103 @@ const CDSSpredictions = () => {
     return auc;
   };
 
+  // Color de una celda con etiqueta de clase: boolLabels[0] es la clase positiva (CHD).
+  const colorEtiqueta = (cell: string | number) => {
+    if (boolLabels && cell === boolLabels[0]) return "bg-red-100 text-red-800";
+    if (boolLabels && cell === boolLabels[1])
+      return "bg-green-100 text-green-800";
+    return "bg-gray-100 text-gray-800";
+  };
+
+  // Tabla [encabezados, ...filas]: ejemplos del set de test o historial de predicciones.
+  const renderTabla = (
+    tabla: (string | number)[][] | null,
+    mensajeVacio: string
+  ) => {
+    if (!tabla || tabla.length < 2) {
+      return (
+        <tbody>
+          <tr>
+            <td colSpan={10} className="px-4 py-8 text-center text-gray-500">
+              {mensajeVacio}
+            </td>
+          </tr>
+        </tbody>
+      );
+    }
+
+    const headers = tabla[0].map(String);
+    const confidenceIdx = headers.findIndex((h) =>
+      h.toLowerCase().includes("confidence")
+    );
+    const esEtiqueta = (i: number) =>
+      headers[i] === targetColumn ||
+      headers[i].toLowerCase().includes("prediction");
+
+    return (
+      <>
+        <thead className="bg-gray-50">
+          <tr>
+            {headers.map((header, i) => (
+              <th
+                key={i}
+                className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                {header}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {tabla.slice(1).map((row, rowIdx) => (
+            <tr key={rowIdx} className="hover:bg-gray-50">
+              {row.map((cell, cellIdx) => {
+                if (esEtiqueta(cellIdx)) {
+                  return (
+                    <td
+                      key={cellIdx}
+                      className="px-4 py-3 whitespace-nowrap text-sm"
+                    >
+                      <span
+                        className={`inline-flex px-2 py-1 rounded-full font-semibold ${colorEtiqueta(
+                          cell
+                        )}`}
+                      >
+                        {cell}
+                      </span>
+                    </td>
+                  );
+                }
+                if (cellIdx === confidenceIdx) {
+                  const percent = Math.round(Number(cell) * 100) || 0;
+                  return (
+                    <td
+                      key={cellIdx}
+                      className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 min-w-[120px]"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Progress value={percent} className="w-16" />
+                        <span className="text-sm text-gray-600">{`${percent}%`}</span>
+                      </div>
+                    </td>
+                  );
+                }
+                return (
+                  <td
+                    key={cellIdx}
+                    className="px-4 py-3 whitespace-nowrap text-sm text-gray-900"
+                  >
+                    {cell}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </>
+    );
+  };
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
@@ -433,226 +383,6 @@ const CDSSpredictions = () => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
   };
-
-  // Selection page content
-  if (!showModelContent) {
-    return (
-      <div className="flex min-h-screen bg-gray-100">
-        <Sidebar />
-        <div
-          className={`flex-1 transition-all duration-300 ${
-            collapsed ? "ml-20" : "ml-64"
-          }`}
-        >
-          <DashboardHeader />
-          <main className="p-6">
-            <div className="flex items-center justify-center min-h-[60vh]">
-              <div className="text-center">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Decision Support System
-                </h1>
-                <p className="text-gray-600 mb-8">
-                  Choose how you want to proceed with the model.
-                </p>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
-                  <Card
-                    className="hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                    onClick={handleLoadModel}
-                  >
-                    <CardContent className="p-8 text-center">
-                      <div className="flex flex-col items-center space-y-4">
-                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                          <Upload className="h-8 w-8 text-blue-600" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900">
-                          Load Model
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                          Upload and load trained model files for nephrology
-                          clinical decision support.
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    className="hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                    onClick={handleSelectTrainedModel}
-                  >
-                    <CardContent className="p-8 text-center">
-                      <div className="flex flex-col items-center space-y-4">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                          <Database className="h-8 w-8 text-green-600" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900">
-                          Select Trained Model
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                          Choose from available trained models in the system.
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </div>
-
-            {/* File Upload Dialog */}
-            <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
-              <DialogContent className="max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle className="flex items-center gap-2">
-                    <Upload className="h-5 w-5 text-blue-600" />
-                    Upload Model Files
-                  </DialogTitle>
-                </DialogHeader>
-
-                <div className="space-y-6">
-                  {/* File Selection Area */}
-                  <div
-                    className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors"
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}
-                  >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      multiple
-                      accept=".skops,.pkl,.joblib,.csv,.json"
-                      onChange={handleFileSelect}
-                      className="hidden"
-                    />
-                    <div className="space-y-4">
-                      <Upload className="h-12 w-12 text-gray-400 mx-auto" />
-                      <div>
-                        <p className="text-lg font-medium text-gray-900">
-                          Drop files here or click to browse
-                        </p>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Supported formats: .skops, .pkl, .joblib, .csv, .json
-                        </p>
-                      </div>
-                      <Button
-                        onClick={() => fileInputRef.current?.click()}
-                        variant="outline"
-                        className="mt-4"
-                      >
-                        Select Files
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Selected Files List */}
-                  {uploadedFiles.length > 0 && (
-                    <div className="space-y-3">
-                      <h4 className="font-medium text-gray-900">
-                        Selected Files:
-                      </h4>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {uploadedFiles.map((file, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                          >
-                            <div className="flex items-center gap-3">
-                              <FileText className="h-5 w-5 text-blue-600" />
-                              <div>
-                                <p className="font-medium text-gray-900">
-                                  {file.name}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                  {(file.size / 1024 / 1024).toFixed(2)} MB
-                                </p>
-                              </div>
-                            </div>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeFile(index)}
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Upload Progress */}
-                  {isUploading && (
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm text-gray-600">
-                        <span>Uploading files...</span>
-                        <span>{uploadProgress}%</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${uploadProgress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Success Message */}
-                  {uploadSuccess && (
-                    <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                      <div>
-                        <p className="font-medium text-green-900">
-                          Upload Successful!
-                        </p>
-                        <p className="text-sm text-green-700">
-                          Model files have been uploaded and processed.
-                          {testDfInfo && testDfInfo.shape && (
-                            <span className="block mt-1">
-                              Test data loaded: {testDfInfo.shape[0]} rows ×{" "}
-                              {testDfInfo.shape[1]} columns
-                            </span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Error Message */}
-                  {uploadError && (
-                    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
-                      <X className="h-5 w-5 text-red-600" />
-                      <div>
-                        <p className="font-medium text-red-900">Upload Error</p>
-                        <p className="text-sm text-red-700">{uploadError}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Action Buttons */}
-                  <div className="flex justify-end gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={handleDialogClose}
-                      disabled={isUploading}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={handleFileUpload}
-                      disabled={uploadedFiles.length === 0 || isUploading}
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      {isUploading ? "Uploading..." : "Upload Files"}
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </main>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -670,8 +400,11 @@ const CDSSpredictions = () => {
         <main className="p-6 pb-40">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900">
-              Decision Support System
+              Cardiology: Framingham Heart Study
             </h1>
+            <p className="text-gray-600 mt-1">
+              Riesgo de enfermedad coronaria (CHD) a 10 años.
+            </p>
           </div>
 
           <div className="grid gap-6">
@@ -692,9 +425,9 @@ const CDSSpredictions = () => {
                           >
                             {targetType === "boolean" ||
                             targetType === "classes"
-                              ? "Clasificassion Problem"
+                              ? "Classification Problem"
                               : targetType === "regression"
-                              ? "Regresion Problem"
+                              ? "Regression Problem"
                               : `Target type: ${targetType}`}
                           </Badge>
                         )}
@@ -769,14 +502,13 @@ const CDSSpredictions = () => {
                               {modelDescriptions[modelName] ||
                                 "Error: Model description not available."}
                             </p>
-                            {/* {firstTree && <DecisionTreeText tree={firstTree} />} */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="bg-gray-50 p-3 rounded">
                                 <span className="font-medium text-gray-700">
                                   Domain:
                                 </span>
                                 <span className="ml-2 text-gray-600">
-                                  Agriculture
+                                  Cardiology
                                 </span>
                               </div>
                               <div className="bg-gray-50 p-3 rounded">
@@ -801,65 +533,11 @@ const CDSSpredictions = () => {
                                 </span>
                                 <span className="ml-2 text-gray-600">1.0</span>
                               </div>
-                              {/* {firstTree && (
-                                <DecisionTreeText tree={firstTree} />
-                              )} */}
                               {/* <div className="bg-gray-50 p-3 rounded"> */}
                               {/* <span className="font-medium text-gray-700">Target Type:</span> */}
                               {/* <span className="ml-2 text-gray-600">{targetType || 'Not specified'}</span> */}
                               {/* </div> */}
                             </div>
-
-                            {/* Test DataFrame Information */}
-                            {testDfInfo && (
-                              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                                <h4 className="font-semibold text-blue-900 mb-3">
-                                  Uploaded Test Data
-                                </h4>
-                                <div className="space-y-2 text-sm">
-                                  <div className="flex justify-between">
-                                    <span className="font-medium text-blue-800">
-                                      DataFrame Shape:
-                                    </span>
-                                    <span className="text-blue-700">
-                                      {testDfInfo.shape
-                                        ? `${testDfInfo.shape[0]} rows × ${testDfInfo.shape[1]} columns`
-                                        : "N/A"}
-                                    </span>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <span className="font-medium text-blue-800">
-                                      Columns:
-                                    </span>
-                                    <span className="text-blue-700">
-                                      {testDfInfo.columns
-                                        ? testDfInfo.columns.length
-                                        : 0}
-                                    </span>
-                                  </div>
-                                  {testDfInfo.columns && (
-                                    <div className="mt-2">
-                                      <span className="font-medium text-blue-800">
-                                        Column Names:
-                                      </span>
-                                      <div className="mt-1 flex flex-wrap gap-1">
-                                        {testDfInfo.columns.map(
-                                          (col, index) => (
-                                            <Badge
-                                              key={index}
-                                              variant="outline"
-                                              className="text-xs bg-blue-100 text-blue-800"
-                                            >
-                                              {col}
-                                            </Badge>
-                                          )
-                                        )}
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            )}
                           </div>
 
                           {/* Model Results Section */}
@@ -981,7 +659,7 @@ const CDSSpredictions = () => {
                                             data={getROCCurveData()}
                                             title={`ROC Curve - ${modelName}`}
                                             color="#8b5cf6"
-                                            auc={calculateAUC()}
+                                            auc={auc ?? calculateAUC()}
                                             className="hover:shadow-lg transition-all duration-200"
                                           />
                                         </div>
@@ -1026,165 +704,15 @@ const CDSSpredictions = () => {
                           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                             <div className="overflow-x-auto">
                               <table className="w-full">
-                                {examplePrediction &&
-                                examplePrediction.length > 1 ? (
-                                  <>
-                                    <thead className="bg-gray-50">
-                                      <tr>
-                                        {examplePrediction[0].map(
-                                          (header, i) => (
-                                            <th
-                                              key={i}
-                                              className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                            >
-                                              {header}
-                                            </th>
-                                          )
-                                        )}
-                                      </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
-                                      {index === 0 ? (
-                                        examplePrediction
-                                          .slice(1)
-                                          .map((row, rowIdx) => {
-                                            // Find the index of the confidence/completion column (case-insensitive match)
-                                            const completionIdx =
-                                              examplePrediction[0].findIndex(
-                                                (h) =>
-                                                  h
-                                                    .toLowerCase()
-                                                    .includes("confidence")
-                                              );
-                                            return (
-                                              <tr
-                                                key={rowIdx}
-                                                className="hover:bg-gray-50"
-                                              >
-                                                {row.map((cell, cellIdx) => {
-                                                  // Color logic for STATUS and PREDICTION columns
-                                                  const statusIdx =
-                                                    examplePrediction[0].findIndex(
-                                                      (h) =>
-                                                        h
-                                                          .toLowerCase()
-                                                          .includes("status")
-                                                    );
-                                                  const predictionIdx =
-                                                    examplePrediction[0].findIndex(
-                                                      (h) =>
-                                                        h
-                                                          .toLowerCase()
-                                                          .includes(
-                                                            "prediction"
-                                                          )
-                                                    );
-                                                  const completionIdx =
-                                                    examplePrediction[0].findIndex(
-                                                      (h) =>
-                                                        h
-                                                          .toLowerCase()
-                                                          .includes(
-                                                            "confidence"
-                                                          )
-                                                    );
-
-                                                  if (
-                                                    cellIdx === statusIdx ||
-                                                    cellIdx === predictionIdx
-                                                  ) {
-                                                    let colorClass = "";
-                                                    if (cell === "Respuesta") {
-                                                      colorClass =
-                                                        "bg-green-100 text-green-800";
-                                                    } else if (
-                                                      cell === "Progresión"
-                                                    ) {
-                                                      colorClass =
-                                                        "bg-red-100 text-red-800";
-                                                    } else {
-                                                      colorClass =
-                                                        "bg-gray-100 text-gray-800";
-                                                    }
-                                                    return (
-                                                      <td
-                                                        key={cellIdx}
-                                                        className="px-4 py-3 whitespace-nowrap text-sm"
-                                                      >
-                                                        <span
-                                                          className={`inline-flex px-2 py-1 rounded-full font-semibold ${colorClass}`}
-                                                        >
-                                                          {cell}
-                                                        </span>
-                                                      </td>
-                                                    );
-                                                  } else if (
-                                                    cellIdx === completionIdx
-                                                  ) {
-                                                    // Try to parse the value as a float between 0 and 1, fallback to original
-                                                    let percent =
-                                                      parseFloat(cell);
-                                                    if (!isNaN(percent)) {
-                                                      if (percent <= 1)
-                                                        percent = percent * 100;
-                                                      percent =
-                                                        Math.round(percent);
-                                                    } else {
-                                                      percent = 0;
-                                                    }
-                                                    return (
-                                                      <td
-                                                        key={cellIdx}
-                                                        className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 min-w-[120px]"
-                                                      >
-                                                        <div className="flex items-center gap-2">
-                                                          <Progress
-                                                            value={percent}
-                                                            className="w-16"
-                                                          />
-                                                          <span className="text-sm text-gray-600">{`${percent}%`}</span>
-                                                        </div>
-                                                      </td>
-                                                    );
-                                                  } else {
-                                                    return (
-                                                      <td
-                                                        key={cellIdx}
-                                                        className="px-4 py-3 whitespace-nowrap text-sm text-gray-900"
-                                                      >
-                                                        {cell}
-                                                      </td>
-                                                    );
-                                                  }
-                                                })}
-                                              </tr>
-                                            );
-                                          })
-                                      ) : (
-                                        <tr>
-                                          <td
-                                            colSpan={
-                                              examplePrediction[0].length
-                                            }
-                                            className="px-4 py-8 text-center text-gray-500"
-                                          >
-                                            No older predictions available
-                                          </td>
-                                        </tr>
-                                      )}
-                                    </tbody>
-                                  </>
-                                ) : (
-                                  <tbody>
-                                    <tr>
-                                      <td
-                                        colSpan={10}
-                                        className="px-4 py-8 text-center text-gray-500"
-                                      >
-                                        Loading example predictions...
-                                      </td>
-                                    </tr>
-                                  </tbody>
+                                {renderTabla(
+                                  index === 0
+                                    ? examplePrediction
+                                    : predictionHistory,
+                                  index === 0
+                                    ? loading
+                                      ? "Loading example predictions..."
+                                      : "No example predictions available"
+                                    : "Todavía no hiciste predicciones"
                                 )}
                               </table>
                             </div>
@@ -1368,74 +896,29 @@ const CDSSpredictions = () => {
                       : "max-h-0 opacity-0"
                   }`}
                 >
-                  {/* Special row for specific features */}
-                  <div className="grid grid-cols-5 gap-4">
-                    {features
-                      .filter((feature) =>
-                        [
-                          "HEPARINASOD",
-                          "PADPOST",
-                          "V38",
-                          "HDCATGEMELAR",
-                          "HDFAVNATIVA",
-                        ].includes(feature)
-                      )
-                      .map((feature) => (
-                        <div key={feature} className="flex flex-col gap-2">
-                          <label className="text-sm font-medium text-gray-300">
-                            {feature}:
-                          </label>
-                          <Input
-                            type="text"
-                            placeholder={`Enter ${feature} value`}
-                            value={featureValues[feature] || ""}
-                            onChange={(e) =>
-                              handleFeatureChange(feature, e.target.value)
-                            }
-                            className="w-full rounded-lg border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
-                          />
-                        </div>
-                      ))}
-                  </div>
-
-                  {/* Remaining features in responsive grid */}
-                  <div
-                    className={
-                      "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2"
-                    }
-                  >
-                    {features
-                      .filter(
-                        (feature) =>
-                          ![
-                            "HEPARINASOD",
-                            "PADPOST",
-                            "V38",
-                            "HDCATGEMELAR",
-                            "HDFAVNATIVA",
-                          ].includes(feature)
-                      )
-                      .map((feature) => (
-                        <div key={feature} className="flex flex-col gap-2">
-                          <label className="text-sm font-medium text-gray-300">
-                            {feature}:
-                          </label>
-                          <Input
-                            type="text"
-                            placeholder={`Enter ${feature} value`}
-                            value={featureValues[feature] || ""}
-                            onChange={(e) =>
-                              handleFeatureChange(feature, e.target.value)
-                            }
-                            className="w-full rounded-lg border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
-                          />
-                        </div>
-                      ))}
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {features.map((feature) => (
+                      <div key={feature} className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-300">
+                          {feature}:
+                        </label>
+                        <Input
+                          type="number"
+                          step="any"
+                          placeholder={`Enter ${feature} value`}
+                          value={featureValues[feature] || ""}
+                          onChange={(e) =>
+                            handleFeatureChange(feature, e.target.value)
+                          }
+                          className="w-full rounded-lg border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
 
                 {/* Prediction Result */}
-                {prediction && (
+                {(prediction || predictionError) && (
                   <div
                     className={`mt-6 p-4 bg-gray-700 rounded-xl border border-gray-600 shadow-sm overflow-hidden transition-all duration-500 ease-in-out ${
                       isDockHovered
@@ -1446,9 +929,28 @@ const CDSSpredictions = () => {
                     <h4 className="font-semibold text-white mb-2">
                       Prediction Result:
                     </h4>
-                    <div className="text-xl font-bold text-blue-400">
-                      {prediction}
-                    </div>
+                    {predictionError ? (
+                      <div className="text-sm font-medium text-red-300">
+                        {predictionError}
+                      </div>
+                    ) : (
+                      <div className="flex items-baseline gap-3">
+                        <span
+                          className={`text-xl font-bold ${
+                            boolLabels && prediction === boolLabels[0]
+                              ? "text-red-400"
+                              : "text-green-400"
+                          }`}
+                        >
+                          {prediction}
+                        </span>
+                        {predictionConfidence !== null && (
+                          <span className="text-sm text-gray-300">
+                            Confianza: {Math.round(predictionConfidence * 100)}%
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -1460,4 +962,4 @@ const CDSSpredictions = () => {
   );
 };
 
-export default CDSSpredictions;
+export default FraminhamPage;

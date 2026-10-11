@@ -55,7 +55,7 @@ const PieChart = ({
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             border: "none",
           }}
-          formatter={(value: number, name: string) => [
+          formatter={(value, name) => [
             value, 
             name
           ]}

@@ -93,8 +93,8 @@ const ROCCurve: React.FC<ROCCurveProps> = ({
               border: "1px solid #e5e7eb",
             }}
             itemStyle={{ color: color }}
-            formatter={(value: number, name: string) => [
-              value.toFixed(3), 
+            formatter={(value, name) => [
+              Number(value).toFixed(3), 
               name === "tpr" ? "True Positive Rate" : "False Positive Rate"
             ]}
             labelFormatter={(label) => `False Positive Rate: ${label}`}
