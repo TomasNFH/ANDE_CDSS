@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
 import DashboardHeader from "@/components/DashboardHeader";
-import { useSidebar } from "@/contexts/SidebarContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -89,7 +87,6 @@ const FraminhamPage = () => {
   const [isModelInfoOpen, setIsModelInfoOpen] = useState(false);
   const [isDockHovered, setIsDockHovered] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { collapsed } = useSidebar();
   // New state variables for model data
   const [modelData, setModelData] = useState<{
     feat: string[][];
@@ -386,12 +383,7 @@ const FraminhamPage = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <Sidebar />
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          collapsed ? "ml-20" : "ml-64"
-        }`}
-      >
+      <div className="flex-1">
         {/* Background overlay */}
         {isDockHovered && (
           <div className="fixed inset-0 bg-black bg-opacity-40 z-40 transition-all duration-300"></div>
