@@ -183,7 +183,7 @@ const FraminhamPage = () => {
           </button>
           <div>
             <p className="text-sm font-medium text-sky-700">Cardiología</p>
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
               Riesgo de enfermedad coronaria a 10 años
             </h1>
             <p className="mt-1 text-sm text-slate-600">
@@ -192,7 +192,7 @@ const FraminhamPage = () => {
               {modelo?.auc ? <> · AUC {formatearDecimales(modelo.auc, 2)}</> : null}
             </p>
           </div>
-          <p className="flex items-start gap-2 text-xs text-slate-500">
+          <p className="flex items-start gap-2 text-sm text-slate-500">
             <Info className="mt-px h-3.5 w-3.5 shrink-0" />
             Herramienta de apoyo a la decisión clínica en fase de investigación. No
             reemplaza el juicio clínico ni constituye una indicación diagnóstica o terapéutica.
@@ -295,7 +295,7 @@ const FraminhamPage = () => {
 
               <div className="space-y-2 lg:sticky lg:top-6">
                 {desactualizado && !calculando && (
-                  <p className="rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                  <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800">
                     Los datos cambiaron desde el último cálculo. Presioná «Calcular riesgo»
                     para actualizar el resultado.
                   </p>

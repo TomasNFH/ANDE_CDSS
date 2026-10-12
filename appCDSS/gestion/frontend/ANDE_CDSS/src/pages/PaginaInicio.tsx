@@ -108,7 +108,7 @@ const PaginaInicio = () => {
                           className="w-full h-full object-cover"
                         />
                         <span className="absolute inset-0 flex items-end justify-center pb-4">
-                          <span className="bg-black bg-opacity-85 px-6 py-2 rounded text-white text-3xl font-bold drop-shadow-lg">
+                          <span className="bg-black bg-opacity-85 px-6 py-2 rounded text-white text-2xl font-bold drop-shadow-lg">
                             Cardiología
                           </span>
                         </span>

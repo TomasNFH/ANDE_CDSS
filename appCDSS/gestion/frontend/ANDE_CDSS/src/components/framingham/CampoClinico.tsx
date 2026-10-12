@@ -62,7 +62,7 @@ const CampoClinico = ({
             {v.unidad}
           </span>
         </div>
-        <div id={ayudaId} className="min-h-[1.25rem] text-xs">
+        <div id={ayudaId} className="min-h-[1.25rem] text-sm">
           {error ? (
             <span className="text-red-600">{error}</span>
           ) : (

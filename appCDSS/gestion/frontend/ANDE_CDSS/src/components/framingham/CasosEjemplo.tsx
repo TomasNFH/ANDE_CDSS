@@ -16,7 +16,7 @@ interface CasosEjemploProps {
 const Etiqueta = ({ texto, positivo }: { texto: string; positivo: boolean }) => (
   <span
     className={cn(
-      "inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium",
+      "inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-sm font-medium",
       positivo ? "bg-rose-50 text-rose-800" : "bg-emerald-50 text-emerald-800"
     )}
   >
@@ -40,7 +40,7 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
       </p>
       <div className="relative overflow-x-auto rounded-md border border-slate-200">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs text-slate-500">
+          <thead className="bg-slate-50 text-left text-sm text-slate-500">
             <tr>
               {VARIABLES.map((v) => (
                 <th key={v.id} className="whitespace-nowrap px-3 py-2 font-medium">
@@ -86,7 +86,7 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-7 text-xs text-sky-700"
+                      className="h-7 text-sm text-sky-700"
                       onClick={() => onCargar(valores)}
                     >
                       <ArrowUpToLine />

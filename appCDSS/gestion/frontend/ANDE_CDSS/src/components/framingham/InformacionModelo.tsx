@@ -12,7 +12,7 @@ import {
 
 const Dato = ({ titulo, children }: { titulo: string; children: ReactNode }) => (
   <div>
-    <dt className="text-xs text-slate-500">{titulo}</dt>
+    <dt className="text-sm text-slate-500">{titulo}</dt>
     <dd className="text-sm text-slate-900">{children}</dd>
   </div>
 );

@@ -24,7 +24,7 @@ const estiloTooltip = {
   backgroundColor: "white",
   borderRadius: "8px",
   border: "1px solid #e2e8f0",
-  fontSize: 12,
+  fontSize: 14,
 };
 
 // ---- Importancia de variables ----
@@ -55,14 +55,14 @@ export const ImportanciaVariables = ({
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 11, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "#64748b" }}
             tickFormatter={(v) => formatearNumero(v)}
           />
           <YAxis
             type="category"
             dataKey="nombre"
             width={170}
-            tick={{ fontSize: 12, fill: "#334155" }}
+            tick={{ fontSize: 14, fill: "#334155" }}
             axisLine={false}
             tickLine={false}
           />
@@ -86,23 +86,23 @@ const Celda = ({ valor, sigla, correcto }: { valor: number; sigla: string; corre
     }`}
   >
     <div
-      className={`text-xl font-semibold tabular-nums ${
+      className={`text-2xl font-semibold tabular-nums ${
         correcto ? "text-emerald-800" : "text-rose-800"
       }`}
     >
       {valor}
     </div>
-    <div className="text-[11px] text-slate-500">{sigla}</div>
+    <div className="text-sm text-slate-500">{sigla}</div>
   </div>
 );
 
 const Metrica = ({ nombre, valor, detalle }: { nombre: string; valor: number; detalle: string }) => (
   <div className="rounded-md bg-slate-50 p-3">
-    <div className="text-xs text-slate-500">{nombre}</div>
-    <div className="text-lg font-semibold tabular-nums text-slate-900">
+    <div className="text-sm text-slate-500">{nombre}</div>
+    <div className="text-2xl font-semibold tabular-nums text-slate-900">
       {formatearPorcentaje(valor)}
     </div>
-    <div className="text-[11px] text-slate-500">{detalle}</div>
+    <div className="text-sm text-slate-500">{detalle}</div>
   </div>
 );
 
@@ -122,12 +122,12 @@ export const MatrizConfusion = ({
     </p>
     <div className="grid grid-cols-[auto_1fr_1fr] items-center gap-2 text-sm">
       <div />
-      <div className="text-center text-xs font-medium text-slate-500">Predicción: {positivo}</div>
-      <div className="text-center text-xs font-medium text-slate-500">Predicción: {negativo}</div>
-      <div className="pr-2 text-right text-xs font-medium text-slate-500">Real: {positivo}</div>
+      <div className="text-center text-sm font-medium text-slate-500">Predicción: {positivo}</div>
+      <div className="text-center text-sm font-medium text-slate-500">Predicción: {negativo}</div>
+      <div className="pr-2 text-right text-sm font-medium text-slate-500">Real: {positivo}</div>
       <Celda valor={m.vp} sigla="Verdaderos positivos" correcto />
       <Celda valor={m.fn} sigla="Falsos negativos" correcto={false} />
-      <div className="pr-2 text-right text-xs font-medium text-slate-500">Real: {negativo}</div>
+      <div className="pr-2 text-right text-sm font-medium text-slate-500">Real: {negativo}</div>
       <Celda valor={m.fp} sigla="Falsos positivos" correcto={false} />
       <Celda valor={m.vn} sigla="Verdaderos negativos" correcto />
     </div>
@@ -160,17 +160,17 @@ export const CurvaROC = ({ puntos, auc }: { puntos: [number, number][]; auc: num
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 11, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "#64748b" }}
             tickFormatter={(v) => formatearNumero(v)}
-            label={{ value: "1 − Especificidad", position: "bottom", offset: 4, fontSize: 12, fill: "#475569" }}
+            label={{ value: "1 − Especificidad", position: "bottom", offset: 4, fontSize: 14, fill: "#475569" }}
           />
           <YAxis
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 11, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "#64748b" }}
             tickFormatter={(v) => formatearNumero(v)}
-            label={{ value: "Sensibilidad", angle: -90, position: "insideLeft", fontSize: 12, fill: "#475569" }}
+            label={{ value: "Sensibilidad", angle: -90, position: "insideLeft", fontSize: 14, fill: "#475569" }}
           />
           <Tooltip
             contentStyle={estiloTooltip}

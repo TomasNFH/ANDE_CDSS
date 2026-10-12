@@ -36,7 +36,7 @@ const BarraProbabilidad = ({ probabilidad, positivo }: { probabilidad: number; p
         aria-hidden
       />
     </div>
-    <div className="relative h-4 text-[11px] text-slate-500">
+    <div className="relative h-5 text-sm text-slate-500">
       <span className="absolute left-0">0%</span>
       <span className="absolute -translate-x-1/2" style={{ left: `${UMBRAL * 100}%` }}>
         Umbral {formatearPorcentaje(UMBRAL)}
@@ -118,7 +118,7 @@ const PanelResultado = ({
               ))}
             </dl>
 
-            <p className="text-xs leading-relaxed text-slate-500">
+            <p className="text-sm leading-relaxed text-slate-500">
               La probabilidad no está calibrada a la prevalencia real y tiende a
               sobreestimar el riesgo absoluto: interpretala como un indicador relativo.
               Ver «Información del modelo».
@@ -133,7 +133,7 @@ const PanelResultado = ({
 
         {anteriores.length > 0 && (
           <div className="border-t border-slate-100 pt-4">
-            <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+            <h3 className="mb-2 text-sm font-medium uppercase tracking-wide text-slate-500">
               Cálculos anteriores de esta sesión
             </h3>
             <ul className="divide-y divide-slate-100">

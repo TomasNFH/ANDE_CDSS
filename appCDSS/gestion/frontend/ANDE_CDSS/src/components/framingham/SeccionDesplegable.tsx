@@ -28,7 +28,7 @@ const SeccionDesplegable = ({ titulo, icono, resumen, children }: SeccionDespleg
             <span className="block text-sm font-semibold text-slate-900">{titulo}</span>
             <span className="block truncate text-sm text-slate-500">{resumen}</span>
           </span>
-          <span className="hidden text-xs text-slate-500 sm:inline">
+          <span className="hidden text-sm text-slate-500 sm:inline">
             {abierta ? "Ocultar" : "Ver detalle"}
           </span>
           <ChevronDown

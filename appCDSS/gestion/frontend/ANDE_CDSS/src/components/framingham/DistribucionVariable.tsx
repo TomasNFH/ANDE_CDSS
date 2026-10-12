@@ -36,7 +36,7 @@ const nombreCorto = (g: GrupoDesenlace) => (g.positivo ? "con CHD" : "sin CHD");
 
 /** Leyenda compartida por todos los violines divididos por desenlace. */
 export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
-  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600">
     {grupos.map((g) => (
       <span key={g.etiqueta} className="inline-flex items-center gap-1.5">
         <span
@@ -222,7 +222,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
       </div>
 
       {/* Eje: mínimo y máximo observados en la cohorte */}
-      <div className="relative h-4 text-[11px] tabular-nums text-slate-400">
+      <div className="relative h-5 text-sm tabular-nums text-slate-400">
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.min)}%` }}>
           {formatearNumero(d.min)}
         </span>
@@ -231,7 +231,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
         </span>
       </div>
 
-      <div className="space-y-0.5 text-xs">
+      <div className="space-y-0.5 text-sm">
         {ubicacion === "habitual" ? (
           <p className="text-slate-700">Percentil {percentil} de la cohorte · dentro del rango habitual</p>
         ) : ubicacion === "atipico" ? (
