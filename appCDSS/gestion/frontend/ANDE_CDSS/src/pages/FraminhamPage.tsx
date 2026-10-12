@@ -13,7 +13,9 @@ import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CampoClinico from "@/components/framingham/CampoClinico";
-import DistribucionVariable from "@/components/framingham/DistribucionVariable";
+import DistribucionVariable, {
+  LeyendaDesenlace,
+} from "@/components/framingham/DistribucionVariable";
 import CasosEjemplo from "@/components/framingham/CasosEjemplo";
 import InformacionModelo from "@/components/framingham/InformacionModelo";
 import PanelResultado from "@/components/framingham/PanelResultado";
@@ -224,9 +226,14 @@ const FraminhamPage = () => {
                     Datos del paciente
                   </CardTitle>
                   <p className="text-sm text-slate-500">
-                    Cada variable se muestra sobre su distribución en la cohorte de prueba; el
-                    punto marca al paciente. Los valores de ejemplo son la mediana.
+                    Cada variable se muestra sobre su distribución en la cohorte de prueba,
+                    separada según el desenlace real. Los valores de ejemplo son la mediana.
                   </p>
+                  {modelo.distribuciones?.[VARIABLES[0].id]?.por_desenlace?.length === 2 && (
+                    <LeyendaDesenlace
+                      grupos={modelo.distribuciones[VARIABLES[0].id].por_desenlace}
+                    />
+                  )}
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={calcular} noValidate className="space-y-6">

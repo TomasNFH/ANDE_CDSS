@@ -5,6 +5,7 @@ import {
   percentilDe,
   ubicarValor,
   type Distribucion,
+  type GrupoDesenlace,
   type VariableClinica,
 } from "./variables";
 
@@ -20,13 +21,44 @@ interface DistribucionVariableProps {
 const EXTENSION_MAXIMA = 0.6;
 
 const COLOR_PUNTO = {
-  habitual: "bg-sky-600",
+  habitual: "bg-slate-800",
   atipico: "bg-amber-500",
-  fuera: "bg-rose-600",
+  fuera: "bg-orange-600",
 };
 
+// Mitad superior: sin el desenlace; mitad inferior: con el desenlace (CHD).
+const ESTILO_GRUPO = {
+  negativo: { violin: "fill-emerald-100 stroke-emerald-400", caja: "stroke-emerald-700" },
+  positivo: { violin: "fill-rose-100 stroke-rose-400", caja: "stroke-rose-700" },
+};
+
+const nombreCorto = (g: GrupoDesenlace) => (g.positivo ? "con CHD" : "sin CHD");
+
+/** Leyenda compartida por todos los violines divididos por desenlace. */
+export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
+  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+    {grupos.map((g) => (
+      <span key={g.etiqueta} className="inline-flex items-center gap-1.5">
+        <span
+          className={cn(
+            "h-2.5 w-4 border",
+            g.positivo
+              ? "rounded-b-full border-rose-400 bg-rose-100"
+              : "rounded-t-full border-emerald-400 bg-emerald-100"
+          )}
+        />
+        {g.etiqueta} (n = {g.n})
+      </span>
+    ))}
+    <span className="inline-flex items-center gap-1.5">
+      <span className="h-3 w-3 rounded-full bg-slate-800 ring-2 ring-white" />
+      Paciente
+    </span>
+  </div>
+);
+
 const DistribucionVariable = ({ variable: v, distribucion: d, valor }: DistribucionVariableProps) => {
-  const { x, densidad } = d.kde;
+  const { x } = d.kde;
   const base: [number, number] = [x[0], x[x.length - 1]];
   const rango = base[1] - base[0];
 
@@ -51,27 +83,60 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
   const pos = (valorEje: number) => ((valorEje - desde) / (hasta - desde)) * 100;
   const posPunto = valor === null ? null : pos(Math.min(Math.max(valor, desde), hasta));
 
-  // Violín horizontal: silueta superior y luego la inferior en espejo (viewBox 100 × 100).
-  const superior = x.map((xi, i) => `${pos(xi)},${50 - densidad[i] * 44}`);
-  const inferior = x.map((xi, i) => `${pos(xi)},${50 + densidad[i] * 44}`).reverse();
-  const silueta = `M${superior.join("L")}L${inferior.join("L")}Z`;
+  // Media silueta entre la línea central (y = 50) y el borde; signo −1 hacia arriba, +1 hacia abajo.
+  const mitad = (densidad: number[], signo: 1 | -1) =>
+    `M${pos(x[0])},50L${x.map((xi, i) => `${pos(xi)},${50 + signo * densidad[i] * 46}`).join("L")}L${pos(
+      x[x.length - 1]
+    )},50Z`;
 
-  const ric = d.q3 - d.q1;
-  const bigoteInf = Math.max(d.min, d.q1 - 1.5 * ric);
-  const bigoteSup = Math.min(d.max, d.q3 + 1.5 * ric);
+  const negativo = d.por_desenlace?.find((g) => !g.positivo);
+  const positivo = d.por_desenlace?.find((g) => g.positivo);
+  const grupos = negativo && positivo ? { negativo, positivo } : null;
 
   const ubicacion = valor === null ? null : ubicarValor(d, valor);
   const percentil = valor === null ? null : Math.round(percentilDe(d, valor));
   const unidad = v.unidad;
 
+  // Caja Q1–Q3 y mediana de un grupo, dentro de su mitad del violín.
+  const cajaGrupo = (g: GrupoDesenlace, signo: 1 | -1) => {
+    const estilo = ESTILO_GRUPO[g.positivo ? "positivo" : "negativo"];
+    const y = signo === -1 ? 36 : 50;
+    return (
+      <g key={g.etiqueta}>
+        <rect
+          x={pos(g.q1)}
+          width={pos(g.q3) - pos(g.q1)}
+          y={y}
+          height={14}
+          className={cn("fill-white", estilo.caja)}
+          strokeWidth={1}
+          vectorEffect="non-scaling-stroke"
+        />
+        <line
+          x1={pos(g.mediana)}
+          x2={pos(g.mediana)}
+          y1={y}
+          y2={y + 14}
+          className={estilo.caja}
+          strokeWidth={2}
+          vectorEffect="non-scaling-stroke"
+        />
+      </g>
+    );
+  };
+
   return (
     <div className="space-y-1">
       <div
-        className="relative h-14"
+        className="relative h-16"
         role="img"
-        aria-label={`Distribución de ${v.etiqueta} en la cohorte: mediana ${formatearNumero(
-          d.mediana
-        )} ${unidad}, rango intercuartílico ${formatearNumero(d.q1)} a ${formatearNumero(d.q3)} ${unidad}`}
+        aria-label={
+          grupos
+            ? `Distribución de ${v.etiqueta}: mediana ${formatearNumero(
+                grupos.negativo.mediana
+              )} ${unidad} sin CHD y ${formatearNumero(grupos.positivo.mediana)} ${unidad} con CHD`
+            : `Distribución de ${v.etiqueta} en la cohorte: mediana ${formatearNumero(d.mediana)} ${unidad}`
+        }
       >
         <svg
           viewBox="0 0 100 100"
@@ -79,34 +144,60 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           className="absolute inset-0 h-full w-full overflow-visible"
           aria-hidden
         >
-          <path d={silueta} className="fill-sky-100 stroke-sky-300" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-          <line
-            x1={pos(bigoteInf)}
-            x2={pos(bigoteSup)}
-            y1={50}
-            y2={50}
-            className="stroke-slate-400"
-            strokeWidth={1}
-            vectorEffect="non-scaling-stroke"
-          />
-          <rect
-            x={pos(d.q1)}
-            width={pos(d.q3) - pos(d.q1)}
-            y={38}
-            height={24}
-            className="fill-white stroke-slate-500"
-            strokeWidth={1}
-            vectorEffect="non-scaling-stroke"
-          />
-          <line
-            x1={pos(d.mediana)}
-            x2={pos(d.mediana)}
-            y1={38}
-            y2={62}
-            className="stroke-slate-700"
-            strokeWidth={2}
-            vectorEffect="non-scaling-stroke"
-          />
+          {grupos ? (
+            <>
+              <path
+                d={mitad(grupos.negativo.densidad, -1)}
+                className={ESTILO_GRUPO.negativo.violin}
+                strokeWidth={1}
+                vectorEffect="non-scaling-stroke"
+              />
+              <path
+                d={mitad(grupos.positivo.densidad, 1)}
+                className={ESTILO_GRUPO.positivo.violin}
+                strokeWidth={1}
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1={pos(x[0])}
+                x2={pos(x[x.length - 1])}
+                y1={50}
+                y2={50}
+                className="stroke-slate-300"
+                strokeWidth={1}
+                vectorEffect="non-scaling-stroke"
+              />
+              {cajaGrupo(grupos.negativo, -1)}
+              {cajaGrupo(grupos.positivo, 1)}
+            </>
+          ) : (
+            <>
+              <path
+                d={`${mitad(d.kde.densidad, -1)}${mitad(d.kde.densidad, 1)}`}
+                className="fill-sky-100 stroke-sky-300"
+                strokeWidth={1}
+                vectorEffect="non-scaling-stroke"
+              />
+              <rect
+                x={pos(d.q1)}
+                width={pos(d.q3) - pos(d.q1)}
+                y={38}
+                height={24}
+                className="fill-white stroke-slate-500"
+                strokeWidth={1}
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1={pos(d.mediana)}
+                x2={pos(d.mediana)}
+                y1={38}
+                y2={62}
+                className="stroke-slate-700"
+                strokeWidth={2}
+                vectorEffect="non-scaling-stroke"
+              />
+            </>
+          )}
         </svg>
 
         {posPunto !== null && ubicacion && (
@@ -115,7 +206,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             style={{ left: `${posPunto}%` }}
           >
             {fijado === "izquierda" && (
-              <ChevronLeft className="absolute -left-5 -top-2 h-4 w-4 text-rose-600" />
+              <ChevronLeft className="absolute -left-5 -top-2 h-4 w-4 text-orange-600" />
             )}
             <span
               className={cn(
@@ -124,48 +215,58 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
               )}
             />
             {fijado === "derecha" && (
-              <ChevronRight className="absolute left-1 -top-2 h-4 w-4 text-rose-600" />
+              <ChevronRight className="absolute left-1 -top-2 h-4 w-4 text-orange-600" />
             )}
           </div>
         )}
       </div>
 
-      {/* Eje: mínimo, mediana y máximo de la cohorte */}
+      {/* Eje: mínimo y máximo observados en la cohorte */}
       <div className="relative h-4 text-[11px] tabular-nums text-slate-400">
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.min)}%` }}>
           {formatearNumero(d.min)}
-        </span>
-        <span className="absolute -translate-x-1/2 text-slate-600" style={{ left: `${pos(d.mediana)}%` }}>
-          {formatearNumero(d.mediana)}
         </span>
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.max)}%` }}>
           {formatearNumero(d.max)}
         </span>
       </div>
 
-      <p className="min-h-[1rem] text-xs">
-        {ubicacion === null ? (
-          <span className="text-slate-500">
-            Cohorte (n = {d.n}): mediana {formatearNumero(d.mediana)} {unidad} · RIC{" "}
-            {formatearNumero(d.q1)}–{formatearNumero(d.q3)} {unidad}
-          </span>
-        ) : ubicacion === "habitual" ? (
-          <span className="text-slate-600">
-            Percentil {percentil} de la cohorte · dentro del rango habitual
-          </span>
+      <div className="space-y-0.5 text-xs">
+        {ubicacion === "habitual" ? (
+          <p className="text-slate-700">Percentil {percentil} de la cohorte · dentro del rango habitual</p>
         ) : ubicacion === "atipico" ? (
-          <span className="flex items-start gap-1 text-amber-700">
+          <p className="flex items-start gap-1 text-amber-700">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" />
             Percentil {percentil} · valor atípico respecto de la cohorte
-          </span>
-        ) : (
-          <span className="flex items-start gap-1 text-rose-700">
+          </p>
+        ) : ubicacion === "fuera" ? (
+          <p className="flex items-start gap-1 text-orange-700">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" />
             Fuera de lo observado en la cohorte ({formatearNumero(d.min)}–{formatearNumero(d.max)}{" "}
             {unidad}): la estimación es menos confiable.
-          </span>
-        )}
-      </p>
+          </p>
+        ) : null}
+        <p className="text-slate-500">
+          {grupos ? (
+            <>
+              Mediana{" "}
+              <span className="text-emerald-700">
+                {nombreCorto(grupos.negativo)} {formatearNumero(grupos.negativo.mediana)}
+              </span>{" "}
+              ·{" "}
+              <span className="text-rose-700">
+                {nombreCorto(grupos.positivo)} {formatearNumero(grupos.positivo.mediana)}
+              </span>{" "}
+              {unidad}
+            </>
+          ) : (
+            <>
+              Mediana {formatearNumero(d.mediana)} {unidad} · RIC {formatearNumero(d.q1)}–
+              {formatearNumero(d.q3)} {unidad}
+            </>
+          )}
+        </p>
+      </div>
     </div>
   );
 };

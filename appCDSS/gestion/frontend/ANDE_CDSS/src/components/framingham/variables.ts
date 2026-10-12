@@ -166,6 +166,18 @@ export interface Distribucion {
   percentiles: number[];
   /** Densidad (KDE) normalizada a máximo 1, evaluada en x. */
   kde: { x: number[]; densidad: number[] };
+  /** Distribución por desenlace real, sobre la misma grilla kde.x (cada una normalizada a máximo 1). */
+  por_desenlace: GrupoDesenlace[];
+}
+
+export interface GrupoDesenlace {
+  etiqueta: string;
+  positivo: boolean;
+  n: number;
+  q1: number;
+  mediana: number;
+  q3: number;
+  densidad: number[];
 }
 
 /** habitual: dentro de los bigotes de Tukey; atipico: fuera de Q1 − 1,5·RIC / Q3 + 1,5·RIC
