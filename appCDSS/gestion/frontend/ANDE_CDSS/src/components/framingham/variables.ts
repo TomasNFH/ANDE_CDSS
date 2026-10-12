@@ -7,7 +7,7 @@ export interface VariableClinica {
   abreviatura?: string;
   unidad: string;
   descripcion: string;
-  /** Valor de ejemplo (mediana de la cohorte de test), solo como placeholder. */
+  /** Valor de ejemplo (mediana del dataset completo), solo como placeholder. */
   ejemplo: number;
   /** Límites de plausibilidad fisiológica: fuera de esto el valor se rechaza. */
   min: number;
@@ -33,7 +33,7 @@ export const VARIABLES: VariableClinica[] = [
     etiqueta: "Glucemia",
     unidad: "mg/dL",
     descripcion: "Nivel de glucosa en sangre.",
-    ejemplo: 77,
+    ejemplo: 78,
     min: 20,
     max: 600,
     decimales: 0,
@@ -56,7 +56,7 @@ export const VARIABLES: VariableClinica[] = [
     abreviatura: "IMC",
     unidad: "kg/m²",
     descripcion: "Peso (kg) dividido por la talla al cuadrado (m²).",
-    ejemplo: 25.1,
+    ejemplo: 25.4,
     min: 10,
     max: 80,
     decimales: 1,
@@ -68,7 +68,7 @@ export const VARIABLES: VariableClinica[] = [
     abreviatura: "PAS",
     unidad: "mmHg",
     descripcion: "Presión arterial sistólica en reposo.",
-    ejemplo: 127.5,
+    ejemplo: 128,
     min: 60,
     max: 300,
     decimales: 1,

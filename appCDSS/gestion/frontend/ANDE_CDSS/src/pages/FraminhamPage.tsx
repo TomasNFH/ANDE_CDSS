@@ -226,7 +226,7 @@ const FraminhamPage = () => {
                     Datos del paciente
                   </CardTitle>
                   <p className="text-sm text-slate-500">
-                    Cada variable se muestra sobre su distribución en la cohorte de prueba,
+                    Cada variable se muestra sobre su distribución en la cohorte de referencia,
                     separada según el desenlace real. Los valores de ejemplo son la mediana.
                   </p>
                   {modelo.distribuciones?.[VARIABLES[0].id]?.por_desenlace?.length === 2 && (

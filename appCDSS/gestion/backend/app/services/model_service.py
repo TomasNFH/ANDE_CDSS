@@ -96,70 +96,65 @@ def predecir_df(m: LoadedModel, X: pd.DataFrame) -> tuple[list[str], list[float]
     return [etiqueta(m, c) for c in clases], proba.max(axis=1).tolist(), proba
 
 
-def _redondear(arr) -> list[float]:
-    return [round(float(v), 4) for v in arr]
+# CSV fijos con las distribuciones de cada variable (los genera scripts/exportar_distribuciones.py).
+ARCHIVOS_DISTRIBUCIONES = (
+    "distribuciones_resumen.csv",
+    "distribuciones_curvas.csv",
+    "distribuciones_percentiles.csv",
+)
 
 
-def _ancho_banda(x: np.ndarray) -> float:
-    """Regla de Silverman."""
-    q1, q3 = np.percentile(x, [25, 75])
-    de = x.std(ddof=1)
-    escala = min(de, (q3 - q1) / 1.34) or de
-    return 0.9 * escala * len(x) ** (-1 / 5)
+def _leer_distribuciones(m: LoadedModel, carpeta: Path) -> dict:
+    """Arma, para cada feature, lo que necesita el violín a partir de los CSV fijos del export.
 
-
-def _kde(x: np.ndarray, grilla: np.ndarray) -> np.ndarray:
-    """KDE gaussiano normalizado a máximo 1 (solo importa la forma)."""
-    ancho = _ancho_banda(x)
-    densidad = np.exp(-0.5 * ((grilla[:, None] - x[None, :]) / ancho) ** 2).sum(axis=1)
-    return densidad / densidad.max()
-
-
-def _distribucion(valores: pd.Series, grupos: list[tuple[str, bool, pd.Series]], puntos: int = 120) -> dict:
-    """Resumen de la distribución de una variable en la cohorte, para dibujar un violín.
-
-    Incluye la densidad general y la de cada grupo de desenlace sobre la misma grilla, cada una
-    normalizada a máximo 1 para comparar formas aunque los grupos tengan tamaños muy distintos.
-    Los percentiles 0..100 (de toda la cohorte) permiten ubicar un valor nuevo.
+    grupo es "todos" o el valor del target; cada grupo de desenlace trae su curva de densidad
+    (columna densidad_<grupo>) sobre la grilla x común de la variable.
     """
-    x = valores.dropna().to_numpy(dtype=float)
-    q1, mediana, q3 = np.percentile(x, [25, 50, 75])
-    de = x.std(ddof=1)
-    ancho = _ancho_banda(x)
-    grilla = np.linspace(x.min() - 2 * ancho, x.max() + 2 * ancho, puntos)
+    faltan = [a for a in ARCHIVOS_DISTRIBUCIONES if not (carpeta / a).exists()]
+    if faltan:
+        raise FileNotFoundError(
+            f"{m.nombre}: faltan {', '.join(faltan)} en {carpeta}. "
+            "Generalos con scripts/exportar_distribuciones.py"
+        )
+    resumen = pd.read_csv(carpeta / "distribuciones_resumen.csv", dtype={"grupo": str})
+    curvas = pd.read_csv(carpeta / "distribuciones_curvas.csv")
+    percentiles = pd.read_csv(carpeta / "distribuciones_percentiles.csv").sort_values("percentil")
 
-    por_desenlace = []
-    for etiqueta_grupo, positivo, mascara in grupos:
-        xg = valores[mascara].dropna().to_numpy(dtype=float)
-        if len(xg) < 2:
-            continue
-        gq1, gmediana, gq3 = np.percentile(xg, [25, 50, 75])
-        por_desenlace.append({
-            "etiqueta": etiqueta_grupo,
-            "positivo": positivo,
-            "n": int(len(xg)),
-            "q1": float(gq1),
-            "mediana": float(gmediana),
-            "q3": float(gq3),
-            "densidad": _redondear(_kde(xg, grilla)),
-        })
+    clase_positiva = str(int(m.clf.classes_[-1]))
+    distribuciones = {}
+    for f in m.features:
+        filas = resumen[resumen["variable"] == f].set_index("grupo")
+        curva = curvas[curvas["variable"] == f]
+        if "todos" not in filas.index or curva.empty or f not in percentiles.columns:
+            raise ValueError(f"{m.nombre}: los CSV de distribuciones no tienen la variable '{f}'")
 
-    return {
-        "n": int(len(x)),
-        "min": float(x.min()),
-        "max": float(x.max()),
-        "q1": float(q1),
-        "mediana": float(mediana),
-        "q3": float(q3),
-        "media": float(x.mean()),
-        "de": float(de),
-        "percentiles": _redondear(np.percentile(x, np.arange(101))),
-        "kde": {"x": _redondear(grilla), "densidad": _redondear(_kde(x, grilla))},
-        "por_desenlace": por_desenlace,
-    }
+        todos = filas.loc["todos"]
+        por_desenlace = []
+        if m.target_type == "boolean":
+            for grupo, fila in filas.drop(index="todos").iterrows():
+                por_desenlace.append({
+                    "etiqueta": etiqueta(m, int(grupo)),
+                    "positivo": grupo == clase_positiva,
+                    "n": int(fila["n"]),
+                    "q1": float(fila["q1"]),
+                    "mediana": float(fila["mediana"]),
+                    "q3": float(fila["q3"]),
+                    "densidad": curva[f"densidad_{grupo}"].tolist(),
+                })
+
+        distribuciones[f] = {
+            "n": int(todos["n"]),
+            **{k: float(todos[k]) for k in ("min", "max", "q1", "mediana", "q3", "media", "de")},
+            "percentiles": percentiles[f].tolist(),
+            "kde": {"x": curva["x"].tolist(), "densidad": curva["densidad_todos"].tolist()},
+            "por_desenlace": por_desenlace,
+        }
+    return distribuciones
 
 
-def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
+def _armar_resumen(
+    m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test: pd.Series, distribuciones: dict
+) -> dict:
     """Lo que consume FraminhamPage: métricas, gráficas y ejemplos. Se calcula una vez al cargar."""
     importances = np.array(_parsear_numeros(info["importances"]))
     if len(importances) == len(m.features) and importances.max() > 0:
@@ -192,10 +187,6 @@ def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test
     ejemplo["CONFIDENCE"] = conf
     example_prediction = [ejemplo.columns.tolist()] + ejemplo.values.tolist()
 
-    # Grupos por desenlace real, para comparar la distribución de cada variable.
-    grupos = [(etiqueta(m, c), bool(c == clases[-1]), y_test == c) for c in clases] \
-        if m.target_type == "boolean" else []
-
     first_tree, last_tree = [], []
     if hasattr(m.clf, "estimators_") and m.model_name == "RandomForestClassifier":
         from sklearn.tree import export_text
@@ -213,8 +204,7 @@ def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test
         "bool_labels": bool_labels,
         "target_column": m.target_column,
         "target_type": m.target_type,
-        # Distribución de cada feature en el conjunto de prueba (el de entrenamiento no se exporta).
-        "distribuciones": {f: _distribucion(X_test[f], grupos) for f in m.features},
+        "distribuciones": distribuciones,
         "NumbClasses": len(clases),
         "FirstTree": first_tree,
         "LastTree": last_tree,
@@ -222,7 +212,7 @@ def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test
 
 
 def cargar_modelo(nombre: str) -> LoadedModel:
-    """Lee un export de openModels (model.skops + info.csv + scalers + set de test)."""
+    """Lee un export de openModels (model.skops + info.csv + scalers + set de test + distribuciones)."""
     config = OPEN_MODELS[nombre]
     carpeta = OPEN_MODELS_DIR / config["carpeta"]
 
@@ -256,7 +246,7 @@ def cargar_modelo(nombre: str) -> LoadedModel:
             f"{nombre}: el modelo espera {clf.n_features_in_} features y info.csv lista {len(m.features)}"
         )
 
-    m.resumen = _armar_resumen(m, info, X_test, y_test)
+    m.resumen = _armar_resumen(m, info, X_test, y_test, _leer_distribuciones(m, carpeta))
     return m
 
 
