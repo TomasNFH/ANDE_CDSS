@@ -47,7 +47,7 @@ export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
               : "rounded-t-full border-emerald-400 bg-emerald-100"
           )}
         />
-        {g.etiqueta} (n = {g.n})
+        {g.etiqueta}
       </span>
     ))}
     <span className="inline-flex items-center gap-1.5">
@@ -263,6 +263,16 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             <>
               Mediana {formatearNumero(d.mediana)} {unidad} · RIC {formatearNumero(d.q1)}–
               {formatearNumero(d.q3)} {unidad}
+            </>
+          )}
+        </p>
+        <p className="tabular-nums text-slate-400">
+          n = {d.n}
+          {grupos && (
+            <>
+              {" "}
+              ({grupos.negativo.n} {nombreCorto(grupos.negativo)} · {grupos.positivo.n}{" "}
+              {nombreCorto(grupos.positivo)})
             </>
           )}
         </p>

@@ -96,7 +96,7 @@ def predecir_df(m: LoadedModel, X: pd.DataFrame) -> tuple[list[str], list[float]
     return [etiqueta(m, c) for c in clases], proba.max(axis=1).tolist(), proba
 
 
-# CSV fijos con las distribuciones de cada variable (los genera scripts/exportar_distribuciones.py).
+# CSV fijos con las distribuciones de cada variable, generados aparte a partir del dataset completo.
 ARCHIVOS_DISTRIBUCIONES = (
     "distribuciones_resumen.csv",
     "distribuciones_curvas.csv",
@@ -112,10 +112,7 @@ def _leer_distribuciones(m: LoadedModel, carpeta: Path) -> dict:
     """
     faltan = [a for a in ARCHIVOS_DISTRIBUCIONES if not (carpeta / a).exists()]
     if faltan:
-        raise FileNotFoundError(
-            f"{m.nombre}: faltan {', '.join(faltan)} en {carpeta}. "
-            "Generalos con scripts/exportar_distribuciones.py"
-        )
+        raise FileNotFoundError(f"{m.nombre}: faltan {', '.join(faltan)} en {carpeta}")
     resumen = pd.read_csv(carpeta / "distribuciones_resumen.csv", dtype={"grupo": str})
     curvas = pd.read_csv(carpeta / "distribuciones_curvas.csv")
     percentiles = pd.read_csv(carpeta / "distribuciones_percentiles.csv").sort_values("percentil")

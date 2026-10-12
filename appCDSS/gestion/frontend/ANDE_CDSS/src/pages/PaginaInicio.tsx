@@ -257,7 +257,7 @@ const HomePage = () => {
                             style={{ padding: 0 }}
                           >
                             <img
-                              src="/CardioCard3.jpg"
+                              src="/CardioCard4.jpg"
                               alt="Cardiology"
                               className="w-full h-full object-cover"
                             />
