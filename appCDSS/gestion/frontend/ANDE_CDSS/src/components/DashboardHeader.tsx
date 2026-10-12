@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Search, Bell, Settings, User, Globe, Check } from "lucide-react";
+import { useState } from "react";
+import { Bell, Settings, User, Globe, Check } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
