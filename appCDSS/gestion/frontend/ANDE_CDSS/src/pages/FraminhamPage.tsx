@@ -182,11 +182,10 @@ const FraminhamPage = () => {
             Modelos abiertos
           </button>
           <div>
-            <p className="text-sm font-medium text-sky-700">Cardiología</p>
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
               Riesgo de enfermedad coronaria a 10 años
             </h1>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="text-sm font-medium text-sky-700">
               Framingham Heart Study
               {modelo && <> · {nombreAlgoritmo(modelo.model_name)}</>}
               {modelo?.auc ? <> · AUC {formatearDecimales(modelo.auc, 2)}</> : null}

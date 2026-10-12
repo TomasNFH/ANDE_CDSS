@@ -47,11 +47,12 @@ const InformacionModelo = ({ modelo, metricas }: InformacionModeloProps) => {
         <div className="flex gap-2 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
           <p className="leading-relaxed">
-            El modelo se entrenó con clases balanceadas: la probabilidad que informa no
-            está calibrada a la prevalencia real ({formatearPorcentaje(metricas.prevalencia)}{" "}
-            en el conjunto de prueba) y tiende a sobreestimar el riesgo absoluto. Con el
-            umbral de 50%, el VPP es {formatearPorcentaje(metricas.vpp)} y el VPN{" "}
-            {formatearPorcentaje(metricas.vpn)}: un resultado negativo es más informativo que uno positivo.
+            La probabilidad mostrada no es un riesgo absoluto: el modelo se entrenó con
+            clases balanceadas y tiende a sobreestimarlo frente a la prevalencia real
+            ({formatearPorcentaje(metricas.prevalencia)} en el conjunto de prueba). Con el
+            umbral de 50%, un resultado negativo es confiable (VPN{" "}
+            {formatearPorcentaje(metricas.vpn)}), pero un resultado positivo debe confirmarse
+            (VPP {formatearPorcentaje(metricas.vpp)}).
           </p>
         </div>
       </div>

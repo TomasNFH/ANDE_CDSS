@@ -44,7 +44,7 @@ const PaginaInicio = () => {
                 <BrainCircuit size={64} />
               </button>
               <span className="text-base font-semibold text-gray-700 mt-2">
-                Modelos propios
+                Modelos personalizados
               </span>
             </div>
             <div className="flex flex-col items-center">
