@@ -12,8 +12,6 @@ export interface VariableClinica {
   /** Límites de plausibilidad fisiológica: fuera de esto el valor se rechaza. */
   min: number;
   max: number;
-  /** Rango observado en la cohorte de test: fuera de esto se advierte, pero se permite. */
-  rangoCohorte: [number, number];
   decimales: number;
   paso: number;
 }
@@ -27,7 +25,6 @@ export const VARIABLES: VariableClinica[] = [
     ejemplo: 49,
     min: 1,
     max: 120,
-    rangoCohorte: [34, 68],
     decimales: 0,
     paso: 1,
   },
@@ -39,7 +36,6 @@ export const VARIABLES: VariableClinica[] = [
     ejemplo: 77,
     min: 20,
     max: 600,
-    rangoCohorte: [44, 292],
     decimales: 0,
     paso: 1,
   },
@@ -51,7 +47,6 @@ export const VARIABLES: VariableClinica[] = [
     ejemplo: 234,
     min: 50,
     max: 700,
-    rangoCohorte: [135, 390],
     decimales: 0,
     paso: 1,
   },
@@ -64,7 +59,6 @@ export const VARIABLES: VariableClinica[] = [
     ejemplo: 25.1,
     min: 10,
     max: 80,
-    rangoCohorte: [16.6, 44.7],
     decimales: 1,
     paso: 0.1,
   },
@@ -77,7 +71,6 @@ export const VARIABLES: VariableClinica[] = [
     ejemplo: 127.5,
     min: 60,
     max: 300,
-    rangoCohorte: [92.5, 243],
     decimales: 1,
     paso: 0.5,
   },
@@ -95,15 +88,6 @@ export const validarValor = (v: VariableClinica, texto: string): string | null =
   if (valor < v.min || valor > v.max)
     return `Ingresá un valor entre ${v.min} y ${v.max} ${v.unidad}.`;
   return null;
-};
-
-export const fueraDeCohorte = (v: VariableClinica, texto: string) => {
-  const valor = Number(texto);
-  return (
-    texto.trim() !== "" &&
-    Number.isFinite(valor) &&
-    (valor < v.rangoCohorte[0] || valor > v.rangoCohorte[1])
-  );
 };
 
 const formato = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 1 });
@@ -167,6 +151,48 @@ export const calcularMetricas = ([vp, fn, fp, vn]: number[]): MetricasClinicas =
   };
 };
 
+// ---- Ubicación de un valor en la distribución de la cohorte ----
+
+export interface Distribucion {
+  n: number;
+  min: number;
+  max: number;
+  q1: number;
+  mediana: number;
+  q3: number;
+  media: number;
+  de: number;
+  /** Percentiles 0..100 de la cohorte. */
+  percentiles: number[];
+  /** Densidad (KDE) normalizada a máximo 1, evaluada en x. */
+  kde: { x: number[]; densidad: number[] };
+}
+
+/** habitual: dentro de los bigotes de Tukey; atipico: fuera de Q1 − 1,5·RIC / Q3 + 1,5·RIC
+ *  pero dentro de lo observado; fuera: más allá del mínimo o máximo de la cohorte. */
+export type Ubicacion = "habitual" | "atipico" | "fuera";
+
+export const ubicarValor = (d: Distribucion, valor: number): Ubicacion => {
+  if (valor < d.min || valor > d.max) return "fuera";
+  const ric = d.q3 - d.q1;
+  if (valor < d.q1 - 1.5 * ric || valor > d.q3 + 1.5 * ric) return "atipico";
+  return "habitual";
+};
+
+/** Percentil (0–100) de un valor, interpolando entre los percentiles de la cohorte. */
+export const percentilDe = (d: Distribucion, valor: number) => {
+  const p = d.percentiles;
+  if (valor <= p[0]) return 0;
+  if (valor >= p[100]) return 100;
+  let i = 0;
+  while (p[i + 1] < valor) i++;
+  // Valores repetidos (p. ej. edades enteras): tomar el centro del tramo plano.
+  let j = i + 1;
+  while (j < 100 && p[j + 1] === p[j] && p[j] === valor) j++;
+  if (p[i + 1] === valor) return (i + 1 + j) / 2;
+  return i + (valor - p[i]) / (p[i + 1] - p[i]);
+};
+
 // ---- Tipos de la API (/api/models/framingham) ----
 
 export interface ResumenModelo {
@@ -180,6 +206,7 @@ export interface ResumenModelo {
   bool_labels: string[];
   target_column: string;
   target_type: string;
+  distribuciones: Record<string, Distribucion>;
 }
 
 export interface Prediccion {

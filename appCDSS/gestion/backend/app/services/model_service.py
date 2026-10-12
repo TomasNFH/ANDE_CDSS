@@ -96,6 +96,37 @@ def predecir_df(m: LoadedModel, X: pd.DataFrame) -> tuple[list[str], list[float]
     return [etiqueta(m, c) for c in clases], proba.max(axis=1).tolist(), proba
 
 
+def _distribucion(valores: pd.Series, puntos: int = 120) -> dict:
+    """Resumen de la distribución de una variable en la cohorte, para dibujar un violín.
+
+    La densidad es un KDE gaussiano con ancho de banda de Silverman, normalizado a máximo 1
+    (solo importa la forma). Los percentiles 0..100 permiten ubicar un valor nuevo.
+    """
+    x = valores.dropna().to_numpy(dtype=float)
+    q1, mediana, q3 = np.percentile(x, [25, 50, 75])
+    de = x.std(ddof=1)
+    escala = min(de, (q3 - q1) / 1.34) or de
+    ancho = 0.9 * escala * len(x) ** (-1 / 5)
+
+    grilla = np.linspace(x.min() - 2 * ancho, x.max() + 2 * ancho, puntos)
+    densidad = np.exp(-0.5 * ((grilla[:, None] - x[None, :]) / ancho) ** 2).sum(axis=1)
+    densidad /= densidad.max()
+
+    redondear = lambda arr: [round(float(v), 4) for v in arr]
+    return {
+        "n": int(len(x)),
+        "min": float(x.min()),
+        "max": float(x.max()),
+        "q1": float(q1),
+        "mediana": float(mediana),
+        "q3": float(q3),
+        "media": float(x.mean()),
+        "de": float(de),
+        "percentiles": redondear(np.percentile(x, np.arange(101))),
+        "kde": {"x": redondear(grilla), "densidad": redondear(densidad)},
+    }
+
+
 def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test: pd.Series) -> dict:
     """Lo que consume FraminhamPage: métricas, gráficas y ejemplos. Se calcula una vez al cargar."""
     importances = np.array(_parsear_numeros(info["importances"]))
@@ -146,6 +177,8 @@ def _armar_resumen(m: LoadedModel, info: pd.Series, X_test: pd.DataFrame, y_test
         "bool_labels": bool_labels,
         "target_column": m.target_column,
         "target_type": m.target_type,
+        # Distribución de cada feature en el conjunto de prueba (el de entrenamiento no se exporta).
+        "distribuciones": {f: _distribucion(X_test[f]) for f in m.features},
         "NumbClasses": len(clases),
         "FirstTree": first_tree,
         "LastTree": last_tree,

@@ -1,12 +1,7 @@
 import type { ReactNode } from "react";
-import { AlertTriangle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import {
-  formatearNumero,
-  fueraDeCohorte,
-  type VariableClinica,
-} from "./variables";
+import { formatearNumero, type VariableClinica } from "./variables";
 
 interface CampoClinicoProps {
   variable: VariableClinica;
@@ -29,7 +24,6 @@ const CampoClinico = ({
 }: CampoClinicoProps) => {
   const inputId = `campo-${v.id}`;
   const ayudaId = `${inputId}-ayuda`;
-  const advertencia = !error && fueraDeCohorte(v, valor);
 
   return (
     <div
@@ -71,12 +65,6 @@ const CampoClinico = ({
         <div id={ayudaId} className="min-h-[1.25rem] text-xs">
           {error ? (
             <span className="text-red-600">{error}</span>
-          ) : advertencia ? (
-            <span className="flex items-start gap-1 text-amber-700">
-              <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" />
-              Fuera del rango de la cohorte ({formatearNumero(v.rangoCohorte[0])}–
-              {formatearNumero(v.rangoCohorte[1])} {v.unidad}): la estimación es menos confiable.
-            </span>
           ) : (
             <span className="text-slate-500">
               {v.descripcion} Valores admitidos: {v.min}–{v.max} {v.unidad}.

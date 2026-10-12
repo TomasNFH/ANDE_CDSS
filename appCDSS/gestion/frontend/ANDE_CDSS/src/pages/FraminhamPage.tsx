@@ -13,6 +13,7 @@ import DashboardHeader from "@/components/DashboardHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import CampoClinico from "@/components/framingham/CampoClinico";
+import DistribucionVariable from "@/components/framingham/DistribucionVariable";
 import CasosEjemplo from "@/components/framingham/CasosEjemplo";
 import InformacionModelo from "@/components/framingham/InformacionModelo";
 import PanelResultado from "@/components/framingham/PanelResultado";
@@ -223,27 +224,38 @@ const FraminhamPage = () => {
                     Datos del paciente
                   </CardTitle>
                   <p className="text-sm text-slate-500">
-                    Los valores de ejemplo corresponden a la mediana de la cohorte.
+                    Cada variable se muestra sobre su distribución en la cohorte de prueba; el
+                    punto marca al paciente. Los valores de ejemplo son la mediana.
                   </p>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={calcular} noValidate className="space-y-6">
-                    <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <div className="divide-y divide-slate-100">
                       {VARIABLES.map((v) => (
-                        <CampoClinico
-                          key={v.id}
-                          variable={v}
-                          valor={valores[v.id]}
-                          onChange={(valor) =>
-                            setValores((prev) => ({ ...prev, [v.id]: valor }))
-                          }
-                          onBlur={() => setTocados((prev) => ({ ...prev, [v.id]: true }))}
-                          error={
-                            (tocados[v.id] && valores[v.id] !== "") || intentoCalcular
-                              ? errores[v.id]
-                              : null
-                          }
-                        />
+                        <div key={v.id} className="py-4 first:pt-0">
+                          <CampoClinico
+                            variable={v}
+                            valor={valores[v.id]}
+                            onChange={(valor) =>
+                              setValores((prev) => ({ ...prev, [v.id]: valor }))
+                            }
+                            onBlur={() => setTocados((prev) => ({ ...prev, [v.id]: true }))}
+                            error={
+                              (tocados[v.id] && valores[v.id] !== "") || intentoCalcular
+                                ? errores[v.id]
+                                : null
+                            }
+                            contexto={
+                              modelo.distribuciones?.[v.id] && (
+                                <DistribucionVariable
+                                  variable={v}
+                                  distribucion={modelo.distribuciones[v.id]}
+                                  valor={errores[v.id] === null ? Number(valores[v.id]) : null}
+                                />
+                              )
+                            }
+                          />
+                        </div>
                       ))}
                     </div>
 

@@ -257,11 +257,11 @@ const HomePage = () => {
                             style={{ padding: 0 }}
                           >
                             <img
-                              src="/cardiology.jpg"
+                              src="/CardioCard3.jpg"
                               alt="Cardiology"
                               className="w-full h-full object-cover"
                             />
-                            <span className="absolute inset-0 flex items-center justify-center">
+                            <span className="absolute inset-0 flex items-end justify-center pb-4">
                               <span className="bg-black bg-opacity-85 px-6 py-2 rounded text-white text-3xl font-bold drop-shadow-lg">
                                 Cardiology
                               </span>
