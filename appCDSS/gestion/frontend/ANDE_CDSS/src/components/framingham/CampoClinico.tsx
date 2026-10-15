@@ -33,7 +33,9 @@ const CampoClinico = ({
         contexto && "md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]"
       )}
     >
-      <div className="space-y-1.5">
+      {/* Con gráfico al lado, el pt alinea el centro del input con la línea central del violín
+          (etiqueta 20px + 6px + mitad del input 20px + 6px = 52px = margen 20px + mitad del gráfico 32px). */}
+      <div className={cn("space-y-1.5", contexto && "md:pt-1.5")}>
         <label htmlFor={inputId} className="block text-sm font-medium text-slate-900">
           {v.etiqueta}
           {v.abreviatura && (
