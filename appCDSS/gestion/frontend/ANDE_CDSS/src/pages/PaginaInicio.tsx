@@ -103,7 +103,7 @@ const PaginaInicio = () => {
                         style={{ padding: 0 }}
                       >
                         <img
-                          src="/CardioCard4.jpg"
+                          src="/CardioCard.jpg"
                           alt="Cardiología"
                           className="w-full h-full object-cover"
                         />

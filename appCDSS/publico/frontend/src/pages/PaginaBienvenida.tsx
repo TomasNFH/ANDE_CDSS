@@ -17,14 +17,15 @@ const PaginaBienvenida = () => {
 
       <main className="flex flex-1 items-center justify-center px-4 py-16 sm:px-6">
         <div className="w-full max-w-2xl space-y-10 text-center">
-          <div className="space-y-4">
-            <h1 className="text-5xl font-extrabold tracking-tight text-slate-900">DynamicDSS</h1>
-            <p className="text-2xl font-semibold text-slate-700">
-              Sistema dinámico de apoyo a la decisión clínica
-            </p>
-            <p className="text-base text-slate-600">
-              Selección dinámica de modelos de aprendizaje automático adaptados a datos médicos,
-              con aplicación a datos de diálisis en nefrología.
+          <div>
+            <h1 className="mb-6 text-5xl font-extrabold text-slate-900">
+              Te damos la bienvenida a DynamicDSS
+            </h1>
+            <p className="text-slate-600">
+              Este trabajo presenta el desarrollo de un sistema dinámico de apoyo a la decisión
+              clínica (CDSS) que incorpora la selección dinámica de modelos de aprendizaje
+              automático adaptados a datos médicos, con una aplicación específica a datos de
+              diálisis en nefrología.
             </p>
           </div>
 
