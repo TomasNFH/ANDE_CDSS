@@ -36,7 +36,7 @@ const nombreCorto = (g: GrupoDesenlace) => (g.positivo ? "con CHD" : "sin CHD");
 
 /** Leyenda compartida por todos los violines divididos por desenlace. */
 export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
-  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600">
+  <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm text-slate-600">
     {grupos.map((g) => (
       <span key={g.etiqueta} className="inline-flex items-center gap-1.5">
         <span
@@ -128,7 +128,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
   return (
     <div className="space-y-1">
       <div
-        className="relative h-16"
+        className={cn("relative h-16", grupos && "my-5")}
         role="img"
         aria-label={
           grupos
@@ -200,6 +200,26 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           )}
         </svg>
 
+        {/* Mediana de cada grupo, rotulada sobre (sin CHD) y bajo (con CHD) su línea. */}
+        {grupos && (
+          <>
+            <span
+              aria-hidden
+              className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-emerald-700"
+              style={{ left: `${pos(grupos.negativo.mediana)}%` }}
+            >
+              {formatearNumero(grupos.negativo.mediana)}
+            </span>
+            <span
+              aria-hidden
+              className="absolute top-full mt-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-rose-700"
+              style={{ left: `${pos(grupos.positivo.mediana)}%` }}
+            >
+              {formatearNumero(grupos.positivo.mediana)}
+            </span>
+          </>
+        )}
+
         {posPunto !== null && ubicacion && (
           <div
             className="absolute top-1/2 transition-[left] duration-300 ease-out"
@@ -246,26 +266,12 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             {unidad}): la estimación es menos confiable.
           </p>
         ) : null}
-        <p className="text-slate-500">
-          {grupos ? (
-            <>
-              Mediana{" "}
-              <span className="text-emerald-700">
-                {nombreCorto(grupos.negativo)} {formatearNumero(grupos.negativo.mediana)}
-              </span>{" "}
-              ·{" "}
-              <span className="text-rose-700">
-                {nombreCorto(grupos.positivo)} {formatearNumero(grupos.positivo.mediana)}
-              </span>{" "}
-              {unidad}
-            </>
-          ) : (
-            <>
-              Mediana {formatearNumero(d.mediana)} {unidad} · RIC {formatearNumero(d.q1)}–
-              {formatearNumero(d.q3)} {unidad}
-            </>
-          )}
-        </p>
+        {!grupos && (
+          <p className="text-slate-500">
+            Mediana {formatearNumero(d.mediana)} {unidad} · RIC {formatearNumero(d.q1)}–
+            {formatearNumero(d.q3)} {unidad}
+          </p>
+        )}
         <p className="tabular-nums text-slate-400">
           n = {d.n}
           {grupos && (

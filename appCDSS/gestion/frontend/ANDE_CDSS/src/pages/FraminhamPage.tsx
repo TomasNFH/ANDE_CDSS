@@ -229,9 +229,13 @@ const FraminhamPage = () => {
                     separada según el desenlace real. Los valores de ejemplo son la mediana.
                   </p>
                   {modelo.distribuciones?.[VARIABLES[0].id]?.por_desenlace?.length === 2 && (
-                    <LeyendaDesenlace
-                      grupos={modelo.distribuciones[VARIABLES[0].id].por_desenlace}
-                    />
+                    // Misma grilla que CampoClinico, para que la leyenda quede centrada sobre los gráficos.
+                    <div className="grid gap-x-6 pt-2 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+                      <div className="hidden md:block" />
+                      <LeyendaDesenlace
+                        grupos={modelo.distribuciones[VARIABLES[0].id].por_desenlace}
+                      />
+                    </div>
                   )}
                 </CardHeader>
                 <CardContent>
