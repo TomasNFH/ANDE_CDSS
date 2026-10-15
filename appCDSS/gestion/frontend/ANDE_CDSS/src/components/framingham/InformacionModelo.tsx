@@ -12,8 +12,8 @@ import {
 
 const Dato = ({ titulo, children }: { titulo: string; children: ReactNode }) => (
   <div>
-    <dt className="text-sm text-slate-500">{titulo}</dt>
-    <dd className="text-sm text-slate-900">{children}</dd>
+    <dt className="text-sm text-muted-foreground">{titulo}</dt>
+    <dd className="text-sm text-foreground">{children}</dd>
   </div>
 );
 
@@ -30,7 +30,7 @@ const InformacionModelo = ({ modelo, metricas }: InformacionModeloProps) => {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
       <div className="space-y-5">
-        <p className="text-sm leading-relaxed text-slate-700">
+        <p className="text-sm leading-relaxed text-foreground-secondary">
           Estima la probabilidad de desarrollar enfermedad coronaria (CHD) en los
           próximos 10 años a partir de cinco variables clínicas. Se entrenó con
           datos del Framingham Heart Study, una cohorte poblacional de adultos de
@@ -44,7 +44,7 @@ const InformacionModelo = ({ modelo, metricas }: InformacionModeloProps) => {
           <Dato titulo="Conjunto de prueba">{metricas.total} pacientes</Dato>
         </dl>
 
-        <div className="flex gap-2 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+        <div className="flex gap-2 rounded-md border border-warning-border bg-warning-muted p-3 text-sm text-warning-text">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
           <p className="leading-relaxed">
             La probabilidad mostrada no es un riesgo absoluto: el modelo se entrenó con

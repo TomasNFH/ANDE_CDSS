@@ -11,14 +11,14 @@ const PaginaInicio = () => {
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-page">
       <div className="flex-1">
         <DashboardHeader />
         <main className="p-6">
           <h1 className="text-5xl font-extrabold mb-6 text-center">
             Te damos la bienvenida a DynamicDSS
           </h1>
-          <p className="text-gray-700 mb-12 text-center">
+          <p className="text-foreground-secondary mb-12 text-center">
             Este trabajo presenta el desarrollo de un sistema dinámico de
             apoyo a la decisión clínica (CDSS) que incorpora la selección
             dinámica de modelos de aprendizaje automático adaptados a datos
@@ -31,8 +31,8 @@ const PaginaInicio = () => {
                 type="button"
                 className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCustomOptions
-                    ? "bg-blue-300"
-                    : "bg-blue-100 hover:bg-blue-200"
+                    ? "bg-primary-300"
+                    : "bg-primary-100 hover:bg-primary-200"
                 }`}
                 aria-label="Modelos propios"
                 onClick={() => {
@@ -43,7 +43,7 @@ const PaginaInicio = () => {
               >
                 <BrainCircuit size={64} />
               </button>
-              <span className="text-base font-semibold text-gray-700 mt-2">
+              <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos personalizados
               </span>
             </div>
@@ -52,8 +52,8 @@ const PaginaInicio = () => {
                 type="button"
                 className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCDSSOptions
-                    ? "bg-blue-300"
-                    : "bg-blue-100 hover:bg-blue-200"
+                    ? "bg-primary-300"
+                    : "bg-primary-100 hover:bg-primary-200"
                 }`}
                 aria-label="Modelos abiertos"
                 onClick={() => {
@@ -64,14 +64,14 @@ const PaginaInicio = () => {
               >
                 <Sparkles size={64} />
               </button>
-              <span className="text-base font-semibold text-gray-700 mt-2">
+              <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos abiertos
               </span>
             </div>
             <div className="flex flex-col items-center">
               <button
                 type="button"
-                className="w-40 h-40 flex items-center justify-center rounded-2xl bg-blue-100 hover:bg-blue-200 transition-all mb-2 shadow-lg"
+                className="w-40 h-40 flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg"
                 aria-label="Cómo usar"
                 onClick={() => {
                   setShowCDSSOptions(false);
@@ -81,7 +81,7 @@ const PaginaInicio = () => {
               >
                 <Binoculars size={64} />
               </button>
-              <span className="text-base font-semibold text-gray-700 mt-2">
+              <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Cómo usar
               </span>
             </div>
@@ -91,14 +91,14 @@ const PaginaInicio = () => {
               <CardContent className="w-full flex flex-col items-center justify-center">
                 <div className="flex flex-row justify-center items-center gap-12 mt-8">
                   <div className="flex-1 flex items-center justify-end pr-8">
-                    <span className="text-2xl font-semibold text-gray-800 max-w-xs text-left">
+                    <span className="text-2xl font-semibold text-foreground max-w-xs text-left">
                       Usá modelos entrenados con datasets abiertos.
                     </span>
                   </div>
                   <div className="flex flex-row gap-8">
                     <div className="flex flex-col items-center">
                       <button
-                        className="w-80 h-56 cursor-pointer border-2 border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all bg-white p-0 hover:scale-105 hover:z-10 relative"
+                        className="w-80 h-56 cursor-pointer border-2 border-border rounded-lg overflow-hidden hover:shadow-lg transition-all bg-card p-0 hover:scale-105 hover:z-10 relative"
                         onClick={() => navigate("/cardiology")}
                         style={{ padding: 0 }}
                       >
@@ -122,7 +122,7 @@ const PaginaInicio = () => {
           {showCustomOptions && (
             <Card className="mt-10 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
               <CardContent className="w-full flex items-center justify-center py-16">
-                <span className="text-2xl font-semibold text-gray-500">
+                <span className="text-2xl font-semibold text-muted-foreground">
                   No hay modelos disponibles.
                 </span>
               </CardContent>
@@ -134,7 +134,7 @@ const PaginaInicio = () => {
             className="fixed bottom-6 right-6 z-50"
             style={{ width: "600px", height: "340px" }}
           >
-            <div className="w-full h-full bg-white rounded-lg shadow-lg border border-gray-300 flex flex-col">
+            <div className="w-full h-full bg-card rounded-lg shadow-lg border border-border flex flex-col">
               <iframe
                 width="100%"
                 height="100%"

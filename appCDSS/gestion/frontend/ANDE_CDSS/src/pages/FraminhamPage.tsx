@@ -168,7 +168,7 @@ const FraminhamPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-page">
       <DashboardHeader />
 
       <main className="mx-auto max-w-6xl space-y-6 px-4 pb-16 sm:px-6">
@@ -176,15 +176,15 @@ const FraminhamPage = () => {
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
               Riesgo de enfermedad coronaria a 10 años
             </h1>
-            <p className="text-sm font-medium text-sky-700">
+            <p className="text-sm font-medium text-primary">
               Framingham Heart Study
               {modelo && <> · {nombreAlgoritmo(modelo.model_name)}</>}
               {modelo?.auc ? <> · AUC {formatearDecimales(modelo.auc, 2)}</> : null}
@@ -193,15 +193,15 @@ const FraminhamPage = () => {
         </header>
 
         {cargando ? (
-          <Card className="border-slate-200">
-            <CardContent className="flex items-center gap-3 py-10 text-sm text-slate-500">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-sky-700" />
+          <Card className="border-border">
+            <CardContent className="flex items-center gap-3 py-10 text-sm text-muted-foreground">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-primary" />
               Cargando el modelo…
             </CardContent>
           </Card>
         ) : errorCarga || !modelo ? (
-          <Card className="border-red-200">
-            <CardContent className="flex flex-wrap items-center gap-3 py-6 text-sm text-red-800">
+          <Card className="border-danger-border">
+            <CardContent className="flex flex-wrap items-center gap-3 py-6 text-sm text-danger-text">
               <AlertCircle className="h-5 w-5" />
               <span className="flex-1">No se pudo cargar el modelo: {errorCarga}</span>
               <Button variant="outline" size="sm" onClick={reintentarCarga}>
@@ -212,13 +212,13 @@ const FraminhamPage = () => {
         ) : (
           <>
             <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-              <Card className="border-slate-200 shadow-sm">
+              <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-base text-slate-900">
-                    <Stethoscope className="h-4 w-4 text-sky-700" />
+                  <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                    <Stethoscope className="h-4 w-4 text-primary" />
                     Datos del paciente
                   </CardTitle>
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-muted-foreground">
                     Cada variable se muestra sobre su distribución en la cohorte de referencia,
                     separada según desenlace.
                   </p>
@@ -234,7 +234,7 @@ const FraminhamPage = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={calcular} noValidate className="space-y-6">
-                    <div className="divide-y divide-slate-100">
+                    <div className="divide-y divide-border">
                       {VARIABLES.map((v) => (
                         <div key={v.id} className="py-3 first:pt-0">
                           <CampoClinico
@@ -263,11 +263,11 @@ const FraminhamPage = () => {
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 pt-5">
+                    <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
                       <Button
                         type="submit"
                         disabled={calculando}
-                        className="h-10 bg-sky-700 px-5 text-white hover:bg-sky-800"
+                        className="h-10 bg-primary px-5 text-primary-foreground hover:bg-primary-800"
                       >
                         <Calculator />
                         {calculando ? "Calculando…" : "Calcular riesgo"}
@@ -278,7 +278,7 @@ const FraminhamPage = () => {
                       <Button
                         type="button"
                         variant="link"
-                        className="h-10 px-0 text-slate-600"
+                        className="h-10 px-0 text-foreground-secondary"
                         onClick={() =>
                           cargarValores(Object.fromEntries(VARIABLES.map((v) => [v.id, v.ejemplo])))
                         }
@@ -292,7 +292,7 @@ const FraminhamPage = () => {
 
               <div className="space-y-2 lg:sticky lg:top-6">
                 {desactualizado && !calculando && (
-                  <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800">
+                  <p className="rounded-md bg-warning-muted px-3 py-2 text-sm text-warning-text">
                     Los datos cambiaron desde el último cálculo. Presioná «Calcular riesgo»
                     para actualizar el resultado.
                   </p>
@@ -331,8 +331,8 @@ const FraminhamPage = () => {
           </>
         )}
 
-        <footer className="border-t border-slate-200 pt-4">
-          <p className="mx-auto flex max-w-2xl items-start justify-center gap-2 text-center text-sm text-slate-500">
+        <footer className="border-t border-border pt-4">
+          <p className="mx-auto flex max-w-2xl items-start justify-center gap-2 text-center text-sm text-muted-foreground">
             <Info className="mt-px h-3.5 w-3.5 shrink-0" />
             Herramienta de apoyo a la decisión clínica en fase de investigación. No
             reemplaza el juicio clínico ni constituye una indicación diagnóstica o terapéutica.

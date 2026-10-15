@@ -25,7 +25,7 @@ const DashboardHeader = () => {
     >
       <div data-id="vkvsxiyn9" data-path="src/components/DashboardHeader.tsx">
         <h1
-          className="text-2xl font-semibold text-gray-800"
+          className="text-2xl font-semibold text-foreground"
           data-id="4il15r3mm"
           data-path="src/components/DashboardHeader.tsx"
         ></h1>
@@ -36,7 +36,7 @@ const DashboardHeader = () => {
         data-path="src/components/DashboardHeader.tsx"
       >
         <button
-          className="p-1.5 text-gray-500 hover:text-gray-700 transition-colors"
+          className="p-1.5 text-muted-foreground hover:text-foreground-secondary transition-colors"
           data-id="rlzeaq06h"
           data-path="src/components/DashboardHeader.tsx"
         >
@@ -49,7 +49,7 @@ const DashboardHeader = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
-              className="p-1.5 text-gray-500 hover:text-gray-700 transition-colors"
+              className="p-1.5 text-muted-foreground hover:text-foreground-secondary transition-colors"
               data-id="no3kkw2w1"
               data-path="src/components/DashboardHeader.tsx"
             >
@@ -83,7 +83,7 @@ const DashboardHeader = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         <button
-          className="p-1.5 text-gray-500 hover:text-gray-700 transition-colors"
+          className="p-1.5 text-muted-foreground hover:text-foreground-secondary transition-colors"
           data-id="dfj61s3vc"
           data-path="src/components/DashboardHeader.tsx"
         >

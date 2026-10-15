@@ -17,13 +17,13 @@ import {
   type MetricasClinicas,
 } from "./variables";
 
-const COLOR = "#0369a1"; // sky-700
+const COLOR = "hsl(var(--primary))";
 const MARCAS_0_A_1 = [0, 0.2, 0.4, 0.6, 0.8, 1];
 
 const estiloTooltip = {
-  backgroundColor: "white",
+  backgroundColor: "hsl(var(--card))",
   borderRadius: "8px",
-  border: "1px solid #e2e8f0",
+  border: "1px solid hsl(var(--border))",
   fontSize: 14,
 };
 
@@ -45,24 +45,24 @@ export const ImportanciaVariables = ({
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-foreground-secondary">
         Importancia relativa de cada variable según el método de selección usado en el entrenamiento (1 = la más alta).
       </p>
       <ResponsiveContainer width="100%" height={240}>
         <BarChart data={datos} layout="vertical" margin={{ top: 4, right: 24, left: 8, bottom: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" horizontal={false} />
           <XAxis
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 14, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "hsl(var(--muted-foreground))" }}
             tickFormatter={(v) => formatearNumero(v)}
           />
           <YAxis
             type="category"
             dataKey="nombre"
             width={170}
-            tick={{ fontSize: 14, fill: "#334155" }}
+            tick={{ fontSize: 14, fill: "hsl(var(--foreground-secondary))" }}
             axisLine={false}
             tickLine={false}
           />
@@ -82,27 +82,27 @@ export const ImportanciaVariables = ({
 const Celda = ({ valor, sigla, correcto }: { valor: number; sigla: string; correcto: boolean }) => (
   <div
     className={`rounded-md border p-3 text-center ${
-      correcto ? "border-emerald-200 bg-emerald-50" : "border-rose-200 bg-rose-50"
+      correcto ? "border-success-border bg-success-muted" : "border-danger-border bg-danger-muted"
     }`}
   >
     <div
       className={`text-2xl font-semibold tabular-nums ${
-        correcto ? "text-emerald-800" : "text-rose-800"
+        correcto ? "text-success-text" : "text-danger-text"
       }`}
     >
       {valor}
     </div>
-    <div className="text-sm text-slate-500">{sigla}</div>
+    <div className="text-sm text-muted-foreground">{sigla}</div>
   </div>
 );
 
 const Metrica = ({ nombre, valor, detalle }: { nombre: string; valor: number; detalle: string }) => (
-  <div className="rounded-md bg-slate-50 p-3">
-    <div className="text-sm text-slate-500">{nombre}</div>
-    <div className="text-2xl font-semibold tabular-nums text-slate-900">
+  <div className="rounded-md bg-muted p-3">
+    <div className="text-sm text-muted-foreground">{nombre}</div>
+    <div className="text-2xl font-semibold tabular-nums text-foreground">
       {formatearPorcentaje(valor)}
     </div>
-    <div className="text-sm text-slate-500">{detalle}</div>
+    <div className="text-sm text-muted-foreground">{detalle}</div>
   </div>
 );
 
@@ -116,18 +116,18 @@ export const MatrizConfusion = ({
   negativo: string;
 }) => (
   <div className="space-y-4">
-    <p className="text-sm text-slate-600">
+    <p className="text-sm text-foreground-secondary">
       Desempeño sobre {m.total} pacientes del conjunto de prueba (prevalencia de CHD:{" "}
       {formatearPorcentaje(m.prevalencia)}).
     </p>
     <div className="grid grid-cols-[auto_1fr_1fr] items-center gap-2 text-sm">
       <div />
-      <div className="text-center text-sm font-medium text-slate-500">Predicción: {positivo}</div>
-      <div className="text-center text-sm font-medium text-slate-500">Predicción: {negativo}</div>
-      <div className="pr-2 text-right text-sm font-medium text-slate-500">Real: {positivo}</div>
+      <div className="text-center text-sm font-medium text-muted-foreground">Predicción: {positivo}</div>
+      <div className="text-center text-sm font-medium text-muted-foreground">Predicción: {negativo}</div>
+      <div className="pr-2 text-right text-sm font-medium text-muted-foreground">Real: {positivo}</div>
       <Celda valor={m.vp} sigla="Verdaderos positivos" correcto />
       <Celda valor={m.fn} sigla="Falsos negativos" correcto={false} />
-      <div className="pr-2 text-right text-sm font-medium text-slate-500">Real: {negativo}</div>
+      <div className="pr-2 text-right text-sm font-medium text-muted-foreground">Real: {negativo}</div>
       <Celda valor={m.fp} sigla="Falsos positivos" correcto={false} />
       <Celda valor={m.vn} sigla="Verdaderos negativos" correcto />
     </div>
@@ -147,30 +147,30 @@ export const CurvaROC = ({ puntos, auc }: { puntos: [number, number][]; auc: num
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-foreground-secondary">
         Área bajo la curva (AUC):{" "}
-        <span className="font-semibold text-slate-900">{formatearDecimales(auc, 2)}</span>.
+        <span className="font-semibold text-foreground">{formatearDecimales(auc, 2)}</span>.
         La diagonal representa un clasificador al azar (AUC 0,5).
       </p>
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={datos} margin={{ top: 8, right: 16, left: 8, bottom: 24 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--muted))" />
           <XAxis
             dataKey="fpr"
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 14, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "hsl(var(--muted-foreground))" }}
             tickFormatter={(v) => formatearNumero(v)}
-            label={{ value: "1 − Especificidad", position: "bottom", offset: 4, fontSize: 14, fill: "#475569" }}
+            label={{ value: "1 − Especificidad", position: "bottom", offset: 4, fontSize: 14, fill: "hsl(var(--foreground-secondary))" }}
           />
           <YAxis
             type="number"
             domain={[0, 1]}
             ticks={MARCAS_0_A_1}
-            tick={{ fontSize: 14, fill: "#64748b" }}
+            tick={{ fontSize: 14, fill: "hsl(var(--muted-foreground))" }}
             tickFormatter={(v) => formatearNumero(v)}
-            label={{ value: "Sensibilidad", angle: -90, position: "insideLeft", fontSize: 14, fill: "#475569" }}
+            label={{ value: "Sensibilidad", angle: -90, position: "insideLeft", fontSize: 14, fill: "hsl(var(--foreground-secondary))" }}
           />
           <Tooltip
             contentStyle={estiloTooltip}
@@ -180,7 +180,7 @@ export const CurvaROC = ({ puntos, auc }: { puntos: [number, number][]; auc: num
           <Line
             data={[{ fpr: 0, tpr: 0 }, { fpr: 1, tpr: 1 }]}
             dataKey="tpr"
-            stroke="#cbd5e1"
+            stroke="hsl(var(--border))"
             strokeDasharray="4 4"
             dot={false}
             activeDot={false}

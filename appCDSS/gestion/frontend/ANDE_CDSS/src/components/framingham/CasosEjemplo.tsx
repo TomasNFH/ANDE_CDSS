@@ -17,7 +17,7 @@ const Etiqueta = ({ texto, positivo }: { texto: string; positivo: boolean }) => 
   <span
     className={cn(
       "inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-sm font-medium",
-      positivo ? "bg-rose-50 text-rose-800" : "bg-emerald-50 text-emerald-800"
+      positivo ? "bg-danger-muted text-danger-text" : "bg-success-muted text-success-text"
     )}
   >
     {texto}
@@ -34,18 +34,18 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-foreground-secondary">
         Pacientes del conjunto de prueba (no usados en el entrenamiento) con su
         desenlace real y lo que estimó el modelo. Podés cargar cualquiera en el formulario.
       </p>
-      <div className="relative overflow-x-auto rounded-md border border-slate-200">
+      <div className="relative overflow-x-auto rounded-md border border-border">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-sm text-slate-500">
+          <thead className="bg-muted text-left text-sm text-muted-foreground">
             <tr>
               {VARIABLES.map((v) => (
                 <th key={v.id} className="whitespace-nowrap px-3 py-2 font-medium">
                   {v.abreviatura ?? v.etiqueta}
-                  <span className="block font-normal text-slate-400">{v.unidad}</span>
+                  <span className="block font-normal text-muted-foreground">{v.unidad}</span>
                 </th>
               ))}
               <th className="px-3 py-2 font-medium">Desenlace real</th>
@@ -56,7 +56,7 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-border">
             {filas.map((fila, i) => {
               const valores = Object.fromEntries(
                 VARIABLES.map((v) => [v.id, Number(fila[col(v.id)])])
@@ -67,9 +67,9 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
               const probCHD = prediccion === positivo ? confianza : 1 - confianza;
 
               return (
-                <tr key={i} className="hover:bg-slate-50">
+                <tr key={i} className="hover:bg-muted">
                   {VARIABLES.map((v) => (
-                    <td key={v.id} className="px-3 py-2 tabular-nums text-slate-900">
+                    <td key={v.id} className="px-3 py-2 tabular-nums text-foreground">
                       {formatearNumero(valores[v.id])}
                     </td>
                   ))}
@@ -79,14 +79,14 @@ const CasosEjemplo = ({ modelo, onCargar }: CasosEjemploProps) => {
                   <td className="px-3 py-2">
                     <Etiqueta texto={prediccion} positivo={prediccion === positivo} />
                   </td>
-                  <td className="px-3 py-2 text-right tabular-nums text-slate-900">
+                  <td className="px-3 py-2 text-right tabular-nums text-foreground">
                     {formatearPorcentaje(probCHD)}
                   </td>
                   <td className="px-3 py-2 text-right">
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-7 text-sm text-sky-700"
+                      className="h-7 text-sm text-primary"
                       onClick={() => onCargar(valores)}
                     >
                       <ArrowUpToLine />

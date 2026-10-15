@@ -36,10 +36,10 @@ const CampoClinico = ({
       {/* Con gráfico al lado, el pt alinea el centro del input con la línea central del violín
           (2px + etiqueta 20px + 6px + mitad del input 20px = 48px = margen 20px + mitad del gráfico 28px). */}
       <div className={cn("space-y-1.5", contexto && "md:pt-0.5")}>
-        <label htmlFor={inputId} className="block text-sm font-medium text-slate-900">
+        <label htmlFor={inputId} className="block text-sm font-medium text-foreground">
           {v.etiqueta}
           {v.abreviatura && (
-            <span className="ml-1 font-normal text-slate-500">({v.abreviatura})</span>
+            <span className="ml-1 font-normal text-muted-foreground">({v.abreviatura})</span>
           )}
         </label>
         <div className="relative">
@@ -61,20 +61,20 @@ const CampoClinico = ({
             aria-invalid={!!error}
             aria-describedby={ayudaId}
             className={cn(
-              "h-10 pr-16 text-base tabular-nums placeholder:text-slate-400",
-              error && "border-red-500 focus-visible:ring-red-500"
+              "h-10 pr-16 text-base tabular-nums placeholder:text-muted-foreground",
+              error && "border-danger focus-visible:ring-danger"
             )}
           />
-          <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-slate-500">
+          <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
             {v.unidad}
           </span>
         </div>
         {/* La ayuda solo se muestra mientras se edita el campo; los errores, siempre. */}
         <div id={ayudaId} className="text-sm">
           {error ? (
-            <span className="text-red-600">{error}</span>
+            <span className="text-danger-text">{error}</span>
           ) : (
-            <span className={cn("text-slate-500", !enfocado && "sr-only")}>
+            <span className={cn("text-muted-foreground", !enfocado && "sr-only")}>
               {v.descripcion} Valores admitidos: {v.min}–{v.max} {v.unidad}.
             </span>
           )}

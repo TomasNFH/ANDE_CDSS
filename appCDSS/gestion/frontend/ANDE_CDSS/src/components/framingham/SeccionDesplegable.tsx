@@ -21,25 +21,25 @@ const SeccionDesplegable = ({ titulo, icono, resumen, children }: SeccionDespleg
 
   return (
     <Collapsible open={abierta} onOpenChange={setAbierta} asChild>
-      <Card className="border-slate-200 shadow-sm">
-        <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-xl px-5 py-4 text-left transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-600">
-          <span className="text-slate-500">{icono}</span>
+      <Card className="border-border shadow-sm">
+        <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-xl px-5 py-4 text-left transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <span className="text-muted-foreground">{icono}</span>
           <span className="min-w-0 flex-1">
-            <span className="block text-sm font-semibold text-slate-900">{titulo}</span>
-            <span className="block truncate text-sm text-slate-500">{resumen}</span>
+            <span className="block text-sm font-semibold text-foreground">{titulo}</span>
+            <span className="block truncate text-sm text-muted-foreground">{resumen}</span>
           </span>
-          <span className="hidden text-sm text-slate-500 sm:inline">
+          <span className="hidden text-sm text-muted-foreground sm:inline">
             {abierta ? "Ocultar" : "Ver detalle"}
           </span>
           <ChevronDown
             className={cn(
-              "h-4 w-4 shrink-0 text-slate-500 transition-transform",
+              "h-4 w-4 shrink-0 text-muted-foreground transition-transform",
               abierta && "rotate-180"
             )}
           />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="border-t border-slate-100 px-5 py-5">{children}</div>
+          <div className="border-t border-border px-5 py-5">{children}</div>
         </CollapsibleContent>
       </Card>
     </Collapsible>

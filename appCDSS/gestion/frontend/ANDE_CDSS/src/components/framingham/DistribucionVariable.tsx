@@ -21,37 +21,37 @@ interface DistribucionVariableProps {
 const EXTENSION_MAXIMA = 0.6;
 
 const COLOR_PUNTO = {
-  habitual: "bg-slate-800",
-  atipico: "bg-amber-500",
-  fuera: "bg-orange-600",
+  habitual: "bg-foreground",
+  atipico: "bg-warning",
+  fuera: "bg-danger",
 };
 
 // Mitad superior: sin el desenlace; mitad inferior: con el desenlace (CHD).
 const ESTILO_GRUPO = {
-  negativo: { violin: "fill-emerald-100 stroke-emerald-400", caja: "stroke-emerald-700" },
-  positivo: { violin: "fill-rose-100 stroke-rose-400", caja: "stroke-rose-700" },
+  negativo: { violin: "fill-success-muted stroke-success", caja: "stroke-success-text" },
+  positivo: { violin: "fill-danger-muted stroke-danger", caja: "stroke-danger-text" },
 };
 
 const nombreCorto = (g: GrupoDesenlace) => (g.positivo ? "con CHD" : "sin CHD");
 
 /** Leyenda compartida por todos los violines divididos por desenlace. */
 export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
-  <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm text-slate-600">
+  <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm text-foreground-secondary">
     {grupos.map((g) => (
       <span key={g.etiqueta} className="inline-flex items-center gap-1.5">
         <span
           className={cn(
             "h-2.5 w-4 border",
             g.positivo
-              ? "rounded-b-full border-rose-400 bg-rose-100"
-              : "rounded-t-full border-emerald-400 bg-emerald-100"
+              ? "rounded-b-full border-danger bg-danger-muted"
+              : "rounded-t-full border-success bg-success-muted"
           )}
         />
         {g.etiqueta}
       </span>
     ))}
     <span className="inline-flex items-center gap-1.5">
-      <span className="h-3 w-3 rounded-full bg-slate-800 ring-2 ring-white" />
+      <span className="h-3 w-3 rounded-full bg-foreground ring-2 ring-card" />
       Paciente
     </span>
   </div>
@@ -108,7 +108,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           width={pos(g.q3) - pos(g.q1)}
           y={y}
           height={14}
-          className={cn("fill-white", estilo.caja)}
+          className={cn("fill-card", estilo.caja)}
           strokeWidth={1}
           vectorEffect="non-scaling-stroke"
         />
@@ -163,7 +163,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
                 x2={pos(x[x.length - 1])}
                 y1={50}
                 y2={50}
-                className="stroke-slate-300"
+                className="stroke-border"
                 strokeWidth={1}
                 vectorEffect="non-scaling-stroke"
               />
@@ -174,7 +174,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             <>
               <path
                 d={`${mitad(d.kde.densidad, -1)}${mitad(d.kde.densidad, 1)}`}
-                className="fill-sky-100 stroke-sky-300"
+                className="fill-primary-100 stroke-primary-300"
                 strokeWidth={1}
                 vectorEffect="non-scaling-stroke"
               />
@@ -183,7 +183,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
                 width={pos(d.q3) - pos(d.q1)}
                 y={38}
                 height={24}
-                className="fill-white stroke-slate-500"
+                className="fill-card stroke-muted-foreground"
                 strokeWidth={1}
                 vectorEffect="non-scaling-stroke"
               />
@@ -192,7 +192,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
                 x2={pos(d.mediana)}
                 y1={38}
                 y2={62}
-                className="stroke-slate-700"
+                className="stroke-foreground-secondary"
                 strokeWidth={2}
                 vectorEffect="non-scaling-stroke"
               />
@@ -204,7 +204,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
         {grupos && (
           <span
             aria-hidden
-            className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-emerald-700"
+            className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-success-text"
             style={{ left: `${pos(grupos.negativo.mediana)}%` }}
           >
             {formatearNumero(grupos.negativo.mediana)}
@@ -214,7 +214,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
         {/* Tamaño de la cohorte: pop-up flotante al pasar el mouse sobre el gráfico (no ocupa espacio). */}
         <div
           aria-hidden
-          className="pointer-events-none absolute right-0 top-0 z-10 whitespace-nowrap rounded-md border border-slate-200 bg-white px-2 py-1 text-xs tabular-nums text-slate-600 opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100"
+          className="pointer-events-none absolute right-0 top-0 z-10 whitespace-nowrap rounded-md border border-border bg-card px-2 py-1 text-xs tabular-nums text-foreground-secondary opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100"
         >
           n = {d.n}
           {grupos && (
@@ -232,30 +232,30 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             style={{ left: `${posPunto}%` }}
           >
             {fijado === "izquierda" && (
-              <ChevronLeft className="absolute -left-5 -top-2 h-4 w-4 text-orange-600" />
+              <ChevronLeft className="absolute -left-5 -top-2 h-4 w-4 text-danger" />
             )}
             <span
               className={cn(
-                "block h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full shadow ring-2 ring-white",
+                "block h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full shadow ring-2 ring-card",
                 COLOR_PUNTO[ubicacion]
               )}
             />
             {fijado === "derecha" && (
-              <ChevronRight className="absolute left-1 -top-2 h-4 w-4 text-orange-600" />
+              <ChevronRight className="absolute left-1 -top-2 h-4 w-4 text-danger" />
             )}
           </div>
         )}
       </div>
 
       {/* Eje: mínimo y máximo observados en la cohorte, y mediana con CHD bajo su línea. */}
-      <div className="relative h-5 text-sm tabular-nums text-slate-400">
+      <div className="relative h-5 text-sm tabular-nums text-muted-foreground">
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.min)}%` }}>
           {formatearNumero(d.min)}
         </span>
         {grupos && (
           <span
             aria-hidden
-            className="absolute -translate-x-1/2 text-xs font-medium leading-5 text-rose-700"
+            className="absolute -translate-x-1/2 text-xs font-medium leading-5 text-danger-text"
             style={{ left: `${pos(grupos.positivo.mediana)}%` }}
           >
             {formatearNumero(grupos.positivo.mediana)}
@@ -268,21 +268,21 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
 
       <div className="space-y-0.5 text-sm">
         {ubicacion === "habitual" ? (
-          <p className="text-slate-700">Percentil {percentil} de la cohorte · dentro del rango habitual</p>
+          <p className="text-foreground-secondary">Percentil {percentil} de la cohorte · dentro del rango habitual</p>
         ) : ubicacion === "atipico" ? (
-          <p className="flex items-start gap-1 text-amber-700">
+          <p className="flex items-start gap-1 text-warning-text">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" />
             Percentil {percentil} · valor atípico respecto de la cohorte
           </p>
         ) : ubicacion === "fuera" ? (
-          <p className="flex items-start gap-1 text-orange-700">
+          <p className="flex items-start gap-1 text-danger-text">
             <AlertTriangle className="mt-px h-3.5 w-3.5 shrink-0" />
             Fuera de lo observado en la cohorte ({formatearNumero(d.min)}–{formatearNumero(d.max)}{" "}
             {unidad}): la estimación es menos confiable.
           </p>
         ) : null}
         {!grupos && (
-          <p className="text-slate-500">
+          <p className="text-muted-foreground">
             Mediana {formatearNumero(d.mediana)} {unidad} · RIC {formatearNumero(d.q1)}–
             {formatearNumero(d.q3)} {unidad}
           </p>
