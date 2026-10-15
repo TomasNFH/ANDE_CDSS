@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { formatearNumero, type VariableClinica } from "./variables";
@@ -24,6 +24,7 @@ const CampoClinico = ({
 }: CampoClinicoProps) => {
   const inputId = `campo-${v.id}`;
   const ayudaId = `${inputId}-ayuda`;
+  const [enfocado, setEnfocado] = useState(false);
 
   return (
     <div
@@ -50,7 +51,11 @@ const CampoClinico = ({
             placeholder={`Ej.: ${formatearNumero(v.ejemplo)}`}
             value={valor}
             onChange={(e) => onChange(e.target.value)}
-            onBlur={onBlur}
+            onFocus={() => setEnfocado(true)}
+            onBlur={() => {
+              setEnfocado(false);
+              onBlur?.();
+            }}
             aria-invalid={!!error}
             aria-describedby={ayudaId}
             className={cn(
@@ -62,11 +67,12 @@ const CampoClinico = ({
             {v.unidad}
           </span>
         </div>
-        <div id={ayudaId} className="min-h-[1.25rem] text-sm">
+        {/* La ayuda solo se muestra mientras se edita el campo; los errores, siempre. */}
+        <div id={ayudaId} className="text-sm">
           {error ? (
             <span className="text-red-600">{error}</span>
           ) : (
-            <span className="text-slate-500">
+            <span className={cn("text-slate-500", !enfocado && "sr-only")}>
               {v.descripcion} Valores admitidos: {v.min}–{v.max} {v.unidad}.
             </span>
           )}
