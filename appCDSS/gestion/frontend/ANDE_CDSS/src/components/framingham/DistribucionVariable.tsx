@@ -28,8 +28,8 @@ const COLOR_PUNTO = {
 
 // Mitad superior: sin el desenlace; mitad inferior: con el desenlace (CHD).
 const ESTILO_GRUPO = {
-  negativo: { violin: "fill-success-muted stroke-success", caja: "stroke-success-text" },
-  positivo: { violin: "fill-danger-muted stroke-danger", caja: "stroke-danger-text" },
+  negativo: { violin: "fill-primary-300 stroke-primary-600", caja: "stroke-primary-800" },
+  positivo: { violin: "fill-danger-border stroke-danger", caja: "stroke-danger-text" },
 };
 
 const nombreCorto = (g: GrupoDesenlace) => (g.positivo ? "con CHD" : "sin CHD");
@@ -43,8 +43,8 @@ export const LeyendaDesenlace = ({ grupos }: { grupos: GrupoDesenlace[] }) => (
           className={cn(
             "h-2.5 w-4 border",
             g.positivo
-              ? "rounded-b-full border-danger bg-danger-muted"
-              : "rounded-t-full border-success bg-success-muted"
+              ? "rounded-b-full border-danger bg-danger-border"
+              : "rounded-t-full border-primary-600 bg-primary-300"
           )}
         />
         {g.etiqueta}
@@ -204,7 +204,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
         {grupos && (
           <span
             aria-hidden
-            className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-success-text"
+            className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-primary-800"
             style={{ left: `${pos(grupos.negativo.mediana)}%` }}
           >
             {formatearNumero(grupos.negativo.mediana)}
