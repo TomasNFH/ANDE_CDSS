@@ -126,7 +126,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
   };
 
   return (
-    <div className="space-y-1">
+    <div className="group space-y-1">
       <div
         className={cn("relative h-16", grupos && "my-5")}
         role="img"
@@ -134,8 +134,8 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           grupos
             ? `Distribución de ${v.etiqueta}: mediana ${formatearNumero(
                 grupos.negativo.mediana
-              )} ${unidad} sin CHD y ${formatearNumero(grupos.positivo.mediana)} ${unidad} con CHD`
-            : `Distribución de ${v.etiqueta} en la cohorte: mediana ${formatearNumero(d.mediana)} ${unidad}`
+              )} ${unidad} sin CHD y ${formatearNumero(grupos.positivo.mediana)} ${unidad} con CHD (n = ${d.n})`
+            : `Distribución de ${v.etiqueta} en la cohorte: mediana ${formatearNumero(d.mediana)} ${unidad} (n = ${d.n})`
         }
       >
         <svg
@@ -220,6 +220,21 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           </>
         )}
 
+        {/* Tamaño de la cohorte: pop-up flotante al pasar el mouse sobre el gráfico (no ocupa espacio). */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute right-0 top-0 z-10 whitespace-nowrap rounded-md border border-slate-200 bg-white px-2 py-1 text-xs tabular-nums text-slate-600 opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100"
+        >
+          n = {d.n}
+          {grupos && (
+            <>
+              {" "}
+              ({grupos.negativo.n} {nombreCorto(grupos.negativo)}, {grupos.positivo.n}{" "}
+              {nombreCorto(grupos.positivo)})
+            </>
+          )}
+        </div>
+
         {posPunto !== null && ubicacion && (
           <div
             className="absolute top-1/2 transition-[left] duration-300 ease-out"
@@ -272,16 +287,6 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
             {formatearNumero(d.q3)} {unidad}
           </p>
         )}
-        <p className="tabular-nums text-slate-400">
-          n = {d.n}
-          {grupos && (
-            <>
-              {" "}
-              ({grupos.negativo.n} {nombreCorto(grupos.negativo)} · {grupos.positivo.n}{" "}
-              {nombreCorto(grupos.positivo)})
-            </>
-          )}
-        </p>
       </div>
     </div>
   );
