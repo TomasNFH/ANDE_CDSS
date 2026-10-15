@@ -178,8 +178,7 @@ const FraminhamPage = () => {
             onClick={() => navigate("/")}
             className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Modelos abiertos
+            <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
@@ -191,11 +190,6 @@ const FraminhamPage = () => {
               {modelo?.auc ? <> · AUC {formatearDecimales(modelo.auc, 2)}</> : null}
             </p>
           </div>
-          <p className="flex items-start gap-2 text-sm text-slate-500">
-            <Info className="mt-px h-3.5 w-3.5 shrink-0" />
-            Herramienta de apoyo a la decisión clínica en fase de investigación. No
-            reemplaza el juicio clínico ni constituye una indicación diagnóstica o terapéutica.
-          </p>
         </header>
 
         {cargando ? (
@@ -226,7 +220,7 @@ const FraminhamPage = () => {
                   </CardTitle>
                   <p className="text-sm text-slate-500">
                     Cada variable se muestra sobre su distribución en la cohorte de referencia,
-                    separada según el desenlace real. Los valores de ejemplo son la mediana.
+                    separada según desenlace.
                   </p>
                   {modelo.distribuciones?.[VARIABLES[0].id]?.por_desenlace?.length === 2 && (
                     // Misma grilla que CampoClinico, para que la leyenda quede centrada sobre los gráficos.
@@ -242,7 +236,7 @@ const FraminhamPage = () => {
                   <form onSubmit={calcular} noValidate className="space-y-6">
                     <div className="divide-y divide-slate-100">
                       {VARIABLES.map((v) => (
-                        <div key={v.id} className="py-4 first:pt-0">
+                        <div key={v.id} className="py-3 first:pt-0">
                           <CampoClinico
                             variable={v}
                             valor={valores[v.id]}
@@ -336,6 +330,14 @@ const FraminhamPage = () => {
             </SeccionDesplegable>
           </>
         )}
+
+        <footer className="border-t border-slate-200 pt-4">
+          <p className="mx-auto flex max-w-2xl items-start justify-center gap-2 text-center text-sm text-slate-500">
+            <Info className="mt-px h-3.5 w-3.5 shrink-0" />
+            Herramienta de apoyo a la decisión clínica en fase de investigación. No
+            reemplaza el juicio clínico ni constituye una indicación diagnóstica o terapéutica.
+          </p>
+        </footer>
       </main>
     </div>
   );

@@ -34,8 +34,8 @@ const CampoClinico = ({
       )}
     >
       {/* Con gráfico al lado, el pt alinea el centro del input con la línea central del violín
-          (etiqueta 20px + 6px + mitad del input 20px + 6px = 52px = margen 20px + mitad del gráfico 32px). */}
-      <div className={cn("space-y-1.5", contexto && "md:pt-1.5")}>
+          (2px + etiqueta 20px + 6px + mitad del input 20px = 48px = margen 20px + mitad del gráfico 28px). */}
+      <div className={cn("space-y-1.5", contexto && "md:pt-0.5")}>
         <label htmlFor={inputId} className="block text-sm font-medium text-slate-900">
           {v.etiqueta}
           {v.abreviatura && (

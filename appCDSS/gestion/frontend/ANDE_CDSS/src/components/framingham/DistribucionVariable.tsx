@@ -128,7 +128,7 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
   return (
     <div className="group space-y-1">
       <div
-        className={cn("relative h-16", grupos && "my-5")}
+        className={cn("relative h-14", grupos && "mt-5")}
         role="img"
         aria-label={
           grupos
@@ -200,24 +200,15 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
           )}
         </svg>
 
-        {/* Mediana de cada grupo, rotulada sobre (sin CHD) y bajo (con CHD) su línea. */}
+        {/* Mediana sin CHD, rotulada sobre su línea (la de con CHD va en la fila del eje). */}
         {grupos && (
-          <>
-            <span
-              aria-hidden
-              className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-emerald-700"
-              style={{ left: `${pos(grupos.negativo.mediana)}%` }}
-            >
-              {formatearNumero(grupos.negativo.mediana)}
-            </span>
-            <span
-              aria-hidden
-              className="absolute top-full mt-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-rose-700"
-              style={{ left: `${pos(grupos.positivo.mediana)}%` }}
-            >
-              {formatearNumero(grupos.positivo.mediana)}
-            </span>
-          </>
+          <span
+            aria-hidden
+            className="absolute bottom-full mb-0.5 -translate-x-1/2 text-xs font-medium tabular-nums text-emerald-700"
+            style={{ left: `${pos(grupos.negativo.mediana)}%` }}
+          >
+            {formatearNumero(grupos.negativo.mediana)}
+          </span>
         )}
 
         {/* Tamaño de la cohorte: pop-up flotante al pasar el mouse sobre el gráfico (no ocupa espacio). */}
@@ -256,11 +247,20 @@ const DistribucionVariable = ({ variable: v, distribucion: d, valor }: Distribuc
         )}
       </div>
 
-      {/* Eje: mínimo y máximo observados en la cohorte */}
+      {/* Eje: mínimo y máximo observados en la cohorte, y mediana con CHD bajo su línea. */}
       <div className="relative h-5 text-sm tabular-nums text-slate-400">
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.min)}%` }}>
           {formatearNumero(d.min)}
         </span>
+        {grupos && (
+          <span
+            aria-hidden
+            className="absolute -translate-x-1/2 text-xs font-medium leading-5 text-rose-700"
+            style={{ left: `${pos(grupos.positivo.mediana)}%` }}
+          >
+            {formatearNumero(grupos.positivo.mediana)}
+          </span>
+        )}
         <span className="absolute -translate-x-1/2" style={{ left: `${pos(d.max)}%` }}>
           {formatearNumero(d.max)}
         </span>
