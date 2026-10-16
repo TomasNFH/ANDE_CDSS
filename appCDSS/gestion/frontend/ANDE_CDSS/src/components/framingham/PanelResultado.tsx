@@ -19,6 +19,11 @@ interface PanelResultadoProps {
   onRecuperar: (p: Prediccion) => void;
 }
 
+// Etiqueta centrada sobre una posición de la barra; cerca de los bordes se alinea hacia adentro
+// para no salirse del panel.
+const alineacion = (proporcion: number) =>
+  proporcion < 0.2 ? "translate-x-0" : proporcion > 0.8 ? "-translate-x-full" : "-translate-x-1/2";
+
 const BarraProbabilidad = ({
   probabilidad,
   positivo,
@@ -29,6 +34,18 @@ const BarraProbabilidad = ({
   umbral: number;
 }) => (
   <div className="space-y-1">
+    <div className="relative h-5 text-sm">
+      <span
+        className={cn(
+          "absolute whitespace-nowrap font-medium tabular-nums transition-all duration-500",
+          alineacion(probabilidad),
+          positivo ? "text-danger-text" : "text-foreground"
+        )}
+        style={{ left: `${probabilidad * 100}%` }}
+      >
+        {formatearPorcentaje(probabilidad)}
+      </span>
+    </div>
     <div className="relative h-3 w-full rounded-full bg-muted">
       <div
         className={cn(
@@ -45,7 +62,10 @@ const BarraProbabilidad = ({
     </div>
     <div className="relative h-5 text-sm text-muted-foreground">
       <span className="absolute left-0">0%</span>
-      <span className="absolute -translate-x-1/2" style={{ left: `${umbral * 100}%` }}>
+      <span
+        className={cn("absolute whitespace-nowrap", alineacion(umbral))}
+        style={{ left: `${umbral * 100}%` }}
+      >
         Umbral {formatearPorcentaje(umbral)}
       </span>
       <span className="absolute right-0">100%</span>
