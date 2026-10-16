@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BrainCircuit, Sparkles, Binoculars } from "lucide-react";
+import { BrainCircuit, Sparkles, Binoculars, Info } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -12,20 +12,16 @@ const PaginaInicio = () => {
 
   return (
     <div className="flex min-h-screen bg-page">
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <DashboardHeader />
-        <main className="p-6">
-          <h1 className="text-5xl font-extrabold mb-6 text-center">
-            Te damos la bienvenida a DynamicDSS
+        <main className="flex-1 px-6 pt-12 pb-10">
+          <h1 className="text-5xl font-extrabold mb-3 text-center">
+            Te damos la bienvenida a MedIAssist
           </h1>
-          <p className="text-foreground-secondary mb-12 text-center">
-            Este trabajo presenta el desarrollo de un sistema dinámico de
-            apoyo a la decisión clínica (CDSS) que incorpora la selección
-            dinámica de modelos de aprendizaje automático adaptados a datos
-            médicos, con una aplicación específica a datos de diálisis en
-            nefrología.
+          <p className="text-lg text-foreground-secondary mb-10 text-center max-w-3xl mx-auto">
+            Elegí un tipo de modelo para apoyar tu decisión clínica.
           </p>
-          <div className="flex justify-center gap-16 mt-16">
+          <div className="flex justify-center gap-12">
             <div className="flex flex-col items-center">
               <button
                 type="button"
@@ -87,12 +83,13 @@ const PaginaInicio = () => {
             </div>
           </div>
           {showCDSSOptions && (
-            <Card className="mt-10 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
+            <Card className="mt-8 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
               <CardContent className="w-full flex flex-col items-center justify-center">
                 <div className="flex flex-row justify-center items-center gap-12 mt-8">
                   <div className="flex-1 flex items-center justify-end pr-8">
                     <span className="text-2xl font-semibold text-foreground max-w-xs text-left">
-                      Usá modelos entrenados con datasets abiertos.
+                      Modelos entrenados con conjuntos de datos médicos
+                      abiertos (open source), listos para usar.
                     </span>
                   </div>
                   <div className="flex flex-row gap-8">
@@ -120,15 +117,27 @@ const PaginaInicio = () => {
             </Card>
           )}
           {showCustomOptions && (
-            <Card className="mt-10 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
-              <CardContent className="w-full flex items-center justify-center py-16">
-                <span className="text-2xl font-semibold text-muted-foreground">
-                  No hay modelos disponibles.
+            <Card className="mt-8 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
+              <CardContent className="w-full flex flex-col items-center justify-center gap-4 py-16 text-center">
+                <span className="text-2xl font-semibold text-foreground max-w-2xl">
+                  Modelos desarrollados a pedido de tu institución, entrenados
+                  con sus propios datos clínicos.
+                </span>
+                <span className="text-muted-foreground">
+                  Todavía no hay modelos personalizados disponibles.
                 </span>
               </CardContent>
             </Card>
           )}
         </main>
+        <footer className="border-t border-border px-6 py-4">
+          <p className="flex items-start justify-center gap-2 text-sm text-muted-foreground text-center">
+            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            Herramienta de apoyo a la decisión clínica en fase de
+            investigación. No reemplaza el juicio clínico ni constituye una
+            indicación diagnóstica o terapéutica.
+          </p>
+        </footer>
         {showMiniPlayer && (
           <div
             className="fixed bottom-6 right-6 z-50"
