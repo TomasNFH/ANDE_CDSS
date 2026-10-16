@@ -173,7 +173,7 @@ def _armar_resumen(
 
     clases = list(m.clf.classes_)
     cm = [int(n) for n in re.findall(r"\d+", info["Confusion matrix"])]
-    roc_curves, auc = [], []
+    roc_curves, auc, calibracion = [], [], None
     if m.target_type == "boolean":
         # sklearn guarda [[TN, FP], [FN, TP]]; ConfusionMatrix espera [TP, FN, FP, TN]
         # con la clase 1 como positiva.
@@ -186,6 +186,17 @@ def _armar_resumen(
         fpr = _parsear_numeros(info["False Positive Rate"])
         if tpr and len(tpr) == len(fpr):
             roc_curves = [list(zip(fpr, tpr))]
+
+        # Calibración del modelo tal como se sirve, sobre todo el set de test.
+        _, _, proba = predecir_df(m, X_test)
+        p = proba[:, -1]
+        y = (y_test == m.clf.classes_[-1]).to_numpy()
+        calibracion = {
+            "brier": float(np.mean((p - y) ** 2)),
+            "brier_referencia": float(np.mean((y.mean() - y) ** 2)),
+            "media_predicha": float(p.mean()),
+            "prevalencia_observada": float(y.mean()),
+        }
     else:
         bool_labels = [etiqueta(m, c) for c in clases]
 
@@ -210,6 +221,7 @@ def _armar_resumen(
         "roc_curves": roc_curves,
         "auc": auc,
         "umbral": m.umbral,
+        "calibracion": calibracion,
         "example_prediction": example_prediction,
         "bool_labels": bool_labels,
         "target_column": m.target_column,

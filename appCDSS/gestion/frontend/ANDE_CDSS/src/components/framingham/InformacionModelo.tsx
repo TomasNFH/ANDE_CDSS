@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CurvaROC, ImportanciaVariables, MatrizConfusion } from "./GraficosModelo";
 import {
   VARIABLES,
+  formatearDecimales,
   formatearPorcentaje,
   nombreAlgoritmo,
   type MetricasClinicas,
@@ -26,6 +26,8 @@ const InformacionModelo = ({ modelo, metricas }: InformacionModeloProps) => {
   const [positivo, negativo] = modelo.bool_labels;
   const importancias = modelo.feat.length === 2 ? modelo.feat[1] : null;
   const roc = modelo.roc_curves[0];
+  const umbral = modelo.umbral ?? 0.5;
+  const cal = modelo.calibracion;
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
@@ -42,19 +44,30 @@ const InformacionModelo = ({ modelo, metricas }: InformacionModeloProps) => {
           <Dato titulo="Desenlace">CHD a 10 años</Dato>
           <Dato titulo="Variables">{VARIABLES.map((v) => v.abreviatura ?? v.etiqueta).join(", ")}</Dato>
           <Dato titulo="Conjunto de prueba">{metricas.total} pacientes</Dato>
+          <Dato titulo="Umbral de clasificación">{formatearPorcentaje(umbral)}</Dato>
+          {cal && (
+            <Dato titulo="Brier score">
+              {formatearDecimales(cal.brier, 3)}{" "}
+              <span className="text-muted-foreground">
+                (sin modelo: {formatearDecimales(cal.brier_referencia, 3)})
+              </span>
+            </Dato>
+          )}
         </dl>
 
-        <div className="flex gap-2 rounded-md border border-warning-border bg-warning-muted p-3 text-sm text-warning-text">
-          <Info className="mt-0.5 h-4 w-4 shrink-0" />
-          <p className="leading-relaxed">
-            La probabilidad mostrada no es un riesgo absoluto: el modelo se entrenó con
-            clases balanceadas y tiende a sobreestimarlo frente a la prevalencia real
-            ({formatearPorcentaje(metricas.prevalencia)} en el conjunto de prueba). Con el
-            umbral de 50%, un resultado negativo es confiable (VPN{" "}
-            {formatearPorcentaje(metricas.vpn)}), pero un resultado positivo debe confirmarse
-            (VPP {formatearPorcentaje(metricas.vpp)}).
-          </p>
-        </div>
+        <p className="text-sm leading-relaxed text-foreground-secondary">
+          {cal && (
+            <>
+              La probabilidad mostrada es un riesgo absoluto: en el conjunto de prueba el
+              riesgo predicho promedio fue {formatearPorcentaje(cal.media_predicha)} y la
+              prevalencia observada, {formatearPorcentaje(cal.prevalencia_observada)}.{" "}
+            </>
+          )}
+          El modelo clasifica como positivo a partir de {formatearPorcentaje(umbral)}, la
+          prevalencia de CHD en la cohorte de entrenamiento. Un resultado negativo es
+          confiable (VPN {formatearPorcentaje(metricas.vpn)}); uno positivo indica riesgo
+          mayor al promedio y debe confirmarse (VPP {formatearPorcentaje(metricas.vpp)}).
+        </p>
       </div>
 
       <Tabs defaultValue="matriz" className="min-w-0">

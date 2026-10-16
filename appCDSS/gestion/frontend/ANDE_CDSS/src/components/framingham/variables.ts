@@ -216,11 +216,21 @@ export interface ResumenModelo {
   auc: number;
   /** Probabilidad de CHD a partir de la cual el modelo clasifica como positivo (null: clase más probable). */
   umbral: number | null;
+  /** Calibración sobre el set de test (solo targets booleanos). */
+  calibracion: Calibracion | null;
   example_prediction: (string | number)[][];
   bool_labels: string[];
   target_column: string;
   target_type: string;
   distribuciones: Record<string, Distribucion>;
+}
+
+export interface Calibracion {
+  brier: number;
+  /** Brier de predecir la prevalencia observada para todos. */
+  brier_referencia: number;
+  media_predicha: number;
+  prevalencia_observada: number;
 }
 
 export interface Prediccion {

@@ -126,12 +126,6 @@ const PanelResultado = ({
                 </div>
               ))}
             </dl>
-
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              El umbral es la prevalencia de CHD a 10 años en la cohorte de entrenamiento:
-              por encima, el riesgo del paciente es mayor que el promedio.
-              Ver «Información del modelo».
-            </p>
           </div>
         ) : (
           <div className="py-8 text-center text-sm text-muted-foreground">
