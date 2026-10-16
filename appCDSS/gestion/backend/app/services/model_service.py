@@ -13,12 +13,17 @@ OPEN_MODELS_DIR = Path(
     os.environ.get("OPEN_MODELS_DIR", Path(__file__).resolve().parents[2] / "openModels")
 )
 
-# Modelos abiertos disponibles: nombre de la API -> carpeta del export y etiquetas legibles
-# de cada clase del target (el export solo trae los valores codificados).
+# Modelos abiertos disponibles: nombre de la API -> carpeta del export, etiquetas legibles
+# de cada clase del target (el export solo trae los valores codificados) y, para targets
+# booleanos, el umbral de probabilidad a partir del cual se clasifica como positivo.
 OPEN_MODELS = {
     "framingham": {
         "carpeta": "framingham_EXPORT",
         "etiquetas": {0: "Sin CHD a 10 años", 1: "CHD a 10 años"},
+        # Prevalencia de CHD en el set de entrenamiento (511/3292). El modelo se entrenó con
+        # class_weight="balanced" y se le corrigió el intercepto (+ logit(prevalencia)) para que
+        # las probabilidades sean reales; con este umbral clasifica igual que el original con 0,5.
+        "umbral": 511 / 3292,
     },
 }
 
@@ -40,6 +45,7 @@ class LoadedModel:
     scalers: dict
     all_features: list[str]
     etiquetas: dict
+    umbral: float | None = None
     resumen: dict = field(default_factory=dict)
 
 
@@ -88,12 +94,18 @@ def predecir_df(m: LoadedModel, X: pd.DataFrame) -> tuple[list[str], list[float]
 
     Devuelve las etiquetas predichas, la confianza (probabilidad de la clase predicha)
     y la matriz completa de probabilidades (filas x clases, en el orden de clf.classes_).
+    Con umbral, la clase positiva (la última) se predice si su probabilidad lo alcanza;
+    si no, se predice la clase más probable.
     """
     Xn = normalizar(m, X[m.features].astype(float))
     proba = m.clf.predict_proba(Xn.to_numpy())
-    pred_idx = proba.argmax(axis=1)
+    if m.umbral is not None:
+        pred_idx = (proba[:, -1] >= m.umbral).astype(int)
+    else:
+        pred_idx = proba.argmax(axis=1)
     clases = m.clf.classes_[pred_idx]
-    return [etiqueta(m, c) for c in clases], proba.max(axis=1).tolist(), proba
+    confianza = proba[np.arange(len(proba)), pred_idx]
+    return [etiqueta(m, c) for c in clases], confianza.tolist(), proba
 
 
 # CSV fijos con las distribuciones de cada variable, generados aparte a partir del dataset completo.
@@ -197,6 +209,7 @@ def _armar_resumen(
         "CM": [cm],
         "roc_curves": roc_curves,
         "auc": auc,
+        "umbral": m.umbral,
         "example_prediction": example_prediction,
         "bool_labels": bool_labels,
         "target_column": m.target_column,
@@ -235,9 +248,12 @@ def cargar_modelo(nombre: str) -> LoadedModel:
         scalers={"minmax": minmax, "std": std},
         all_features=X_test.columns.tolist(),
         etiquetas=config["etiquetas"],
+        umbral=config.get("umbral"),
     )
     if m.norm_method not in NORMALIZATION_METHODS:
         raise ValueError(f"{nombre}: método de normalización desconocido '{m.norm_method}'")
+    if m.umbral is not None and (m.target_type != "boolean" or len(clf.classes_) != 2):
+        raise ValueError(f"{nombre}: el umbral solo aplica a targets booleanos")
     if clf.n_features_in_ != len(m.features):
         raise ValueError(
             f"{nombre}: el modelo espera {clf.n_features_in_} features y info.csv lista {len(m.features)}"

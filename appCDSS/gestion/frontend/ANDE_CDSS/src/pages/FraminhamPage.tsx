@@ -299,6 +299,7 @@ const FraminhamPage = () => {
                 )}
                 <PanelResultado
                   resultado={resultado}
+                  umbral={modelo.umbral ?? 0.5}
                   calculando={calculando}
                   error={errorPrediccion}
                   historial={historial}

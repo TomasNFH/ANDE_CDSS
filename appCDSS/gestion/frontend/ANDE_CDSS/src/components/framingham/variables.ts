@@ -214,6 +214,8 @@ export interface ResumenModelo {
   CM: number[][];
   roc_curves: [number, number][][];
   auc: number;
+  /** Probabilidad de CHD a partir de la cual el modelo clasifica como positivo (null: clase más probable). */
+  umbral: number | null;
   example_prediction: (string | number)[][];
   bool_labels: string[];
   target_column: string;

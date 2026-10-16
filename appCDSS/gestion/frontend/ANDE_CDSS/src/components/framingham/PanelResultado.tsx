@@ -9,18 +9,25 @@ import {
   type Prediccion,
 } from "./variables";
 
-// El modelo clasifica como positivo por encima de este umbral (predict_proba > 0.5).
-const UMBRAL = 0.5;
-
 interface PanelResultadoProps {
   resultado: Prediccion | null;
+  /** El modelo clasifica como positivo a partir de esta probabilidad. */
+  umbral: number;
   calculando: boolean;
   error: string;
   historial: Prediccion[];
   onRecuperar: (p: Prediccion) => void;
 }
 
-const BarraProbabilidad = ({ probabilidad, positivo }: { probabilidad: number; positivo: boolean }) => (
+const BarraProbabilidad = ({
+  probabilidad,
+  positivo,
+  umbral,
+}: {
+  probabilidad: number;
+  positivo: boolean;
+  umbral: number;
+}) => (
   <div className="space-y-1">
     <div className="relative h-3 w-full rounded-full bg-muted">
       <div
@@ -32,14 +39,14 @@ const BarraProbabilidad = ({ probabilidad, positivo }: { probabilidad: number; p
       />
       <div
         className="absolute -top-1 h-5 w-0.5 bg-foreground"
-        style={{ left: `${UMBRAL * 100}%` }}
+        style={{ left: `${umbral * 100}%` }}
         aria-hidden
       />
     </div>
     <div className="relative h-5 text-sm text-muted-foreground">
       <span className="absolute left-0">0%</span>
-      <span className="absolute -translate-x-1/2" style={{ left: `${UMBRAL * 100}%` }}>
-        Umbral {formatearPorcentaje(UMBRAL)}
+      <span className="absolute -translate-x-1/2" style={{ left: `${umbral * 100}%` }}>
+        Umbral {formatearPorcentaje(umbral)}
       </span>
       <span className="absolute right-0">100%</span>
     </div>
@@ -48,6 +55,7 @@ const BarraProbabilidad = ({ probabilidad, positivo }: { probabilidad: number; p
 
 const PanelResultado = ({
   resultado,
+  umbral,
   calculando,
   error,
   historial,
@@ -93,6 +101,7 @@ const PanelResultado = ({
             <BarraProbabilidad
               probabilidad={resultado.probabilidad}
               positivo={resultado.positivo}
+              umbral={umbral}
             />
 
             <div
@@ -119,8 +128,8 @@ const PanelResultado = ({
             </dl>
 
             <p className="text-sm leading-relaxed text-muted-foreground">
-              La probabilidad no está calibrada a la prevalencia real y tiende a
-              sobreestimar el riesgo absoluto: interpretala como un indicador relativo.
+              El umbral es la prevalencia de CHD a 10 años en la cohorte de entrenamiento:
+              por encima, el riesgo del paciente es mayor que el promedio.
               Ver «Información del modelo».
             </p>
           </div>
