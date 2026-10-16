@@ -23,7 +23,7 @@ const SeccionDesplegable = ({ titulo, icono, resumen, children }: SeccionDespleg
     <Collapsible open={abierta} onOpenChange={setAbierta} asChild>
       <Card className="border-border shadow-sm">
         <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-xl px-5 py-4 text-left transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <span className="text-muted-foreground">{icono}</span>
+          <span className="text-foreground">{icono}</span>
           <span className="min-w-0 flex-1">
             <span className="block text-sm font-semibold text-foreground">{titulo}</span>
             <span className="block truncate text-sm text-muted-foreground">{resumen}</span>

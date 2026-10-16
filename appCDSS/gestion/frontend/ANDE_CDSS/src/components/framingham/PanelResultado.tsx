@@ -26,7 +26,7 @@ const BarraProbabilidad = ({ probabilidad, positivo }: { probabilidad: number; p
       <div
         className={cn(
           "h-full rounded-full transition-all duration-500",
-          positivo ? "bg-danger" : "bg-success"
+          positivo ? "bg-danger" : "bg-primary-100"
         )}
         style={{ width: `${probabilidad * 100}%` }}
       />
@@ -59,7 +59,7 @@ const PanelResultado = ({
     <Card className="border-border shadow-sm">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base text-foreground">
-          <Activity className="h-4 w-4 text-primary" />
+          <Activity className="h-4 w-4 text-foreground" />
           Resultado
         </CardTitle>
       </CardHeader>

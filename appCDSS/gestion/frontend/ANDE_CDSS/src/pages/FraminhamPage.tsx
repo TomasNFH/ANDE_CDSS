@@ -215,7 +215,7 @@ const FraminhamPage = () => {
               <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center gap-2 text-base text-foreground">
-                    <Stethoscope className="h-4 w-4 text-primary" />
+                    <Stethoscope className="h-4 w-4 text-foreground" />
                     Datos del paciente
                   </CardTitle>
                   <p className="text-sm text-muted-foreground">
@@ -267,7 +267,7 @@ const FraminhamPage = () => {
                       <Button
                         type="submit"
                         disabled={calculando}
-                        className="h-10 bg-primary px-5 text-primary-foreground hover:bg-primary-800"
+                        className="h-10 rounded-xl bg-primary-100 px-5 font-semibold text-foreground-secondary shadow-lg transition-all hover:bg-primary-200 active:bg-primary-300"
                       >
                         <Calculator />
                         {calculando ? "Calculando…" : "Calcular riesgo"}
