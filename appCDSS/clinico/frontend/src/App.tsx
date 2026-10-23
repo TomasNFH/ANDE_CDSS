@@ -11,7 +11,7 @@ function App() {
       <TooltipProvider>
         <BrowserRouter>
           <Routes>
-            {/* Todo gestión requiere sesión; el login está en el módulo público */}
+            {/* Todo clínico requiere sesión; el login está en el módulo público */}
             <Route element={<RequireAuth />}>
               <Route path="/" element={<PaginaInicio />} />
               <Route path="/cardiology" element={<FraminhamPage />} />

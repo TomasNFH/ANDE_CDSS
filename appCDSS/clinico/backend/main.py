@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title = 'CDSS backend: gestion',
+    title = 'CDSS backend: clinico',
     version = '1.0.0',
     lifespan = lifespan,
 )
