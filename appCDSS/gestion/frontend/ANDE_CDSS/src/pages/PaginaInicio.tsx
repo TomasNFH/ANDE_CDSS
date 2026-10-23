@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BrainCircuit, Sparkles, Binoculars, Info, Workflow } from "lucide-react";
+import { BrainCircuit, PackageOpen, Wrench, Binoculars, Info, Table2, ChartLine } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
@@ -13,6 +13,10 @@ const PaginaInicio = () => {
   const [showModeladoDinamico, setShowModeladoDinamico] = useState(false);
   const { usuario } = useAuth();
   const esAdministrador = usuario?.rol === "ADMINISTRADOR";
+  // Con una tarjeta abierta abajo, los botones se achican para dejarle lugar.
+  const haySeleccion = showCDSSOptions || showCustomOptions || showModeladoDinamico;
+  const tamanoBoton = haySeleccion ? "w-28 h-28" : "w-40 h-40";
+  const tamanoIcono = haySeleccion ? "h-11 w-11" : "h-16 w-16";
 
   return (
     <div className="flex min-h-screen bg-page">
@@ -29,7 +33,7 @@ const PaginaInicio = () => {
             <div className="flex flex-col items-center">
               <button
                 type="button"
-                className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCustomOptions
                     ? "bg-primary-300"
                     : "bg-primary-100 hover:bg-primary-200"
@@ -42,7 +46,7 @@ const PaginaInicio = () => {
                   setShowModeladoDinamico(false);
                 }}
               >
-                <BrainCircuit size={64} />
+                <Wrench className={`${tamanoIcono} transition-all`} />
               </button>
               <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos personalizados
@@ -51,7 +55,7 @@ const PaginaInicio = () => {
             <div className="flex flex-col items-center">
               <button
                 type="button"
-                className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCDSSOptions
                     ? "bg-primary-300"
                     : "bg-primary-100 hover:bg-primary-200"
@@ -64,7 +68,7 @@ const PaginaInicio = () => {
                   setShowModeladoDinamico(false);
                 }}
               >
-                <Sparkles size={64} />
+                <PackageOpen className={`${tamanoIcono} transition-all`} />
               </button>
               <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos abiertos
@@ -74,7 +78,7 @@ const PaginaInicio = () => {
               <div className="flex flex-col items-center">
                 <button
                   type="button"
-                  className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                  className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                     showModeladoDinamico
                       ? "bg-danger text-danger-foreground"
                       : "bg-danger-muted text-danger-text hover:bg-danger-border"
@@ -87,7 +91,7 @@ const PaginaInicio = () => {
                     setShowMiniPlayer(false);
                   }}
                 >
-                  <Workflow size={64} />
+                  <BrainCircuit className={`${tamanoIcono} transition-all`} />
                 </button>
                 <span className="text-base font-semibold text-danger-text mt-2">
                   Modelado dinámico
@@ -97,7 +101,7 @@ const PaginaInicio = () => {
               <div className="flex flex-col items-center">
                 <button
                   type="button"
-                  className="w-40 h-40 flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg"
+                  className={`${tamanoBoton} flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg`}
                   aria-label="Cómo usar"
                   onClick={() => {
                     setShowCDSSOptions(false);
@@ -105,7 +109,7 @@ const PaginaInicio = () => {
                     setShowMiniPlayer(true);
                   }}
                 >
-                  <Binoculars size={64} />
+                  <Binoculars className={`${tamanoIcono} transition-all`} />
                 </button>
                 <span className="text-base font-semibold text-foreground-secondary mt-2">
                   Cómo usar
@@ -149,14 +153,43 @@ const PaginaInicio = () => {
           )}
           {showModeladoDinamico && (
             <Card className="mt-8 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
-              <CardContent className="w-full flex flex-col items-center justify-center gap-4 py-16 text-center">
-                <span className="text-2xl font-semibold text-foreground max-w-2xl">
-                  Entrenamiento y ajuste de modelos a partir de nuevos datos
-                  clínicos.
-                </span>
-                <span className="text-muted-foreground">
-                  Todavía no está disponible.
-                </span>
+              <CardContent className="w-full flex flex-col items-center justify-center">
+                <div className="flex flex-row justify-center items-center gap-12 mt-8">
+                  <div className="flex-1 flex items-center justify-end pr-8">
+                    <span className="text-2xl font-semibold text-foreground max-w-xs text-left">
+                      Flujo de entrenamiento de modelos de aprendizaje
+                      automático para el conjunto de datos cargado.
+                    </span>
+                  </div>
+                  <div className="flex flex-row gap-8">
+                    {[
+                      {
+                        titulo: "Modelado instancial",
+                        descripcion: "Cada fila es una observación independiente.",
+                        Icono: Table2,
+                      },
+                      {
+                        titulo: "Modelado temporal",
+                        descripcion: "Mediciones repetidas de cada paciente en el tiempo.",
+                        Icono: ChartLine,
+                      },
+                    ].map(({ titulo, descripcion, Icono }) => (
+                      <button
+                        key={titulo}
+                        type="button"
+                        className="w-64 h-56 flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-danger-border bg-danger-muted px-6 text-center transition-all hover:scale-105 hover:shadow-lg"
+                      >
+                        <Icono className="h-12 w-12 text-danger-text" />
+                        <span className="text-xl font-bold text-danger-text">
+                          {titulo}
+                        </span>
+                        <span className="text-sm text-foreground-secondary">
+                          {descripcion}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           )}
