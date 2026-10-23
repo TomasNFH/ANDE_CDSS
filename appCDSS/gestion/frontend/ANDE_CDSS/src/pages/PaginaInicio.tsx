@@ -13,10 +13,6 @@ const PaginaInicio = () => {
   const [showModeladoDinamico, setShowModeladoDinamico] = useState(false);
   const { usuario } = useAuth();
   const esAdministrador = usuario?.rol === "ADMINISTRADOR";
-  // Con una tarjeta abierta abajo, los botones se achican para dejarle lugar.
-  const haySeleccion = showCDSSOptions || showCustomOptions || showModeladoDinamico;
-  const tamanoBoton = haySeleccion ? "w-28 h-28" : "w-40 h-40";
-  const tamanoIcono = haySeleccion ? "h-11 w-11" : "h-16 w-16";
 
   return (
     <div className="flex min-h-screen bg-page">
@@ -33,7 +29,7 @@ const PaginaInicio = () => {
             <div className="flex flex-col items-center">
               <button
                 type="button"
-                className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCustomOptions
                     ? "bg-primary-300"
                     : "bg-primary-100 hover:bg-primary-200"
@@ -46,7 +42,7 @@ const PaginaInicio = () => {
                   setShowModeladoDinamico(false);
                 }}
               >
-                <Wrench className={`${tamanoIcono} transition-all`} />
+                <Wrench size={64} />
               </button>
               <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos personalizados
@@ -55,7 +51,7 @@ const PaginaInicio = () => {
             <div className="flex flex-col items-center">
               <button
                 type="button"
-                className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                   showCDSSOptions
                     ? "bg-primary-300"
                     : "bg-primary-100 hover:bg-primary-200"
@@ -68,7 +64,7 @@ const PaginaInicio = () => {
                   setShowModeladoDinamico(false);
                 }}
               >
-                <PackageOpen className={`${tamanoIcono} transition-all`} />
+                <PackageOpen size={64} />
               </button>
               <span className="text-base font-semibold text-foreground-secondary mt-2">
                 Modelos abiertos
@@ -78,7 +74,7 @@ const PaginaInicio = () => {
               <div className="flex flex-col items-center">
                 <button
                   type="button"
-                  className={`${tamanoBoton} flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                  className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
                     showModeladoDinamico
                       ? "bg-danger text-danger-foreground"
                       : "bg-danger-muted text-danger-text hover:bg-danger-border"
@@ -91,7 +87,7 @@ const PaginaInicio = () => {
                     setShowMiniPlayer(false);
                   }}
                 >
-                  <BrainCircuit className={`${tamanoIcono} transition-all`} />
+                  <BrainCircuit size={64} />
                 </button>
                 <span className="text-base font-semibold text-danger-text mt-2">
                   Modelado dinámico
@@ -101,7 +97,7 @@ const PaginaInicio = () => {
               <div className="flex flex-col items-center">
                 <button
                   type="button"
-                  className={`${tamanoBoton} flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg`}
+                  className="w-40 h-40 flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg"
                   aria-label="Cómo usar"
                   onClick={() => {
                     setShowCDSSOptions(false);
@@ -109,7 +105,7 @@ const PaginaInicio = () => {
                     setShowMiniPlayer(true);
                   }}
                 >
-                  <Binoculars className={`${tamanoIcono} transition-all`} />
+                  <Binoculars size={64} />
                 </button>
                 <span className="text-base font-semibold text-foreground-secondary mt-2">
                   Cómo usar
