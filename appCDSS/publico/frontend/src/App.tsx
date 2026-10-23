@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import PaginaBienvenida from '@/pages/PaginaBienvenida'
 import PaginaSesiones from '@/pages/PaginaSesiones'
 
-// El módulo público es la portada y el login; después se pasa a gestión.
+// El módulo público es la portada y el login; después se pasa a clínico.
 function App() {
   return (
     <BrowserRouter>

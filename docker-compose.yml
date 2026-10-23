@@ -1,5 +1,5 @@
 # Compose único para levantar TODO el entorno local con: docker compose up --build
-# Orquesta la base (Postgres) + gestión (back/front) + público (back/front).
+# Orquesta la base (Postgres) + clínico (back/front) + público (back/front).
 # Puertos y subnet elegidos para no chocar con biobanco (5433, 8000-8001, 8080-8081, 172.40)
 # ni con prodnaturales (5434, 8001, 8011, 5173, 5181, 172.41).
 
@@ -23,44 +23,44 @@ services:
       timeout: 5s
       retries: 30
 
-  gestion-backend:
-    build: ./appCDSS/gestion/backend
-    container_name: andeCDSS_gestion_backend
+  clinico-backend:
+    build: ./appCDSS/clinico/backend
+    container_name: andeCDSS_clinico_backend
     environment:
       DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
-      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, gestión la lee
+      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, clínico la lee
       SESSION_HTTPS_ONLY: "false"
       CORS_ORIGINS: http://localhost:8090,http://localhost:8091
     ports:
       - "8020:8000"
     volumes:
-      - ./appCDSS/gestion/backend:/app
+      - ./appCDSS/clinico/backend:/app
     depends_on:
       db:
         condition: service_healthy
 
-  gestion-frontend:
-    build: ./appCDSS/gestion/frontend/ANDE_CDSS
-    container_name: andeCDSS_gestion_frontend
+  clinico-frontend:
+    build: ./appCDSS/clinico/frontend
+    container_name: andeCDSS_clinico_frontend
     environment:
-      VITE_PROXY_TARGET: http://gestion-backend:8000
-      VITE_PUBLICO_URL: http://localhost:8091/   # login: a donde se vuelve sin sesión o al cerrarla
+      VITE_PROXY_TARGET: http://clinico-backend:8000
+      VITE_PUBLICO_URL: http://localhost:8090/   # login: a donde se vuelve sin sesión o al cerrarla
     ports:
-      - "8090:8080"
+      - "8091:8080"
     volumes:
-      - ./appCDSS/gestion/frontend/ANDE_CDSS:/app
+      - ./appCDSS/clinico/frontend:/app
       - /app/node_modules
     depends_on:
-      - gestion-backend
+      - clinico-backend
 
-  # El público NO habla con el backend de gestión: solo con su frontend y con la base.
-  # Hace el login y deja la cookie de sesión; gestión la valida con el mismo SESSION_SECRET.
+  # El público NO habla con el backend clínico: solo con su frontend y con la base.
+  # Hace el login y deja la cookie de sesión; clínico la valida con el mismo SESSION_SECRET.
   publico-backend:
     build: ./appCDSS/publico/backend
     container_name: andeCDSS_publico_backend
     environment:
       DATABASE_URL: postgresql://andeCDSS_user:andeCDSS1234@db:5432/dbAndeCDSS
-      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, gestión la lee
+      SESSION_SECRET: dev-secret-local       # el MISMO en los dos backends: público crea la cookie, clínico la lee
       SESSION_HTTPS_ONLY: "false"
       CORS_ORIGINS: http://localhost:8090,http://localhost:8091
     ports:
@@ -76,9 +76,9 @@ services:
     container_name: andeCDSS_publico_frontend
     environment:
       VITE_PROXY_TARGET: http://publico-backend:8000
-      VITE_GESTION_URL: http://localhost:8090/   # a donde se pasa después del login
+      VITE_CLINICO_URL: http://localhost:8091/   # a donde se pasa después del login
     ports:
-      - "8091:8080"
+      - "8090:8080"
     volumes:
       - ./appCDSS/publico/frontend:/app
       - /app/node_modules

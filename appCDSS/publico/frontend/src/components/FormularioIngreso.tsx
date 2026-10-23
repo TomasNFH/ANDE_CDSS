@@ -3,8 +3,8 @@ import { AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-// A dónde ir después del login. La sesión (cookie) la lee el backend de gestión.
-const GESTION_URL = import.meta.env.VITE_GESTION_URL || 'http://localhost:8090/';
+// A dónde ir después del login. La sesión (cookie) la lee el backend clínico.
+const CLINICO_URL = import.meta.env.VITE_CLINICO_URL || 'http://localhost:8091/';
 
 // Campos con solo línea inferior, como en la portada.
 const ESTILO_CAMPO =
@@ -45,8 +45,8 @@ const FormularioIngreso = () => {
       const respuesta_servidor = await response.json();
 
       if (response.ok && respuesta_servidor.success) {
-        // Pasar a gestión: es otra app, así que es una navegación completa y no del router.
-        window.location.href = GESTION_URL;
+        // Pasar a clínico: es otra app, así que es una navegación completa y no del router.
+        window.location.href = CLINICO_URL;
       } else {
         setError(respuesta_servidor.detail || 'No se pudo iniciar sesión. Revisá el usuario y la contraseña.');
       }

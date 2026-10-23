@@ -12,7 +12,7 @@ app = FastAPI(
     version = '1.0.0'
 )
 
-# Sesión: cookie firmada (HMAC) con el usuario logueado. El backend de gestión usa el MISMO
+# Sesión: cookie firmada (HMAC) con el usuario logueado. El backend clínico usa el MISMO
 # SESSION_SECRET para poder leer la cookie que se crea acá en el login.
 SESSION_SECRET = os.environ.get("SESSION_SECRET", "dev-secret-cambiar-en-desa")
 SESSION_HTTPS_ONLY = os.environ.get("SESSION_HTTPS_ONLY", "false").lower() == "true"

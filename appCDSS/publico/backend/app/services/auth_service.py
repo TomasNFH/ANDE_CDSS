@@ -7,7 +7,7 @@ from fastapi import HTTPException
 from app.db.connection import conectar_base_datos
 
 # Vida de la sesion en segundos. Es ABSOLUTA: se cuenta desde el login y no se renueva con el uso.
-# Tiene que ser el mismo valor en el backend de gestión, que es quien valida la sesión.
+# Tiene que ser el mismo valor en el backend clínico, que es quien valida la sesión.
 SESSION_MAX_AGE = int(os.environ.get("SESSION_MAX_AGE", 12 * 60 * 60))
 
 
@@ -28,7 +28,7 @@ def iniciar_sesion(datos, request):
 
     id_sesion = _registrar_login(usuario["id_usuario"], request, True, None)
 
-    # Guardar la sesión en la cookie firmada (SessionMiddleware). La lee el backend de gestión.
+    # Guardar la sesión en la cookie firmada (SessionMiddleware). La lee el backend clínico.
     request.session["id_sesion"] = id_sesion
     request.session["id_usuario"] = usuario["id_usuario"]
     request.session["username"] = usuario["username"]
