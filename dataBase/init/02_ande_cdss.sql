@@ -9,11 +9,8 @@
 -- =========================================
 
 CREATE TYPE clase_usuario AS ENUM (
-    'ADMIN SISTEMA',
-    'ADMIN',
-    'VALIDADOR',
-    'EDIT',
-    'READ ONLY'
+    'ADMINISTRADOR',
+    'ESPECIALISTA'
 );
 
 
@@ -29,7 +26,7 @@ CREATE TABLE usuario (
     email VARCHAR(150) NOT NULL,
     user_password VARCHAR(255) NOT NULL,
     activo BOOLEAN NOT NULL DEFAULT FALSE,
-    rol clase_usuario NOT NULL DEFAULT 'EDIT',
+    rol clase_usuario NOT NULL DEFAULT 'ESPECIALISTA',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 

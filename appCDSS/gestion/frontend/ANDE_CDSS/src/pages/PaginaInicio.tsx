@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BrainCircuit, Sparkles, Binoculars, Info } from "lucide-react";
+import { BrainCircuit, Sparkles, Binoculars, Info, Workflow } from "lucide-react";
 import DashboardHeader from "@/components/DashboardHeader";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
 
 const PaginaInicio = () => {
   const navigate = useNavigate();
   const [showCDSSOptions, setShowCDSSOptions] = useState(true);
   const [showCustomOptions, setShowCustomOptions] = useState(false);
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
+  const [showModeladoDinamico, setShowModeladoDinamico] = useState(false);
+  const { usuario } = useAuth();
+  const esAdministrador = usuario?.rol === "ADMINISTRADOR";
 
   return (
     <div className="flex min-h-screen bg-page">
@@ -35,6 +39,7 @@ const PaginaInicio = () => {
                   setShowCustomOptions((prev) => !prev);
                   setShowCDSSOptions(false);
                   setShowMiniPlayer(false);
+                  setShowModeladoDinamico(false);
                 }}
               >
                 <BrainCircuit size={64} />
@@ -56,6 +61,7 @@ const PaginaInicio = () => {
                   setShowCDSSOptions((prev) => !prev);
                   setShowCustomOptions(false);
                   setShowMiniPlayer(false);
+                  setShowModeladoDinamico(false);
                 }}
               >
                 <Sparkles size={64} />
@@ -64,23 +70,48 @@ const PaginaInicio = () => {
                 Modelos abiertos
               </span>
             </div>
-            <div className="flex flex-col items-center">
-              <button
-                type="button"
-                className="w-40 h-40 flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg"
-                aria-label="Cómo usar"
-                onClick={() => {
-                  setShowCDSSOptions(false);
-                  setShowCustomOptions(false);
-                  setShowMiniPlayer(true);
-                }}
-              >
-                <Binoculars size={64} />
-              </button>
-              <span className="text-base font-semibold text-foreground-secondary mt-2">
-                Cómo usar
-              </span>
-            </div>
+            {esAdministrador ? (
+              <div className="flex flex-col items-center">
+                <button
+                  type="button"
+                  className={`w-40 h-40 flex items-center justify-center rounded-2xl transition-all mb-2 shadow-lg ${
+                    showModeladoDinamico
+                      ? "bg-danger text-danger-foreground"
+                      : "bg-danger-muted text-danger-text hover:bg-danger-border"
+                  }`}
+                  aria-label="Modelado dinámico"
+                  onClick={() => {
+                    setShowModeladoDinamico((prev) => !prev);
+                    setShowCDSSOptions(false);
+                    setShowCustomOptions(false);
+                    setShowMiniPlayer(false);
+                  }}
+                >
+                  <Workflow size={64} />
+                </button>
+                <span className="text-base font-semibold text-danger-text mt-2">
+                  Modelado dinámico
+                </span>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <button
+                  type="button"
+                  className="w-40 h-40 flex items-center justify-center rounded-2xl bg-primary-100 hover:bg-primary-200 transition-all mb-2 shadow-lg"
+                  aria-label="Cómo usar"
+                  onClick={() => {
+                    setShowCDSSOptions(false);
+                    setShowCustomOptions(false);
+                    setShowMiniPlayer(true);
+                  }}
+                >
+                  <Binoculars size={64} />
+                </button>
+                <span className="text-base font-semibold text-foreground-secondary mt-2">
+                  Cómo usar
+                </span>
+              </div>
+            )}
           </div>
           {showCDSSOptions && (
             <Card className="mt-8 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
@@ -113,6 +144,19 @@ const PaginaInicio = () => {
                     </div>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          )}
+          {showModeladoDinamico && (
+            <Card className="mt-8 shadow-lg flex justify-center items-center max-w-6xl w-full mx-auto">
+              <CardContent className="w-full flex flex-col items-center justify-center gap-4 py-16 text-center">
+                <span className="text-2xl font-semibold text-foreground max-w-2xl">
+                  Entrenamiento y ajuste de modelos a partir de nuevos datos
+                  clínicos.
+                </span>
+                <span className="text-muted-foreground">
+                  Todavía no está disponible.
+                </span>
               </CardContent>
             </Card>
           )}
