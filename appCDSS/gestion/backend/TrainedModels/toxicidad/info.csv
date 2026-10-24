@@ -1,0 +1,5 @@
+,Model name,Target column,Target type,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,ROC ver,Recall,F1 score,AUC,Score,Brier score loss
+0,RandomForestClassifier,ToxicidadB,boolean,No,Filter method,"['Sexo', 'Plaquetas', 'Tipo farmaco']",[1.37444228 1.87661159 3.72711966],57,56,"[[4 0]
+ [1 2]]",[0.         0.33333333 0.66666667 0.66666667 1.         1.        ],[0.   0.   0.   0.25 0.25 1.  ],"(array([1, 0, 0, 1, 1, 0, 0]), array([0.81666667, 0.49722833, 0.18128752, 0.55945407, 0.22071958,
+       0.05310019, 0.10296152]), array([       inf, 0.81666667, 0.55945407, 0.49722833, 0.22071958,
+       0.05310019]))",1.0,1.9769357495881383,0.9166666666666666,0.8571428571428571,0.16121309615816698

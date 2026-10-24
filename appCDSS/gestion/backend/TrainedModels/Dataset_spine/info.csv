@@ -1,0 +1,13 @@
+,Model name,Target column,Target type,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,ROC ver,Recall,F1 score,AUC,Score,Brier score loss
+0,GaussianNB,Class_att,boolean,No,Intrinsic method,"['pelvic incidence', ' lumbar lordosis angle', ' pelvic tilt', ' pelvic radius', ' sacral slope', ' grade of spondylolisthesis']","[ 11.22312587  14.87206171  17.26500447  30.54384126  36.59065007
+ 104.50531662]",279,278,"[[18  3]
+ [ 1  9]]",[0.  0.1 0.9 0.9 1.  1. ],[0.         0.         0.         0.14285714 0.14285714 1.        ],"(array([0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+       1, 0, 0, 0, 1, 0, 0, 0, 1]), array([7.54394813e-18, 1.59642333e-36, 9.06338356e-01, 9.45433822e-01,
+       8.87753352e-01, 9.87625766e-01, 9.70875652e-01, 3.01831845e-05,
+       9.87253409e-01, 3.99227135e-05, 1.64969768e-22, 1.43676157e-04,
+       9.41949216e-01, 3.04310834e-05, 7.20063375e-01, 6.31500596e-01,
+       2.80460103e-26, 6.49927220e-03, 7.82687259e-27, 8.77435071e-06,
+       2.44882892e-26, 3.62418235e-01, 9.89963415e-01, 6.83559590e-06,
+       5.52258075e-15, 3.21211064e-01, 9.78712837e-01, 4.44929417e-19,
+       3.50999223e-10, 5.63735857e-04, 9.54229580e-01]), array([           inf, 9.89963415e-01, 9.06338356e-01, 6.31500596e-01,
+       3.62418235e-01, 1.59642333e-36]))",0.8571428571428571,1.697579377554228,0.9857142857142858,0.8709677419354839,0.07206620693369452

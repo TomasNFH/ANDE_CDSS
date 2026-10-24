@@ -1,0 +1,5 @@
+,Target column,Target type,Model name,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,Recall,F1 score,AUC,Score,Brier score loss
+0,Toxicidad,boolean,LogisticRegression,Min-Max,Filter method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO NLR INICIO', 'Plaquetas',
+       'RATIO PLR  INICIO'],
+      dtype='object')",[0.86640727 1.35776942 2.58951649 3.2499449  3.56268355],49,48,"[[4 1]
+ [0 1]]",[0. 1. 1.],[0. 0. 1.],0.8,1.5847860538827259,1.0,0.8333333333333334,0.22896403881599173

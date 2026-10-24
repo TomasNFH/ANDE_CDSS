@@ -1,0 +1,409 @@
+Paciente,Linfocitos,Neu,RATIO NLR,Plaquetas,RATIO PLR,Ciclo,Status
+Ana Bentancor ,1680,3660,2.18,302000,179.76,Primero,vivo
+Victor Gugliucci ,2190,10770,4.92,193000,88.13,Primero,fallecido/progresado
+Luis Bernier ,1660,4330,2.61,278000,167.47,Primero,fallecido/progresado
+Maria Castillo ,1480,4400,2.97,226000,152.70,Primero,fallecido/progresado
+Teresa Fagundez ,1350,12270,9.09,,,Primero,fallecido/progresado
+Elsa Martinez ,930,6980,7.51,386000,415.05,Primero,vivo
+Jorge Stemphelet ,1300,2010,1.55,234000,180.00,Primero,vivo
+Maria Mujica ,3160,4800,1.52,359000,113.61,Primero,fallecido/progresado
+Alfredo Flores ,1790,5060,2.83,291000,162.57,Primero,vivo
+Iris Bianchi ,1850,3960,2.14,180000,97.30,Primero,vivo
+Alberto Bonilla ,2080,6070,2.92,268000,128.85,Primero,vivo
+Carlos Pintos ,4530,5810,1.28,216000,47.68,Primero,vivo
+Luciano Soares ,1200,5500,4.58,290000,241.67,Primero,fallecido/progresado
+Aparicio Romano ,1000,5400,5.40,287000,287.00,Primero,vivo
+Marcelo Fleitas ,1100,1900,1.73,133000,120.91,Primero,fallecido/progresado
+Molinelli ,1500,7400,4.93,451000,300.67,Primero,vivo
+Cristobal Olivera ,800,6700,8.38,165000,206.25,Primero,fallecido/progresado
+Flor de Lis Ferreira ,3200,3800,1.19,163000,50.94,Primero,vivo
+ Molina ,1300,3600,2.77,267000,205.38,Primero,fallecido/progresado
+Maria Rifran ,2100,4500,2.14,264000,125.71,Primero,vivo
+Claudia Buggiano,1230,4510,3.67,225000,182.93,Primero,
+Marta Marchesan,1730,2910,1.68,243000,140.46,Primero,vivo
+Pablo rizzardini ,1410,3470,2.46,366000,259.57,Primero,
+Walter Moller,1350,6500,4.81,246000,182.22,Primero,vivo
+Nelly ovelar,700,5020,7.17,167000,238.57,Primero,
+Daniel Sosa,2890,4760,1.65,292000,101.04,Primero,
+Nidia Gomez,2230,3760,1.69,300000,134.53,Primero,vivo
+Adalberto Bardesio,,,,,,Primero,
+Luis ferrari,,,,,,Primero,
+Mirta Vazquez,,,,,,Primero,
+Nelly vila,,,,,,Primero,
+Luis Charlone,,,,,,Primero,vivo
+Alicia echenique,,,,,,Primero,
+Teofilo Denis,,,,,,Primero,
+Ana Bentancor ,1340,5750,4.29,330000,246.27,Segundo,vivo
+Victor Gugliucci ,1830,7800,4.26,231000,126.23,Segundo,fallecido/progresado
+Luis Bernier ,3020,6700,2.22,420000,139.07,Segundo,fallecido/progresado
+Maria Castillo ,1480,5200,3.51,238000,160.81,Segundo,fallecido/progresado
+Teresa Fagundez ,,,,,,Segundo,fallecido/progresado
+Elsa Martinez ,1510,6370,4.22,353000,233.77,Segundo,vivo
+Jorge Stemphelet ,1740,5500,3.16,226000,129.89,Segundo,vivo
+Maria Mujica ,,,,,,Segundo,fallecido/progresado
+Alfredo Flores ,680,8330,12.25,280000,411.76,Segundo,vivo
+Iris Bianchi ,1410,3260,2.31,164000,116.31,Segundo,vivo
+Alberto Bonilla ,2840,4250,1.50,233000,82.04,Segundo,vivo
+Carlos Pintos ,4040,5810,1.44,245000,60.64,Segundo,vivo
+Luciano Soares ,,,,,,Segundo,fallecido/progresado
+Aparicio Romano ,1040,5330,5.13,262000,251.92,Segundo,vivo
+Marcelo Fleitas ,,,,,,Segundo,fallecido/progresado
+Molinelli ,1450,5520,3.81,421000,290.34,Segundo,vivo
+Cristobal Olivera ,950,9060,9.54,347000,365.26,Segundo,fallecido/progresado
+Flor de Lis Ferreira ,2950,4070,1.38,135000,45.76,Segundo,vivo
+ Molina ,1190,4420,3.71,245000,205.88,Segundo,fallecido/progresado
+Maria Rifran ,2221,3956,,284000,,Segundo,vivo
+Claudia Buggiano,1390,3790,2.73,222000,159.71,Segundo,
+Marta Marchesan,1490,3910,2.62,324000,217.45,Segundo,vivo
+Pablo rizzardini ,1570,4870,3.10,249000,158.60,Segundo,
+Walter Moller,1570,7030,4.48,204000,129.94,Segundo,vivo
+Nelly ovelar,720,5470,7.60,179000,248.61,Segundo,
+Daniel Sosa,3010,2900,0.96,262000,87.04,Segundo,
+Nidia Gomez,2430,4150,1.71,323000,132.92,Segundo,vivo
+Adalberto Bardesio,,,,,,Segundo,
+Luis ferrari,,,,,,Segundo,
+Mirta Vazquez,,,,,,Segundo,
+Nelly vila,,,,,,Segundo,
+Luis Charlone,,,,,,Segundo,vivo
+Alicia echenique,,,,,,Segundo,
+Teofilo Denis,,,,,,Segundo,
+Ana Bentancor ,1860,3960,2.13,397000,213.44,Tercero,vivo
+Victor Gugliucci ,1640,10770,6.57,186000,113.41,Tercero,fallecido/progresado
+Luis Bernier ,1900,3520,1.85,258000,135.79,Tercero,fallecido/progresado
+Maria Castillo ,,,,,,Tercero,fallecido/progresado
+Teresa Fagundez ,,,,,,Tercero,fallecido/progresado
+Elsa Martinez ,1460,6990,4.79,352000,241.10,Tercero,vivo
+Jorge Stemphelet ,2000,3200,1.60,395000,197.50,Tercero,vivo
+Maria Mujica ,,,,,,Tercero,fallecido/progresado
+Alfredo Flores ,1300,9300,7.15,265000,203.85,Tercero,vivo
+Iris Bianchi ,1150,2950,2.57,156000,135.65,Tercero,vivo
+Alberto Bonilla ,3720,5050,1.36,188000,50.54,Tercero,vivo
+Carlos Pintos ,5560,5780,1.04,205000,36.87,Tercero,vivo
+Luciano Soares ,,,,,,Tercero,fallecido/progresado
+Aparicio Romano ,1420,6470,4.56,275000,193.66,Tercero,vivo
+Marcelo Fleitas ,,,,,,Tercero,fallecido/progresado
+Molinelli ,1280,5620,4.39,404000,315.63,Tercero,vivo
+Cristobal Olivera ,,,,,,Tercero,fallecido/progresado
+Flor de Lis Ferreira ,3030,2820,0.93,152000,50.17,Tercero,vivo
+ Molina ,1380,4720,3.42,272000,197.10,Tercero,fallecido/progresado
+Maria Rifran ,2155,4458,,293000,,Tercero,vivo
+Claudia Buggiano,1340,5060,3.78,227000,169.40,Tercero,
+Marta Marchesan,1510,2710,1.79,291000,192.72,Tercero,vivo
+Pablo rizzardini ,1370,7260,5.30,334000,243.80,Tercero,
+Walter Moller,2000,3630,1.82,199000,99.50,Tercero,vivo
+Nelly ovelar,490,7220,14.73,234000,477.55,Tercero,
+Daniel Sosa,3740,3800,1.02,294000,78.61,Tercero,
+Nidia Gomez,2230,3760,1.69,333000,149.33,Tercero,vivo
+Adalberto Bardesio,,,,,,Tercero,
+Luis ferrari,,,,,,Tercero,
+Mirta Vazquez,,,,,,Tercero,
+Nelly vila,,,,,,Tercero,
+Luis Charlone,,,,,,Tercero,vivo
+Alicia echenique,,,,,,Tercero,
+Teofilo Denis,,,,,,Tercero,
+Ana Bentancor ,1280,4300,3.36,310000,242.19,Cuarto,vivo
+Victor Gugliucci ,1360,13530,9.95,174000,127.94,Cuarto,fallecido/progresado
+Luis Bernier ,1760,4770,2.71,211000,119.89,Cuarto,fallecido/progresado
+Maria Castillo ,1110,5940,5.35,212000,190.99,Cuarto,fallecido/progresado
+Teresa Fagundez ,,,,,,Cuarto,fallecido/progresado
+Elsa Martinez ,1230,5680,4.62,246000,200.00,Cuarto,vivo
+Jorge Stemphelet ,2600,3000,1.15,298000,114.62,Cuarto,vivo
+Maria Mujica ,,,,,,Cuarto,fallecido/progresado
+Alfredo Flores ,750,12400,16.53,239000,318.67,Cuarto,vivo
+Iris Bianchi ,1400,3110,2.22,160000,114.29,Cuarto,vivo
+Alberto Bonilla ,3270,5170,1.58,226000,69.11,Cuarto,vivo
+Carlos Pintos ,4200,6360,1.51,203000,48.33,Cuarto,vivo
+Luciano Soares ,,,,,,Cuarto,fallecido/progresado
+Aparicio Romano ,910,7260,7.98,234000,257.14,Cuarto,vivo
+Marcelo Fleitas ,,,,,,Cuarto,fallecido/progresado
+Molinelli ,1600,7540,4.71,388000,242.50,Cuarto,vivo
+Cristobal Olivera ,,,,,,Cuarto,fallecido/progresado
+Flor de Lis Ferreira ,2220,3360,1.51,138000,62.16,Cuarto,vivo
+ Molina ,1820,3740,2.05,268000,147.25,Cuarto,fallecido/progresado
+Maria Rifran ,2070,4140,,326000,,Cuarto,vivo
+Claudia Buggiano,1300,3730,2.87,198000,152.31,Cuarto,
+Marta Marchesan,2230,4210,1.89,321000,143.95,Cuarto,vivo
+Pablo rizzardini ,1160,6350,5.47,308000,265.52,Cuarto,
+Walter Moller,2050,6950,3.39,225000,109.76,Cuarto,vivo
+Nelly ovelar,860,9550,11.10,284000,330.23,Cuarto,
+Daniel Sosa,2830,3900,1.38,295000,104.24,Cuarto,
+Nidia Gomez,2430,4290,1.77,357000,146.91,Cuarto,vivo
+Adalberto Bardesio,,,,,,Cuarto,
+Luis ferrari,,,,,,Cuarto,
+Mirta Vazquez,,,,,,Cuarto,
+Nelly vila,,,,,,Cuarto,
+Luis Charlone,,,,,,Cuarto,vivo
+Alicia echenique,,,,,,Cuarto,
+Teofilo Denis,,,,,,Cuarto,
+Ana Bentancor ,830,2160,,288000,346.99,Quinto,vivo
+Victor Gugliucci ,,,,,,Quinto,fallecido/progresado
+Luis Bernier ,2060,4880,2.37,243000,117.96,Quinto,fallecido/progresado
+Maria Castillo ,1560,5170,3.31,232000,148.72,Quinto,fallecido/progresado
+Teresa Fagundez ,,,,,,Quinto,fallecido/progresado
+Elsa Martinez ,1210,5740,4.74,275000,227.27,Quinto,vivo
+Jorge Stemphelet ,2010,4380,2.18,217000,107.96,Quinto,vivo
+Maria Mujica ,2640,6250,2.37,383000,145.08,Quinto,fallecido/progresado
+Alfredo Flores ,1570,5950,3.79,292000,185.99,Quinto,vivo
+Iris Bianchi ,1620,3200,1.98,181000,111.73,Quinto,vivo
+Alberto Bonilla ,3200,6400,2.00,269000,84.06,Quinto,vivo
+Carlos Pintos ,3400,5500,1.62,124000,36.47,Quinto,vivo
+Luciano Soares ,,,,,,Quinto,fallecido/progresado
+Aparicio Romano ,1000,11400,11.40,253000,253.00,Quinto,vivo
+Marcelo Fleitas ,,,,,,Quinto,fallecido/progresado
+Molinelli ,1470,6540,4.45,310000,210.88,Quinto,vivo
+Cristobal Olivera ,,,,,,Quinto,fallecido/progresado
+Flor de Lis Ferreira ,1900,2700,1.42,125000,65.79,Quinto,vivo
+ Molina ,1300,5500,4.23,316000,243.08,Quinto,fallecido/progresado
+Maria Rifran ,1500,7100,4.73,226000,150.67,Quinto,vivo
+Claudia Buggiano,1290,4760,3.69,202000,156.59,Quinto,
+Marta Marchesan,2060,3250,1.58,251000,121.84,Quinto,vivo
+Pablo rizzardini ,1060,4380,4.13,280000,264.15,Quinto,
+Walter Moller,2260,6010,2.66,268000,118.58,Quinto,vivo
+Nelly ovelar,500,11960,23.92,294000,588.00,Quinto,
+Daniel Sosa,3140,3600,1.15,294000,93.63,Quinto,
+Nidia Gomez,2080,4530,2.18,333000,160.10,Quinto,vivo
+Adalberto Bardesio,,,,,,Quinto,
+Luis ferrari,,,,,,Quinto,
+Mirta Vazquez,,,,,,Quinto,
+Nelly vila,,,,,,Quinto,
+Luis Charlone,,,,,,Quinto,vivo
+Alicia echenique,,,,,,Quinto,
+Teofilo Denis,,,,,,Quinto,
+Ana Bentancor ,2020,5370,2.66,380000,188.12,Sexto,vivo
+Victor Gugliucci ,,,,,,Sexto,fallecido/progresado
+Luis Bernier ,1640,4910,2.99,238000,145.12,Sexto,fallecido/progresado
+Maria Castillo ,1370,6380,4.66,252000,183.94,Sexto,fallecido/progresado
+Teresa Fagundez ,,,,,,Sexto,fallecido/progresado
+Elsa Martinez ,1680,5660,3.37,300000,178.57,Sexto,vivo
+Jorge Stemphelet ,2210,4250,1.92,224000,101.36,Sexto,vivo
+Maria Mujica ,,,,,,Sexto,fallecido/progresado
+Alfredo Flores ,1690,6390,3.78,200000,118.34,Sexto,vivo
+Iris Bianchi ,1650,3590,2.18,164000,99.39,Sexto,vivo
+Alberto Bonilla ,2070,6380,3.08,252000,121.74,Sexto,vivo
+Carlos Pintos ,4180,6610,1.58,192000,45.93,Sexto,vivo
+Luciano Soares ,,,,,,Sexto,fallecido/progresado
+Aparicio Romano ,1170,13180,11.26,306000,261.54,Sexto,vivo
+Marcelo Fleitas ,,,,,,Sexto,fallecido/progresado
+Molinelli ,1300,3700,2.85,125000,96.15,Sexto,vivo
+Cristobal Olivera ,,,,,,Sexto,fallecido/progresado
+Flor de Lis Ferreira ,2330,3180,1.36,162000,69.53,Sexto,vivo
+ Molina ,1460,4970,3.40,241000,165.07,Sexto,fallecido/progresado
+Maria Rifran ,2561,4790,1.87,385000,150.33,Sexto,vivo
+Claudia Buggiano,1250,3800,3.04,183000,146.40,Sexto,
+Marta Marchesan,1660,3110,1.87,270000,162.65,Sexto,vivo
+Pablo rizzardini ,1140,7500,6.58,275000,241.23,Sexto,
+Walter Moller,650,10650,16.38,265000,407.69,Sexto,vivo
+Nelly ovelar,690,13590,19.70,306000,443.48,Sexto,
+Daniel Sosa,,,,,,Sexto,
+Nidia Gomez,,,,,,Sexto,vivo
+Adalberto Bardesio,,,,,,Sexto,
+Luis ferrari,,,,,,Sexto,
+Mirta Vazquez,,,,,,Sexto,
+Nelly vila,,,,,,Sexto,
+Luis Charlone,,,,,,Sexto,vivo
+Alicia echenique,,,,,,Sexto,
+Teofilo Denis,,,,,,Sexto,
+Ana Bentancor ,2500,7780,3.11,359000,143.60,Septimo,vivo
+Victor Gugliucci ,,,,,,Septimo,fallecido/progresado
+Luis Bernier ,1850,5180,2.80,233000,125.95,Septimo,fallecido/progresado
+Maria Castillo ,,,,,,Septimo,fallecido/progresado
+Teresa Fagundez ,,,,,,Septimo,fallecido/progresado
+Elsa Martinez ,1840,6540,3.55,315000,171.20,Septimo,vivo
+Jorge Stemphelet ,2390,3100,1.30,200000,83.68,Septimo,vivo
+Maria Mujica ,,,,,,Septimo,fallecido/progresado
+Alfredo Flores ,1610,4830,3.00,196000,121.74,Septimo,vivo
+Iris Bianchi ,1690,3860,2.28,160000,94.67,Septimo,vivo
+Alberto Bonilla ,1510,7100,4.70,242000,160.26,Septimo,vivo
+Carlos Pintos ,4720,8520,1.81,282000,59.75,Septimo,vivo
+Luciano Soares ,,,,,,Septimo,fallecido/progresado
+Aparicio Romano ,1170,14910,12.74,315000,269.23,Septimo,vivo
+Marcelo Fleitas ,,,,,,Septimo,fallecido/progresado
+Molinelli ,1460,6960,4.77,334000,228.77,Septimo,vivo
+Cristobal Olivera ,,,,,,Septimo,fallecido/progresado
+Flor de Lis Ferreira ,2010,3870,1.93,115000,57.21,Septimo,vivo
+ Molina ,1720,5920,3.44,312000,181.40,Septimo,fallecido/progresado
+Maria Rifran ,2842,4385,1.54,287000,100.99,Septimo,vivo
+Claudia Buggiano,1220,4385,3.59,230000,188.52,Septimo,
+Marta Marchesan,1950,2390,1.23,233000,119.49,Septimo,vivo
+Pablo rizzardini ,,,,,,Septimo,
+Walter Moller,1050,7750,7.38,231000,220.00,Septimo,vivo
+Nelly ovelar,,,,,,Septimo,
+Daniel Sosa,,,,,,Septimo,
+Nidia Gomez,,,,,,Septimo,vivo
+Adalberto Bardesio,,,,,,Septimo,
+Luis ferrari,,,,,,Septimo,
+Mirta Vazquez,,,,,,Septimo,
+Nelly vila,,,,,,Septimo,
+Luis Charlone,,,,,,Septimo,vivo
+Alicia echenique,,,,,,Septimo,
+Teofilo Denis,,,,,,Septimo,
+Ana Bentancor ,1520,5070,3.34,315000,207.24,Octavo,vivo
+Victor Gugliucci ,,,,,,Octavo,fallecido/progresado
+Luis Bernier ,1970,4860,2.47,210000,106.60,Octavo,fallecido/progresado
+Maria Castillo ,,,,,,Octavo,fallecido/progresado
+Teresa Fagundez ,,,,,,Octavo,fallecido/progresado
+Elsa Martinez ,1820,5800,3.19,239000,131.32,Octavo,vivo
+Jorge Stemphelet ,1990,3900,1.96,225000,113.07,Octavo,vivo
+Maria Mujica ,,,,,,Octavo,fallecido/progresado
+Alfredo Flores ,1860,7290,3.92,243000,130.65,Octavo,vivo
+Iris Bianchi ,980,2680,2.73,185000,188.78,Octavo,vivo
+Alberto Bonilla ,,,,,,Octavo,vivo
+Carlos Pintos ,3820,8270,2.16,340000,89.01,Octavo,vivo
+Luciano Soares ,,,,,,Octavo,fallecido/progresado
+Aparicio Romano ,990,7970,8.05,325000,328.28,Octavo,vivo
+Marcelo Fleitas ,,,,,,Octavo,fallecido/progresado
+Molinelli ,1710,5930,3.47,310000,181.29,Octavo,vivo
+Cristobal Olivera ,,,,,,Octavo,fallecido/progresado
+Flor de Lis Ferreira ,3750,3640,0.97,162000,43.20,Octavo,vivo
+ Molina ,1160,4970,4.28,200000,172.41,Octavo,fallecido/progresado
+Maria Rifran ,1928,4934,2.56,276000,143.15,Octavo,vivo
+Claudia Buggiano,630,4820,7.65,203000,322.22,Octavo,
+Marta Marchesan,2120,3310,1.56,303000,142.92,Octavo,vivo
+Pablo rizzardini ,,,,,,Octavo,
+Walter Moller,1040,8020,7.71,233000,224.04,Octavo,vivo
+Nelly ovelar,,,,,,Octavo,
+Daniel Sosa,2250,4710,,303000,,Octavo,
+Nidia Gomez,,,,,,Octavo,vivo
+Adalberto Bardesio,,,,,,Octavo,
+Luis ferrari,,,,,,Octavo,
+Mirta Vazquez,,,,,,Octavo,
+Nelly vila,,,,,,Octavo,
+Luis Charlone,,,,,,Octavo,vivo
+Alicia echenique,,,,,,Octavo,
+Teofilo Denis,,,,,,Octavo,
+Ana Bentancor ,1930,6020,3.12,337000,174.61,Noveno,vivo
+Victor Gugliucci ,,,,,,Noveno,fallecido/progresado
+Luis Bernier ,1800,5050,2.81,201000,111.67,Noveno,fallecido/progresado
+Maria Castillo ,,,,,,Noveno,fallecido/progresado
+Teresa Fagundez ,,,,,,Noveno,fallecido/progresado
+Elsa Martinez ,2010,5490,2.73,257000,127.86,Noveno,vivo
+Jorge Stemphelet ,3100,3800,1.23,310000,100.00,Noveno,vivo
+Maria Mujica ,,,,,,Noveno,fallecido/progresado
+Alfredo Flores ,1990,5210,2.62,209000,105.03,Noveno,vivo
+Iris Bianchi ,1770,4500,2.54,196000,110.73,Noveno,vivo
+Alberto Bonilla ,1340,15350,11.46,270000,201.49,Noveno,vivo
+Carlos Pintos ,3920,7100,1.81,227000,57.91,Noveno,vivo
+Luciano Soares ,,,,,,Noveno,fallecido/progresado
+Aparicio Romano ,840,3700,4.40,190000,226.19,Noveno,vivo
+Marcelo Fleitas ,,,,,,Noveno,fallecido/progresado
+Molinelli ,1380,5220,3.78,330000,239.13,Noveno,vivo
+Cristobal Olivera ,,,,,,Noveno,fallecido/progresado
+Flor de Lis Ferreira ,,,,,,Noveno,vivo
+ Molina ,,,,,,Noveno,fallecido/progresado
+Maria Rifran ,3215,4829,1.50,330000,102.64,Noveno,vivo
+Claudia Buggiano,1240,3010,2.43,189000,152.42,Noveno,
+Marta Marchesan,1960,3710,,259000,,Noveno,vivo
+Pablo rizzardini ,,,,,,Noveno,
+Walter Moller,860,5900,,263000,,Noveno,vivo
+Nelly ovelar,,,,,,Noveno,
+Daniel Sosa,,,,,,Noveno,
+Nidia Gomez,,,,,,Noveno,vivo
+Adalberto Bardesio,,,,,,Noveno,
+Luis ferrari,,,,,,Noveno,
+Mirta Vazquez,,,,,,Noveno,
+Nelly vila,,,,,,Noveno,
+Luis Charlone,,,,,,Noveno,vivo
+Alicia echenique,,,,,,Noveno,
+Teofilo Denis,,,,,,Noveno,
+Ana Bentancor ,1520,6520,4.29,358000,235.53,Decimo,vivo
+Victor Gugliucci ,,,,,,Decimo,fallecido/progresado
+Luis Bernier ,1750,3790,2.17,192000,109.71,Decimo,fallecido/progresado
+Maria Castillo ,,,,,,Decimo,fallecido/progresado
+Teresa Fagundez ,,,,,,Decimo,fallecido/progresado
+Elsa Martinez ,1690,5020,2.97,220000,130.18,Decimo,vivo
+Jorge Stemphelet ,2400,3800,1.58,274000,114.17,Decimo,vivo
+Maria Mujica ,,,,,,Decimo,fallecido/progresado
+Alfredo Flores ,2450,5270,2.15,183000,74.69,Decimo,vivo
+Iris Bianchi ,1620,3720,2.30,179000,110.49,Decimo,vivo
+Alberto Bonilla ,3650,6430,1.76,293000,80.27,Decimo,vivo
+Carlos Pintos ,,,,,,Decimo,vivo
+Luciano Soares ,,,,,,Decimo,fallecido/progresado
+Aparicio Romano ,850,3390,3.99,207000,243.53,Decimo,vivo
+Marcelo Fleitas ,,,,,,Decimo,fallecido/progresado
+Molinelli ,1390,4910,3.53,305000,219.42,Decimo,vivo
+Cristobal Olivera ,,,,,,Decimo,fallecido/progresado
+Flor de Lis Ferreira ,,,,,,Decimo,vivo
+ Molina ,1870,5230,2.80,305000,163.10,Decimo,fallecido/progresado
+Maria Rifran ,2962,2832,0.96,335000,113.10,Decimo,vivo
+Claudia Buggiano,1160,4490,3.87,206000,177.59,Decimo,
+Marta Marchesan,1930,3190,,349000,,Decimo,vivo
+Pablo rizzardini ,,,,,,Decimo,
+Walter Moller,1280,7490,,254000,,Decimo,vivo
+Nelly ovelar,,,,,,Decimo,
+Daniel Sosa,,,,,,Decimo,
+Nidia Gomez,,,,,,Decimo,vivo
+Adalberto Bardesio,,,,,,Decimo,
+Luis ferrari,,,,,,Decimo,
+Mirta Vazquez,,,,,,Decimo,
+Nelly vila,,,,,,Decimo,
+Luis Charlone,,,,,,Decimo,vivo
+Alicia echenique,,,,,,Decimo,
+Teofilo Denis,,,,,,Decimo,
+Ana Bentancor ,1650,5520,3.35,433000,262.42,Onceavo,vivo
+Victor Gugliucci ,,,,,,Onceavo,fallecido/progresado
+Luis Bernier ,1510,3930,2.60,213000,141.06,Onceavo,fallecido/progresado
+Maria Castillo ,,,,,,Onceavo,fallecido/progresado
+Teresa Fagundez ,,,,,,Onceavo,fallecido/progresado
+Elsa Martinez ,1780,5090,2.86,252000,141.57,Onceavo,vivo
+Jorge Stemphelet ,2500,2700,1.08,253000,101.20,Onceavo,vivo
+Maria Mujica ,,,,,,Onceavo,fallecido/progresado
+Alfredo Flores ,1990,4990,2.51,198000,99.50,Onceavo,vivo
+Iris Bianchi ,1320,4170,3.16,207000,156.82,Onceavo,vivo
+Alberto Bonilla ,2310,6120,2.65,246000,106.49,Onceavo,vivo
+Carlos Pintos ,4060,9280,2.29,257000,63.30,Onceavo,vivo
+Luciano Soares ,,,,,,Onceavo,fallecido/progresado
+Aparicio Romano ,900,5690,6.32,198000,220.00,Onceavo,vivo
+Marcelo Fleitas ,,,,,,Onceavo,fallecido/progresado
+Molinelli ,1460,9480,6.49,305000,208.90,Onceavo,vivo
+Cristobal Olivera ,,,,,,Onceavo,fallecido/progresado
+Flor de Lis Ferreira ,,,,,,Onceavo,vivo
+ Molina ,1600,5320,3.33,285000,178.13,Onceavo,fallecido/progresado
+Maria Rifran ,2216,2238,,278000,,Onceavo,vivo
+Claudia Buggiano,1390,3430,2.47,192000,138.13,Onceavo,
+Marta Marchesan,2500,5000,,427000,,Onceavo,vivo
+Pablo rizzardini ,,,,,,Onceavo,
+Walter Moller,1260,7680,,277000,,Onceavo,vivo
+Nelly ovelar,,,,,,Onceavo,
+Daniel Sosa,,,,,,Onceavo,
+Nidia Gomez,,,,,,Onceavo,vivo
+Adalberto Bardesio,,,,,,Onceavo,
+Luis ferrari,,,,,,Onceavo,
+Mirta Vazquez,,,,,,Onceavo,
+Nelly vila,,,,,,Onceavo,
+Luis Charlone,,,,,,Onceavo,vivo
+Alicia echenique,,,,,,Onceavo,
+Teofilo Denis,,,,,,Onceavo,
+Ana Bentancor ,1630,8560,5.25,390000,,Doceavo,vivo
+Victor Gugliucci ,,,,,,Doceavo,fallecido/progresado
+Luis Bernier ,1720,3900,2.27,208000,,Doceavo,fallecido/progresado
+Maria Castillo ,,,,,,Doceavo,fallecido/progresado
+Teresa Fagundez ,,,,,,Doceavo,fallecido/progresado
+Elsa Martinez ,1960,6550,3.34,230000,,Doceavo,vivo
+Jorge Stemphelet ,1810,4350,2.40,230000,,Doceavo,vivo
+Maria Mujica ,,,,,,Doceavo,fallecido/progresado
+Alfredo Flores ,1850,8660,4.68,221000,,Doceavo,vivo
+Iris Bianchi ,2500,4610,1.84,261000,,Doceavo,vivo
+Alberto Bonilla ,3850,5150,1.34,268000,,Doceavo,vivo
+Carlos Pintos ,4330,9920,2.29,251000,,Doceavo,vivo
+Luciano Soares ,,,,,,Doceavo,fallecido/progresado
+Aparicio Romano ,950,8800,9.26,225000,,Doceavo,vivo
+Marcelo Fleitas ,,,,,,Doceavo,fallecido/progresado
+Molinelli ,,,,,,Doceavo,vivo
+Cristobal Olivera ,,,,,,Doceavo,fallecido/progresado
+Flor de Lis Ferreira ,,,,,,Doceavo,vivo
+ Molina ,,,,,,Doceavo,fallecido/progresado
+Maria Rifran ,2884,3197,,302000,,Doceavo,vivo
+Claudia Buggiano,1500,4840,,286000,,Doceavo,
+Marta Marchesan,2960,6540,,372000,,Doceavo,vivo
+Pablo rizzardini ,,,,,,Doceavo,
+Walter Moller,,,,,,Doceavo,vivo
+Nelly ovelar,,,,,,Doceavo,
+Daniel Sosa,,,,,,Doceavo,
+Nidia Gomez,,,,,,Doceavo,vivo
+Adalberto Bardesio,,,,,,Doceavo,
+Luis ferrari,,,,,,Doceavo,
+Mirta Vazquez,,,,,,Doceavo,
+Nelly vila,,,,,,Doceavo,
+Luis Charlone,,,,,,Doceavo,vivo
+Alicia echenique,,,,,,Doceavo,
+Teofilo Denis,,,,,,Doceavo,

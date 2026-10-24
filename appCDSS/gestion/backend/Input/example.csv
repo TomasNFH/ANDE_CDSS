@@ -1,0 +1,101 @@
+age,sex,city,clinical_variable_1,clinical_variable_2,clinical_variable_3 ,target
+69,Female,La Paz,7.0,C,,class2
+32,Female,Lima,6.6,B,123,class3
+89,Male,Buenos Aires,2.3,A,,class1
+78,Male,Buenos Aires,7.2,B,,class4
+38,Male,Ciudad de México,2.5,A,,class2
+41,Male,Lima,3.3,B,,class5
+20,Male,Quito,7.5,C,,class2
+39,Male,Montevideo,6.5,C,,class5
+70,Female,Santiago,8.5,A,,class3
+19,Male,Buenos Aires,6.6,A,,class5
+47,Male,Bogotá,5.7,A,,class4
+55,Male,Buenos Aires,1.0,B,,class1
+19,Female,Asunción,3.7,B,,class5
+81,Male,Buenos Aires,,,,
+77,Male,Buenos Aires,2.5,C,,class1
+38,Female,Montevideo,9.7,B,,class4
+50,Male,Montevideo,4.0,B,,class2
+75,Male,Caracas,8.9,B,,class5
+39,Male,Quito,6.4,A,,class1
+66,Male,Bogotá,8.0,A,,class3
+76,Male,Buenos Aires,5.1,A,,class1
+59,Female,Buenos Aires,5.8,A,,class3
+77,Female,Santiago,5.0,A,,class4
+32,Female,Montevideo,2.0,C,,class2
+79,Male,Bogotá,7.3,C,,class1
+79,Male,Ciudad de México,2.9,A,,class5
+64,Male,Caracas,0.3,B,,class4
+79,Female,Quito,6.5,A,,class1
+68,Male,Lima,1.9,C,,class5
+72,Male,Quito,9.4,C,,class1
+81,Female,Asunción,9.5,B,23,class3
+20,Male,Buenos Aires,9.2,C,,class1
+68,Female,Caracas,3.8,A,,class1
+24,Female,Asunción,,,,
+38,Female,Bogotá,9.3,A,,class4
+56,Male,Lima,4.3,A,,class1
+35,Male,Montevideo,9.7,B,,class5
+21,Male,Caracas,9.6,A,,class3
+77,Male,Caracas,8.5,C,,class3
+31,Male,Buenos Aires,3.0,A,,class1
+26,Male,La Paz,3.9,B,,class4
+70,Male,Caracas,8.5,B,,class4
+19,Female,Santiago,3.2,B,,class5
+77,Male,Lima,1.8,A,,class1
+88,Female,Lima,5.6,B,,class3
+61,Male,Santiago,9.4,B,,class4
+25,Male,Ciudad de México,7.0,A,,class1
+64,Male,Santiago,5.7,C,,class4
+52,Female,Santiago,1.1,A,,class4
+53,Female,Lima,6.2,B,,class3
+67,Female,Quito,9.9,B,,class2
+21,Female,Lima,1.5,A,,class5
+19,Male,La Paz,5.2,C,,class5
+23,Female,Buenos Aires,8.8,B,,class3
+71,Male,Asunción,7.4,B,,class4
+21,Male,Quito,7.0,B,,class1
+71,Female,Montevideo,7.1,A,,class4
+80,Female,Asunción,3.7,B,,class3
+35,Female,Buenos Aires,3.0,C,,class5
+61,Female,La Paz,8.1,B,,class4
+51,Female,La Paz,8.1,B,,class5
+79,Female,Montevideo,8.7,C,,class1
+31,Female,Quito,9.1,B,,class5
+65,Female,Ciudad de México,5.2,A,,class5
+32,Male,Santiago,,,,
+89,Female,Quito,8.0,A,,class2
+79,Female,Ciudad de México,6.5,C,,class2
+57,Male,La Paz,7.1,B,,class5
+70,Female,Lima,8.0,A,,class3
+41,Male,Buenos Aires,8.9,C,,class5
+43,Male,Montevideo,3.5,B,,class3
+77,Female,Buenos Aires,3.8,C,,class3
+58,Male,Bogotá,1.0,A,,class2
+46,Male,Bogotá,5.8,A,,class4
+32,Male,Quito,0.5,A,,class1
+62,Male,La Paz,4.7,C,,class2
+82,Female,La Paz,5.5,C,,class2
+88,Male,Santiago,2.9,A,,class4
+26,Female,Santiago,6.0,C,,class1
+18,Male,Santiago,0.4,A,,class5
+25,Male,Lima,0.5,A,,class5
+80,Male,Asunción,8.2,B,,class2
+28,Male,Caracas,3.7,C,,class1
+25,Female,Asunción,1.4,A,,class2
+52,Female,Buenos Aires,5.3,A,,class3
+52,Male,Asunción,7.7,C,,class2
+50,Male,Lima,2.2,B,,class2
+22,Female,Buenos Aires,6.3,B,,class5
+58,Male,Asunción,0.9,A,,class5
+45,Male,Lima,0.6,C,,class5
+24,Male,Caracas,5.4,B,,class3
+89,Female,Asunción,5.5,C,,class5
+29,Female,Lima,6.4,C,,class1
+51,,,,,,
+50,Male,La Paz,9.8,B,,class1
+65,Male,Santiago,5.2,A,,class1
+40,Female,La Paz,3.3,B,,class5
+79,Female,Montevideo,8.0,B,,class4
+54,Female,Montevideo,2.8,B,,class4
+61,Female,Montevideo,4.5,B,,class4

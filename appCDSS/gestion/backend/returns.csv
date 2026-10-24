@@ -1,0 +1,75 @@
+,Target column,Target type,Model name,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,Recall,F1 score,AUC,Score,Brier score loss
+8,Status,boolean,KNeighborsClassifier,No,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.72374172 1.77053234 2.02436289 4.50842984 4.79302033],47,46,"[[1 1]
+ [0 4]]",[0.   0.25 1.   1.  ],[0.  0.  0.5 1. ],0.5,0.9940357852882704,0.8125,0.8333333333333334,0.13333333333333333
+2,Status,boolean,KNeighborsClassifier,No,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.09421196 2.81467137 2.87526753 4.77220849 7.82937942],47,46,"[[1 1]
+ [0 4]]",[0.   0.25 1.   1.  ],[0.  0.  0.5 1. ],0.5,0.9940357852882704,0.8125,0.8333333333333334,0.13333333333333333
+9,Status,boolean,SupportVectorClassification,No,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.5  0.5  1.   1.  ],[0.  0.  0.  0.5 0.5 1. ],0.0,0.0,0.75,0.6666666666666666,0.2237970166951743
+3,Status,boolean,SupportVectorClassification,No,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.39842001 3.18889157 3.41277198 5.76783511 9.28497898],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.5  0.5  1.   1.  ],[0.  0.  0.  0.5 0.5 1. ],0.0,0.0,0.75,0.6666666666666666,0.2272578646302121
+4,Status,boolean,GradientBoostingClassifier,No,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.01039052 2.74416885 2.87354747 4.57155591 7.46775045],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.75 0.75 1.  ],[0. 0. 0. 1. 1.],0.0,0.0,0.75,0.6666666666666666,0.3236899422214039
+6,Status,boolean,RandomForestClassifier,No,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.79640499 1.79781788 2.19979386 4.74685638 5.08495752],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.75 0.75 1.  ],[0. 0. 0. 1. 1.],0.0,0.0,0.75,0.6666666666666666,0.21959848943022053
+19,Status,boolean,LogisticRegression,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.5  0.5  0.75 0.75 1.  ],[0.  0.  0.  0.5 0.5 1.  1. ],0.0,0.0,0.625,0.6666666666666666,0.2831400903296957
+0,Status,boolean,RandomForestClassifier,No,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[1.60778196 2.49749865 2.60735997 4.22748463 7.03500285],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.25 1.   1.  ],[0.  0.  0.5 0.5 1. ],0.0,0.0,0.625,0.6666666666666666,0.2168825509100094
+31,Status,boolean,LogisticRegression,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.5  0.5  0.75 0.75 1.  ],[0.  0.  0.  0.5 0.5 1.  1. ],0.0,0.0,0.625,0.6666666666666666,0.2547902689403257
+32,Status,boolean,KNeighborsClassifier,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.07557842 2.54259341 5.39018656 5.69588984],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2933333333333334
+10,Status,boolean,GradientBoostingClassifier,No,Filter method,"Index(['Tipo farmaco', 'Tumor', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96103601 2.00609721 2.57835938 5.29966843 5.51876767],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.25 0.75 0.75 1.  ],[0.  0.  0.5 0.5 1.  1. ],0.0,0.0,0.5,0.6666666666666666,0.29125365150628935
+28,Status,boolean,GradientBoostingClassifier,Z-score,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.52400882 3.17219428 3.22548112 5.72229017 9.1831195 ],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2996471378055872
+12,Status,boolean,RandomForestClassifier,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.72962701 3.11862485 3.54438187 5.73066119 9.43543532],47,46,"[[0 2]
+ [0 4]]",[0. 1.],[0. 1.],0.0,0.0,0.5,0.6666666666666666,0.2288916666666667
+26,Status,boolean,KNeighborsClassifier,Z-score,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.46578644 3.17219428 3.2370306  5.77702943 9.13426343],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2933333333333334
+14,Status,boolean,KNeighborsClassifier,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.59032376 3.03295059 3.39091489 5.58711481 9.13730844],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2933333333333334
+24,Status,boolean,RandomForestClassifier,Z-score,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.52400882 3.17219428 3.22548112 5.72229017 9.1831195 ],47,46,"[[0 2]
+ [0 4]]",[0. 1.],[0. 1.],0.0,0.0,0.5,0.6666666666666666,0.22810000000000005
+16,Status,boolean,GradientBoostingClassifier,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.51515234 3.11712791 3.4160822  5.59331015 9.25347999],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2663631366922513
+20,Status,boolean,KNeighborsClassifier,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[2.07257135 2.15734574 2.64167071 5.7060178  6.08078926],47,46,"[[2 0]
+ [4 0]]",[0. 1.],[0. 1.],1.0,1.941747572815534,0.5,0.3333333333333333,0.2933333333333334
+22,Status,boolean,GradientBoostingClassifier,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.55243524 1.62317022 2.21675103 4.49723044 5.02195747],47,46,"[[0 2]
+ [2 2]]",[0.   0.25 0.5  0.5  1.  ],[0.  0.  0.5 1.  1. ],0.0,0.0,0.4375,0.3333333333333333,0.30207358079982044
+18,Status,boolean,RandomForestClassifier,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.87904712 1.93406699 2.30759722 5.0467035  5.34875616],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.5  0.5  1.  ],[0.  0.  0.5 1.  1. ],0.0,0.0,0.4375,0.6666666666666666,0.2317262684240363
+21,Status,boolean,SupportVectorClassification,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.   0.75 0.75 1.  ],[0.  0.5 0.5 1.  1. ],0.0,0.0,0.375,0.6666666666666666,0.22222253192933186
+15,Status,boolean,SupportVectorClassification,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.59032376 3.03295059 3.39091489 5.58711481 9.13730844],47,46,"[[0 2]
+ [0 4]]",[0.   0.   0.75 0.75 1.  ],[0.  0.5 0.5 1.  1. ],0.0,0.0,0.375,0.6666666666666666,0.222269676975823
+27,Status,boolean,SupportVectorClassification,Z-score,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.52400882 3.17219428 3.22548112 5.72229017 9.1831195 ],47,46,"[[0 2]
+ [0 4]]",[0.   0.   0.75 0.75 1.  ],[0.  0.5 0.5 1.  1. ],0.0,0.0,0.375,0.6666666666666666,0.22229751668021633
+7,Status,boolean,LogisticRegression,No,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.59698683 1.68876502 2.23088341 4.40682823 4.75798502],47,46,"[[0 2]
+ [1 3]]",[0.   0.   0.75 0.75 1.  ],[0.  0.5 0.5 1.  1. ],0.0,0.0,0.375,0.5,0.29012617586755624
+33,Status,boolean,SupportVectorClassification,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.   0.75 0.75 1.  ],[0.  0.5 0.5 1.  1. ],0.0,0.0,0.375,0.6666666666666666,0.222342733878678
+30,Status,boolean,RandomForestClassifier,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0.   0.25 0.25 0.5  1.  ],[0.  0.  0.5 1.  1. ],0.0,0.0,0.3125,0.6666666666666666,0.23478828656462583
+34,Status,boolean,GradientBoostingClassifier,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.56858869 1.74329145 2.17610104 4.52031494 5.00435291],47,46,"[[0 2]
+ [2 2]]",[0.   0.25 0.25 0.5  1.  ],[0.  0.  0.5 1.  1. ],0.0,0.0,0.3125,0.3333333333333333,0.3572046746477809
+1,Status,boolean,LogisticRegression,No,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.10147529 2.86124514 2.99198089 4.97506986 8.11387922],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.291873489637615
+17,Status,boolean,GaussianNB,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.59032376 3.03295059 3.39091489 5.58711481 9.13730844],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.3333331234961181
+23,Status,boolean,GaussianNB,Min-Max,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.96575969 2.15734574 2.64167071 5.57239212 5.86945668],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.33333130131389255
+25,Status,boolean,LogisticRegression,Z-score,Intrinsic method,"Index(['Linfocitos', 'RATIO PLR  INICIO', 'Neutrofilos', 'Plaquetas', 'Edad'], dtype='object')",[2.52400882 3.17219428 3.22548112 5.72229017 9.1831195 ],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.2994955157948036
+13,Status,boolean,LogisticRegression,Min-Max,Intrinsic method,"Index(['Linfocitos', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas', 'Edad'], dtype='object')",[2.59032376 3.03295059 3.39091489 5.58711481 9.13730844],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.2980818286213768
+11,Status,boolean,GaussianNB,No,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[1.79233454 1.93406699 2.46434241 4.99034976 5.34875616],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.3428812422170327
+29,Status,boolean,GaussianNB,Z-score,Intrinsic method,"Index(['Neutrofilos', 'RATIO PLR  INICIO', 'Linfocitos', 'Plaquetas', 'Edad'], dtype='object')",[1.43175486 1.4809596  1.55672518 2.78192144 4.52649378],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.3333331797030079
+5,Status,boolean,GaussianNB,No,Intrinsic method,"Index(['RATIO NLR INICIO', 'Neutrofilos', 'RATIO PLR  INICIO', 'Plaquetas',
+       'Edad'],
+      dtype='object')",[1.51050628 2.33866235 2.35005725 3.91543474 6.23132698],47,46,"[[0 2]
+ [2 2]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.3333333333333333,0.39523764257848265
+35,Status,boolean,GaussianNB,Z-score,Filter method,"Index(['Tumor', 'Tipo farmaco', 'Plaquetas', 'Edad', 'Sexo'], dtype='object')",[2.08902671 2.29111728 2.91542061 6.05398122 6.23419492],47,46,"[[0 2]
+ [0 4]]",[0. 0. 0. 1.],[0.  0.5 1.  1. ],0.0,0.0,0.0,0.6666666666666666,0.33333180343719415

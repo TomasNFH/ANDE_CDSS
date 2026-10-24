@@ -1,0 +1,6 @@
+,Model name,Target column,Target type,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,ROC ver,Recall,F1 score,AUC,Score,Brier score loss
+1,GradientBoostingClassifier,Status,boolean,Z-score,Filter method,"['Plaquetas', 'NLR', 'Tipo farmaco', 'Edad', 'PLR', 'Linfocitos', 'Neutrofilos', 'Tumor', 'Sexo']","[0.         0.09860789 0.53424666 0.56999009 0.9542753  1.77001817
+ 3.0183472  4.88266011 6.57334094]",55,54,"[[1 1]
+ [0 5]]",[0.  0.2 0.8 0.8 1.  1. ],[0.  0.  0.  0.5 0.5 1. ],"(array([0, 1, 1, 1, 0, 1, 1]), array([0.86254085, 0.98725493, 0.90624174, 0.91168571, 0.08077072,
+       0.95047538, 0.70753294]), array([       inf, 0.98725493, 0.90624174, 0.86254085, 0.70753294,
+       0.08077072]))",0.5,0.9942004971002486,0.9,0.8571428571428571,0.12217753758414918

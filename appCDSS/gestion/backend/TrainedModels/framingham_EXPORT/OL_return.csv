@@ -1,0 +1,181 @@
+,Model name,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Score
+0,RandomForestClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.6474164133738601
+1,LogisticRegression,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.6519756838905775
+2,KNeighborsClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.8297872340425532
+3,SupportVectorClassification,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.6428571428571429
+4,GradientBoostingClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.8525835866261399
+5,GaussianNB,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12106931 0.12517972 0.13474552 0.13939048 0.1546822 ],5,0,0.8404255319148937
+6,RandomForestClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6231003039513677
+7,LogisticRegression,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6534954407294833
+8,KNeighborsClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.837386018237082
+9,SupportVectorClassification,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6428571428571429
+10,GradientBoostingClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8556231003039514
+11,GaussianNB,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8221884498480243
+12,RandomForestClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.6458966565349544
+13,LogisticRegression,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.6504559270516718
+14,KNeighborsClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.8267477203647416
+15,SupportVectorClassification,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.6170212765957447
+16,GradientBoostingClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.851063829787234
+17,GaussianNB,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12419841 0.12449076 0.13627584 0.14495683 0.14701293],5,0,0.8404255319148937
+18,RandomForestClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6231003039513677
+19,LogisticRegression,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6610942249240122
+20,KNeighborsClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.817629179331307
+21,SupportVectorClassification,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6443768996960486
+22,GradientBoostingClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8571428571428571
+23,GaussianNB,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8221884498480243
+24,RandomForestClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.6458966565349544
+25,LogisticRegression,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.6519756838905775
+26,KNeighborsClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.8449848024316109
+27,SupportVectorClassification,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.6231003039513677
+28,GradientBoostingClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.8541033434650456
+29,GaussianNB,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12368327 0.12530921 0.13316747 0.13802591 0.15477857],5,0,0.8404255319148937
+30,RandomForestClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6231003039513677
+31,LogisticRegression,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.6550151975683891
+32,KNeighborsClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8297872340425532
+33,SupportVectorClassification,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.648936170212766
+34,GradientBoostingClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8556231003039514
+35,GaussianNB,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11323742 0.15444137 0.18084912 0.22884091 0.23846886],5,0,0.8221884498480243
+36,RandomForestClassifier,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.6793313069908815
+37,LogisticRegression,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.6702127659574468
+38,KNeighborsClassifier,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.817629179331307
+39,SupportVectorClassification,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.6793313069908815
+40,GradientBoostingClassifier,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.8282674772036475
+41,GaussianNB,No,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12437218 0.12591144 0.12688228 0.14184552 0.14588504],5,1,0.8221884498480243
+42,RandomForestClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.668693009118541
+43,LogisticRegression,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.6808510638297872
+44,KNeighborsClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8145896656534954
+45,SupportVectorClassification,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.6762917933130699
+46,GradientBoostingClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8297872340425532
+47,GaussianNB,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8145896656534954
+48,RandomForestClassifier,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.6793313069908815
+49,LogisticRegression,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.6732522796352584
+50,KNeighborsClassifier,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.8069908814589666
+51,SupportVectorClassification,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.6565349544072948
+52,GradientBoostingClassifier,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.8282674772036475
+53,GaussianNB,Min-Max,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12463793 0.12529724 0.12741809 0.14085913 0.14900208],5,1,0.8221884498480243
+54,RandomForestClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.668693009118541
+55,LogisticRegression,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.6762917933130699
+56,KNeighborsClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8206686930091185
+57,SupportVectorClassification,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.6854103343465046
+58,GradientBoostingClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8282674772036475
+59,GaussianNB,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8145896656534954
+60,RandomForestClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.6671732522796353
+61,LogisticRegression,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.6702127659574468
+62,KNeighborsClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.817629179331307
+63,SupportVectorClassification,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.6641337386018237
+64,GradientBoostingClassifier,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.8282674772036475
+65,GaussianNB,Z-score,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12124954 0.12603699 0.12964347 0.13965378 0.15336582],5,1,0.8221884498480243
+66,RandomForestClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.668693009118541
+67,LogisticRegression,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.6808510638297872
+68,KNeighborsClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8252279635258358
+69,SupportVectorClassification,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.668693009118541
+70,GradientBoostingClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8297872340425532
+71,GaussianNB,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.12339461 0.14128952 0.17180324 0.22460324 0.23053407],5,1,0.8145896656534954
+72,RandomForestClassifier,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.668693009118541
+73,LogisticRegression,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.6656534954407295
+74,KNeighborsClassifier,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.8252279635258358
+75,SupportVectorClassification,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.6580547112462006
+76,GradientBoostingClassifier,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.8282674772036475
+77,GaussianNB,No,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12061145 0.12568008 0.13539954 0.13734833 0.14363969],5,2,0.817629179331307
+78,RandomForestClassifier,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6565349544072948
+79,LogisticRegression,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6610942249240122
+80,KNeighborsClassifier,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8221884498480243
+81,SupportVectorClassification,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6474164133738601
+82,GradientBoostingClassifier,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8267477203647416
+83,GaussianNB,No,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.7993920972644377
+84,RandomForestClassifier,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.668693009118541
+85,LogisticRegression,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.662613981762918
+86,KNeighborsClassifier,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.8282674772036475
+87,SupportVectorClassification,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.6261398176291794
+88,GradientBoostingClassifier,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.8252279635258358
+89,GaussianNB,Min-Max,Intrinsic method,"['age', 'sysBP', 'glucose', 'totChol', 'BMI']",[0.12188625 0.13205387 0.13313319 0.13561061 0.1416764 ],5,2,0.817629179331307
+90,RandomForestClassifier,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6565349544072948
+91,LogisticRegression,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6580547112462006
+92,KNeighborsClassifier,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8237082066869301
+93,SupportVectorClassification,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6732522796352584
+94,GradientBoostingClassifier,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8282674772036475
+95,GaussianNB,Min-Max,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.7993920972644377
+96,RandomForestClassifier,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.6717325227963525
+97,LogisticRegression,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.6656534954407295
+98,KNeighborsClassifier,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.8221884498480243
+99,SupportVectorClassification,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.6519756838905775
+100,GradientBoostingClassifier,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.8267477203647416
+101,GaussianNB,Z-score,Intrinsic method,"['age', 'sysBP', 'totChol', 'glucose', 'BMI']",[0.12406879 0.12797035 0.1362581  0.13836053 0.13980642],5,2,0.817629179331307
+102,RandomForestClassifier,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6565349544072948
+103,LogisticRegression,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6610942249240122
+104,KNeighborsClassifier,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8206686930091185
+105,SupportVectorClassification,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.6732522796352584
+106,GradientBoostingClassifier,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.8282674772036475
+107,GaussianNB,Z-score,Filter method,"['diaBP', 'glucose', 'prevalentHyp', 'sysBP', 'age']",[0.13556555 0.14278758 0.16860881 0.20483795 0.22581527],5,2,0.7993920972644377
+108,RandomForestClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.6428571428571429
+109,LogisticRegression,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.6458966565349544
+110,KNeighborsClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.8404255319148937
+111,SupportVectorClassification,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.6398176291793313
+112,GradientBoostingClassifier,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.8525835866261399
+113,GaussianNB,No,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.12313531 0.12994598 0.13090992 0.13352222 0.1434467 ],5,3,0.837386018237082
+114,RandomForestClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6595744680851063
+115,LogisticRegression,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6367781155015197
+116,KNeighborsClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8358662613981763
+117,SupportVectorClassification,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6352583586626139
+118,GradientBoostingClassifier,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8556231003039514
+119,GaussianNB,No,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8252279635258358
+120,RandomForestClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.6428571428571429
+121,LogisticRegression,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.6458966565349544
+122,KNeighborsClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.8480243161094225
+123,SupportVectorClassification,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.6367781155015197
+124,GradientBoostingClassifier,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.851063829787234
+125,GaussianNB,Min-Max,Intrinsic method,"['glucose', 'age', 'totChol', 'BMI', 'sysBP']",[0.11908551 0.12978769 0.13262574 0.13630329 0.14258557],5,3,0.837386018237082
+126,RandomForestClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6595744680851063
+127,LogisticRegression,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6352583586626139
+128,KNeighborsClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8389057750759878
+129,SupportVectorClassification,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6276595744680851
+130,GradientBoostingClassifier,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8556231003039514
+131,GaussianNB,Min-Max,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8252279635258358
+132,RandomForestClassifier,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.648936170212766
+133,LogisticRegression,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.6474164133738601
+134,KNeighborsClassifier,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.8465045592705167
+135,SupportVectorClassification,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.6291793313069909
+136,GradientBoostingClassifier,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.851063829787234
+137,GaussianNB,Z-score,Intrinsic method,"['glucose', 'totChol', 'age', 'BMI', 'sysBP']",[0.12232231 0.13051704 0.13207576 0.13648586 0.13901989],5,3,0.837386018237082
+138,RandomForestClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6595744680851063
+139,LogisticRegression,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6367781155015197
+140,KNeighborsClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8358662613981763
+141,SupportVectorClassification,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.6458966565349544
+142,GradientBoostingClassifier,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8556231003039514
+143,GaussianNB,Z-score,Filter method,"['glucose', 'diaBP', 'prevalentHyp', 'sysBP', 'age']",[0.11714112 0.15159018 0.18353873 0.23348564 0.2483463 ],5,3,0.8252279635258358
+144,RandomForestClassifier,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.6945288753799392
+145,LogisticRegression,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.668693009118541
+146,KNeighborsClassifier,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.8358662613981763
+147,SupportVectorClassification,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.6671732522796353
+148,GradientBoostingClassifier,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.8434650455927052
+149,GaussianNB,No,Intrinsic method,"['glucose', 'age', 'BMI', 'totChol', 'sysBP']",[0.11938058 0.11971742 0.13545218 0.13710144 0.15060201],5,4,0.8267477203647416
+150,RandomForestClassifier,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6747720364741642
+151,LogisticRegression,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6656534954407295
+152,KNeighborsClassifier,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8085106382978723
+153,SupportVectorClassification,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6504559270516718
+154,GradientBoostingClassifier,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8449848024316109
+155,GaussianNB,No,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8054711246200608
+156,RandomForestClassifier,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.6762917933130699
+157,LogisticRegression,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.6717325227963525
+158,KNeighborsClassifier,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.8328267477203647
+159,SupportVectorClassification,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.6382978723404256
+160,GradientBoostingClassifier,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.8434650455927052
+161,GaussianNB,Min-Max,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11613866 0.12596675 0.13156552 0.13709231 0.15607798],5,4,0.8267477203647416
+162,RandomForestClassifier,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6747720364741642
+163,LogisticRegression,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6656534954407295
+164,KNeighborsClassifier,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.817629179331307
+165,SupportVectorClassification,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6367781155015197
+166,GradientBoostingClassifier,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8449848024316109
+167,GaussianNB,Min-Max,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8054711246200608
+168,RandomForestClassifier,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.6762917933130699
+169,LogisticRegression,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.668693009118541
+170,KNeighborsClassifier,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.8419452887537994
+171,SupportVectorClassification,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.6413373860182371
+172,GradientBoostingClassifier,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.8419452887537994
+173,GaussianNB,Z-score,Intrinsic method,"['age', 'glucose', 'totChol', 'BMI', 'sysBP']",[0.11854901 0.12020164 0.13297651 0.13370018 0.15542549],5,4,0.8267477203647416
+174,RandomForestClassifier,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6732522796352584
+175,LogisticRegression,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6656534954407295
+176,KNeighborsClassifier,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8145896656534954
+177,SupportVectorClassification,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.6352583586626139
+178,GradientBoostingClassifier,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8465045592705167
+179,GaussianNB,Z-score,Filter method,"['BPMeds', 'diaBP', 'prevalentHyp', 'age', 'sysBP']",[0.11086578 0.15544029 0.17698687 0.22386496 0.22739177],5,4,0.8054711246200608

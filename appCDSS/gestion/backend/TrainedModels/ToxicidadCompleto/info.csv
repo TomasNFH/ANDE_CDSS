@@ -1,0 +1,3 @@
+,Target column,Target type,Model name,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,Recall,F1 score,AUC,Score,Brier score loss
+0,ToxicidadBool,boolean,SupportVectorClassification,No,Intrinsic method,"['Linfocitos', 'NLR', 'Neutrofilos', 'Plaquetas', 'PLR ']",[2.88191865 3.19622168 3.73413357 5.36350448 6.23017169],49,48,"[[4 0]
+ [2 0]]",[0.  0.5 1.  1. ],[0. 0. 0. 1.],1.0,1.9704433497536946,1.0,0.6666666666666666,0.27135910668703866

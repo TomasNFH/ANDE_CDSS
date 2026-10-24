@@ -1,0 +1,4 @@
+,Target column,Target type,Model name,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,ROC ver,Recall,F1 score,AUC,Score,Brier score loss
+0,Status,boolean,GradientBoostingClassifier,No,Filter method,"['RATIO PLR  INICIO', 'Plaquetas', 'Tumor', 'Sexo']",[1.46265235 1.87912778 2.88060506 3.5324698 ],47,46,"[[3 0]
+ [0 3]]",[0.         0.33333333 1.         1.        ],[0. 0. 0. 1.],"(array([0, 1, 0, 0, 1, 1]), array([-1.29877101,  1.49946926, -2.90041321, -4.2152431 ,  3.64394026,
+        3.94362431]))",1.0,1.9801980198019802,1.0,1.0,0.013867282485537676

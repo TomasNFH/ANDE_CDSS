@@ -14,3 +14,6 @@ dist/
 
 # Entorno
 .env
+venv/
+.venv/
+appCDSS/gestion/backend/path/

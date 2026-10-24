@@ -1,0 +1,103 @@
+,Model,Normalization method,Feature method,Best set,Importances Custom
+0,RandomForestClassifier,No,Intrinsic method,"Index(['PADPRED', 'PASPRED', 'Tiempo', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.02327789 0.02444759 0.02473506 0.04720649 0.12626399 0.1393438
+ 0.15286542 0.29973394]"
+1,RandomForestClassifier,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02349648 0.04615523 0.07345757 0.10239343 0.13703245 0.14554521
+ 0.29842893]"
+2,RandomForestClassifier,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02415451 0.04579819 0.05237707 0.12615654 0.13534773 0.1504573
+ 0.2935588 ]"
+3,RandomForestClassifier,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23956897 0.25753681 0.3366     0.42772832 0.49853796 0.79091707]
+4,RandomForestClassifier,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23956897 0.25753681 0.3366     0.42772832 0.49853796 0.79091707]
+5,RandomForestClassifier,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23956897 0.25793792 0.33697062 0.42811015 0.49893132 0.79159369]
+6,LogisticRegression,No,Intrinsic method,"Index(['PADPRED', 'PASPRED', 'Tiempo', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.02267846 0.02412449 0.02442328 0.04729765 0.12502564 0.13831577
+ 0.15141588 0.29689821]"
+7,LogisticRegression,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02299655 0.04614883 0.07331106 0.10344962 0.13762966 0.14584155
+ 0.29896174]"
+8,LogisticRegression,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02597952 0.04603904 0.05236843 0.12817438 0.13782447 0.15321622
+ 0.29873649]"
+9,LogisticRegression,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23677042 0.25242605 0.32857852 0.41964574 0.48932485 0.77587502]
+10,LogisticRegression,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23317952 0.25211804 0.32598729 0.41616128 0.48508287 0.76969711]
+11,LogisticRegression,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23639505 0.25316517 0.32892084 0.4199721  0.48965187 0.77655948]
+12,KNeighborsClassifier,No,Intrinsic method,"Index(['PADPRED', 'Tiempo', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.02267846 0.02473506 0.02552457 0.04762663 0.12720112 0.14037345
+ 0.15392296 0.30176076]"
+13,KNeighborsClassifier,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02329651 0.04645776 0.07519176 0.10678982 0.14107415 0.14936542
+ 0.30607384]"
+14,KNeighborsClassifier,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02576481 0.0449133  0.05520341 0.12934538 0.13883952 0.15432215
+ 0.30136673]"
+15,KNeighborsClassifier,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24361932 0.25182514 0.34100532 0.42864633 0.49884567 0.79087914]
+16,KNeighborsClassifier,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24360792 0.26868403 0.34811403 0.44100331 0.51316954 0.81524239]
+17,KNeighborsClassifier,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24268447 0.26676254 0.34868232 0.43976366 0.511393   0.81242345]
+18,SupportVectorClassification,No,Intrinsic method,"Index(['PADPRED', 'PASPRED', 'Tiempo', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.02317799 0.023586   0.02442328 0.04635067 0.12401766 0.13712777
+ 0.15019101 0.2945305 ]"
+19,SupportVectorClassification,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02209669 0.04583749 0.07307285 0.10185885 0.13600581 0.14405127
+ 0.29514626]"
+20,SupportVectorClassification,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02501334 0.04550235 0.05165429 0.12593044 0.13543403 0.15058795
+ 0.29357089]"
+21,SupportVectorClassification,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24187088 0.25644036 0.33526215 0.42733634 0.49792637 0.78977925]
+22,SupportVectorClassification,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23465182 0.25156825 0.3268752  0.41709661 0.4860667  0.77097987]
+23,SupportVectorClassification,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.23308206 0.24775671 0.32647991 0.41426623 0.48285217 0.76565663]
+24,GradientBoostingClassifier,No,Intrinsic method,"Index(['PADPRED', 'Tiempo', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.02457666 0.02567042 0.02681696 0.04859581 0.13265233 0.14591023
+ 0.16043388 0.31452156]"
+25,GradientBoostingClassifier,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02529621 0.04740858 0.07815347 0.10850919 0.14452403 0.15379983
+ 0.31529297]"
+26,GradientBoostingClassifier,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02705305 0.04726616 0.05680498 0.13485242 0.1445899  0.16097175
+ 0.31417513]"
+27,GradientBoostingClassifier,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.25396285 0.27436463 0.35466058 0.45251197 0.5267445  0.83607556]
+28,GradientBoostingClassifier,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.25396285 0.27436463 0.35466058 0.45251197 0.5267445  0.83607556]
+29,GradientBoostingClassifier,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.25358748 0.27436463 0.35429872 0.45210029 0.52625317 0.83537595]
+30,GaussianNB,No,Intrinsic method,"Index(['PADPRED', 'PASPRED', 'Tiempo', 'PADPOST', 'V39', 'DeltaPeso',
+       'PASPOST', 'Edad'],
+      dtype='object')","[0.0234777  0.02487838 0.02504685 0.04611728 0.1261469  0.13986289
+ 0.15263886 0.29935644]"
+31,GaussianNB,Min-Max,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.02359646 0.04562273 0.07252878 0.10479828 0.13811647 0.1462322
+ 0.29986843]"
+32,GaussianNB,Z-score,Intrinsic method,"Index(['V38', 'PASPRED', 'PADPOST', 'V39', 'DeltaPeso', 'PASPOST', 'Edad'], dtype='object')","[0.0253354  0.04715021 0.05195277 0.12845975 0.13826905 0.15329191
+ 0.29895533]"
+33,GaussianNB,No,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24651631 0.26429453 0.34096103 0.43657592 0.50886602 0.80750613]
+34,GaussianNB,Min-Max,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24651631 0.26429453 0.34096103 0.43657592 0.50886602 0.80750613]
+35,GaussianNB,Z-score,Filter method,"Index(['PADPRED', 'Cardiopatía isquémica', 'PASPRED', 'PASPOST', 'PADPOST',
+       'Edad'],
+      dtype='object')",[0.24651631 0.26429453 0.34096103 0.43657592 0.50886602 0.80750613]

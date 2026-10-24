@@ -1,0 +1,5 @@
+,Model name,Target column,Target type,Normalization method,Feature selection method,Features used,importances,Number of splits,Cross-validation ID,Confusion matrix,True Positive Rate,False Positive Rate,ROC ver,Recall,F1 score,AUC,Score,Brier score loss
+2,SupportVectorClassification,Salida,classes,No,Intrinsic method,"['Perturbado', 'idLugar', 'cria', 'pestnumbee', 'ldbee']","[0.00000000e+00 1.01890711e-02 1.40530745e-02 1.15298812e-01
+ 2.98604590e+01]",42,41,"[[2 0 0]
+ [2 0 0]
+ [0 0 2]]",,,,,,,0.6666666666666666,0.13856013804959946
